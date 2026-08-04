@@ -255,3 +255,64 @@
     font-size: 56px;
   }
 }
+
+/* 指南样式 */
+.guide-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.guide-section {
+  padding: 12px;
+  background: rgba(167, 139, 250, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(167, 139, 250, 0.1);
+}
+
+.guide-section h4 {
+  margin-bottom: 8px !important;
+}
+
+.guide-section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.guide-section li {
+  margin: 4px 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hand-ranking {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hand-ranking .ant-tag {
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.guide-section code {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #a78bfa;
+  font-size: 13px;
+}
+
+/* 游戏容器响应式 - 移动端仪表盘放下面 */
+@media (max-width: 1024px) {
+  .game-container {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+
+/* 按钮 wrap 支持 */
+.welcome-actions {
+  flex-wrap: wrap;
+  justify-content: center;
+}

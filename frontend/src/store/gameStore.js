@@ -12,6 +12,9 @@ export const useGameStore = create((set, get) => ({
   history: [],
   stats: null,
   pingInterval: null,
+  actionHistory: [],
+  isAiThinking: false,
+  handResult: null,
 
   // 连接游戏
   connectToGame: (gameId, playerId) => {
@@ -52,16 +55,37 @@ export const useGameStore = create((set, get) => ({
         
         switch (type) {
           case 'pong':
-            // 心跳响应，忽略
             break;
           case 'game_state':
             set({ gameState: data || message });
             break;
           case 'action_result':
             console.log('行动结果:', data);
+            if (data?.player_id) {
+              set((state) => ({
+                actionHistory: [...state.actionHistory.slice(-30), {
+                  playerId: data.player_id,
+                  action: data.action,
+                  amount: data.amount || 0,
+                  timestamp: Date.now()
+                }]
+              }));
+            }
             break;
           case 'ai_action':
             console.log('AI行动:', data);
+            set({ isAiThinking: false });
+            if (data?.player_id) {
+              set((state) => ({
+                actionHistory: [...state.actionHistory.slice(-30), {
+                  playerId: data.player_id,
+                  action: data.action,
+                  amount: data.amount || 0,
+                  isAi: true,
+                  timestamp: Date.now()
+                }]
+              }));
+            }
             break;
           case 'system_message':
             console.log('系统消息:', data);
@@ -74,6 +98,10 @@ export const useGameStore = create((set, get) => ({
             break;
           case 'hand_over':
             console.log('牌局结束:', data);
+            set({ handResult: data, isAiThinking: false });
+            break;
+          case 'ai_thinking':
+            set({ isAiThinking: true });
             break;
           case 'error':
             set({ error: data?.message || '连接错误' });
@@ -251,6 +279,33 @@ export const useGameStore = create((set, get) => ({
       throw error;
     }
   },
+
+  // 再来一局
+  startNewHand: async () => {
+    const { currentGameId } = get();
+    if (!currentGameId) return;
+    set({ handResult: null, actionHistory: [], isLoading: true });
+    try {
+      const response = await fetch(`/api/game/${currentGameId}/start`, {
+        method: 'POST'
+      });
+      if (!response.ok) throw new Error('开始新局失败');
+      const data = await response.json();
+      set({ gameState: data.data, isLoading: false });
+      return data;
+    } catch (error) {
+      set({ error: error.message, isLoading: false });
+      throw error;
+    }
+  },
+
+  // 离开游戏
+  leaveGame: () => {
+    get().disconnectGame();
+  },
+
+  // 清理牌局结果
+  clearHandResult: () => set({ handResult: null }),
 
   // 获取统计数据
   fetchStats: async (playerId) => {

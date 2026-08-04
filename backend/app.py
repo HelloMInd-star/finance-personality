@@ -195,8 +195,14 @@ class GameManager:
         if not ai_player:
             return
         
+        # 广播思考状态
+        await self.broadcast(game_id, {
+            "type": "ai_thinking",
+            "data": {"player": ai_player.name}
+        })
+        
         # 等待一下模拟思考
-        await asyncio.sleep(ai_player.ai_difficulty == "hard" and 1.5 or 1.0)
+        await asyncio.sleep(ai_player.ai_difficulty == "hard" and 2.0 or 1.2)
         
         # 获取AI决策
         ai = self.ai_decision_maker.get_ai(ai_player.ai_difficulty)
