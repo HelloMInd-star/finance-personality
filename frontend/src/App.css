@@ -206,6 +206,41 @@
   box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2) !important;
 }
 
+.auth-modal .ant-select-selector {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(167, 139, 250, 0.2) !important;
+  color: #fff !important;
+}
+
+.auth-modal .ant-select-selection-item {
+  color: #fff !important;
+}
+
+.auth-modal .ant-select-arrow {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.auth-modal .ant-modal-close-x {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.auth-modal .ant-modal-close:hover .ant-modal-close-x {
+  color: #fff !important;
+}
+
+.auth-modal .guide-section {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.auth-modal .guide-section h4 {
+  color: #fff !important;
+}
+
+.auth-modal .guide-section code {
+  background: rgba(0, 0, 0, 0.4);
+  color: #a78bfa;
+}
+
 /* 响应式 */
 @media (max-width: 1024px) {
   .game-container {

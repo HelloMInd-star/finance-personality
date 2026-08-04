@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { Layout, Menu, Button, Space, Card, Typography, Modal, Form, Input, Select, message, Divider, Tag } from 'antd';
+import { Layout, Menu, Button, Space, Card, Typography, Modal, Form, Input, Select, message, Tag } from 'antd';
 import { 
   HomeOutlined, 
   TrophyOutlined, 
   UserOutlined,
-  SettingOutlined,
   PlusOutlined,
-  LoginOutlined,
   LogoutOutlined,
   PlayCircleOutlined,
-  BulbOutlined,
-  InfoCircleOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined
+  BulbOutlined
 } from '@ant-design/icons';
 import PokerTable from './components/PokerTable/PokerTable';
 import Dashboard from './components/Dashboard/Dashboard';
@@ -23,7 +18,7 @@ import Stats from './components/Stats/Stats';
 import { useGameStore } from './store/gameStore';
 import './App.css';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 const { Title, Text, Paragraph } = Typography;
 
 // 内部页面组件，有 navigate 上下文
@@ -132,6 +127,7 @@ function HomePage() {
         open={showQuickStart}
         onCancel={() => setShowQuickStart(false)}
         footer={null}
+        className="auth-modal"
       >
         <Form layout="vertical" onFinish={(v) => handleQuickStart(v.player_name)}>
           <Form.Item name="player_name" label="你的昵称" initialValue="Player">
@@ -163,6 +159,7 @@ function HomePage() {
         onCancel={() => setShowGuide(false)}
         footer={[<Button key="ok" type="primary" onClick={() => setShowGuide(false)}>明白了</Button>]}
         width={600}
+        className="auth-modal"
       >
         <div className="guide-content">
           <div className="guide-section">
