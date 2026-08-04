@@ -34,9 +34,6 @@ function HomePage() {
   const [showGuide, setShowGuide] = useState(false);
   const [showQuickStart, setShowQuickStart] = useState(false);
   const [quickDifficulty, setQuickDifficulty] = useState('medium');
-  const [showDashboard, setShowDashboard] = useState(true);
-
-  const toggleDashboard = () => setShowDashboard(v => !v);
 
   const handleQuickStart = async (playerName) => {
     try {
@@ -55,14 +52,12 @@ function HomePage() {
   return (
     <div className="home-page fade-in">
       {gameState ? (
-        <div className={`game-container ${!showDashboard ? 'focus-mode' : ''}`}>
+        <div className="game-container">
           <PokerTable 
             gameState={gameState} 
-            playerId={playerId} 
-            showDashboard={showDashboard}
-            onToggleDashboard={toggleDashboard}
+            playerId={playerId}
           />
-          {showDashboard && <Dashboard gameState={gameState} />}
+          <Dashboard gameState={gameState} />
         </div>
       ) : (
         <div className="welcome-section">
