@@ -236,54 +236,221 @@ const BartenderPage = () => {
   // 阶段1：选择调酒师
   if (stage === 'select-bartender') {
     return (
-      <div style={{ padding: 24, maxWidth: 1200, margin: '0 auto' }}>
-        <Space direction="vertical" size="large" style={{ width: '100%' }}>
-          <Card>
-            <Space align="center">
-              <div style={{ fontSize: 48 }}>🍸</div>
-              <div>
-                <Title level={3} style={{ margin: 0 }}>分子调酒 · 选择你的调酒师</Title>
-                <Paragraph style={{ margin: '8px 0 0' }} type="secondary">
-                  每位调酒师有独特的风格，会影响最终的配方呈现
-                </Paragraph>
+      <div style={{
+        background: 'linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 50%, #0a0a12 100%)',
+        minHeight: '100vh',
+        padding: '48px 24px',
+        margin: -24
+      }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <Space direction="vertical" size="large" style={{ width: '100%' }}>
+            {/* Hero 标题区 */}
+            <div style={{ textAlign: 'center', marginBottom: 32 }}>
+              <div style={{
+                fontSize: 56,
+                marginBottom: 16,
+                filter: 'drop-shadow(0 4px 20px rgba(212, 175, 55, 0.3))'
+              }}>
+                🍸
               </div>
-            </Space>
-          </Card>
+              <Title
+                level={2}
+                style={{
+                  color: '#fff',
+                  margin: 0,
+                  fontWeight: 300,
+                  letterSpacing: 2
+                }}
+              >
+                分子调酒实验室
+              </Title>
+              <div style={{
+                width: 60,
+                height: 2,
+                background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)',
+                margin: '16px auto'
+              }} />
+              <p style={{
+                color: 'rgba(255,255,255,0.6)',
+                fontSize: 15,
+                maxWidth: 520,
+                margin: '0 auto',
+                lineHeight: 1.8
+              }}>
+                选择一位调酒师，开始你的分子调酒体验。
+                <br />
+                六步流程，采集情绪、故事与人格，生成专属于你的那一杯。
+              </p>
+            </div>
 
-          <Row gutter={[16, 16]}>
-            {Object.values(BARTENDERS).map(b => (
-              <Col xs={24} md={8} key={b.key}>
-                <Card
-                  hoverable
-                  onClick={() => handleSelectBartender(b.key)}
-                  style={{
-                    borderColor: b.color,
-                    borderWidth: 2,
-                    height: '100%'
-                  }}
-                  bodyStyle={{ textAlign: 'center', padding: 32 }}
-                >
-                  <Avatar
-                    size={80}
-                    style={{ backgroundColor: b.color, fontSize: 36, marginBottom: 16 }}
+            {/* 调酒师卡片 */}
+            <Row gutter={[24, 24]} style={{ marginTop: 16 }}>
+              {Object.values(BARTENDERS).map((b, index) => (
+                <Col xs={24} md={8} key={b.key}>
+                  <div
+                    onClick={() => handleSelectBartender(b.key)}
+                    style={{
+                      position: 'relative',
+                      background: 'rgba(255,255,255,0.03)',
+                      border: `1px solid ${b.color}33`,
+                      borderRadius: 16,
+                      padding: '32px 24px 24px',
+                      height: '100%',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      backdropFilter: 'blur(10px)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.borderColor = b.color;
+                      e.currentTarget.style.background = `rgba(255,255,255,0.06)`;
+                      e.currentTarget.style.boxShadow = `0 12px 40px ${b.color}22`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.borderColor = `${b.color}33`;
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   >
-                    {b.icon}
-                  </Avatar>
-                  <Title level={4} style={{ margin: '0 0 4px' }}>{b.name}</Title>
-                  <Tag color={b.color} style={{ marginBottom: 12 }}>{b.title}</Tag>
-                  <Paragraph type="secondary" style={{ margin: 0, fontSize: 13 }}>
-                    {b.style}
-                  </Paragraph>
-                  <div style={{ marginTop: 12 }}>
-                    <Text type="secondary" style={{ fontSize: 12 }}>
-                      擅长：{b.specialty}
-                    </Text>
+                    {/* 编号 */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 16,
+                      right: 20,
+                      fontSize: 48,
+                      fontWeight: 700,
+                      color: b.color,
+                      opacity: 0.15,
+                      lineHeight: 1,
+                      fontFamily: 'Georgia, serif'
+                    }}>
+                      0{index + 1}
+                    </div>
+
+                    {/* 头像 */}
+                    <div style={{
+                      width: 72,
+                      height: 72,
+                      borderRadius: '50%',
+                      background: `linear-gradient(135deg, ${b.color}33, ${b.color}11)`,
+                      border: `2px solid ${b.color}66`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 32,
+                      marginBottom: 16
+                    }}>
+                      {b.icon}
+                    </div>
+
+                    {/* 名字 + 头衔 */}
+                    <Title level={4} style={{ color: '#fff', margin: '0 0 4px', fontWeight: 500 }}>
+                      {b.name}
+                    </Title>
+                    <div style={{
+                      display: 'inline-block',
+                      padding: '2px 10px',
+                      borderRadius: 10,
+                      background: `${b.color}22`,
+                      color: b.color,
+                      fontSize: 12,
+                      marginBottom: 12
+                    }}>
+                      {b.title}
+                    </div>
+
+                    {/* MBTI */}
+                    <div style={{
+                      fontSize: 11,
+                      color: 'rgba(255,255,255,0.4)',
+                      marginBottom: 12,
+                      letterSpacing: 1
+                    }}>
+                      MBTI · {b.mbti}
+                    </div>
+
+                    {/* 风格描述 */}
+                    <p style={{
+                      color: 'rgba(255,255,255,0.6)',
+                      fontSize: 13,
+                      lineHeight: 1.7,
+                      margin: '0 0 16px',
+                      minHeight: 44
+                    }}>
+                      {b.style}
+                    </p>
+
+                    {/* 擅长标签 */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 20 }}>
+                      {b.specialty.split('、').map((tag, i) => (
+                        <span key={i} style={{
+                          padding: '3px 10px',
+                          borderRadius: 6,
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.1)',
+                          fontSize: 11,
+                          color: 'rgba(255,255,255,0.5)'
+                        }}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* CTA 按钮 */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      paddingTop: 16,
+                      borderTop: '1px solid rgba(255,255,255,0.06)'
+                    }}>
+                      <span style={{
+                        fontSize: 12,
+                        color: b.color
+                      }}>
+                        6 步流程 · 约 3 分钟
+                      </span>
+                      <span style={{
+                        color: b.color,
+                        fontSize: 14,
+                        fontWeight: 500
+                      }}>
+                        开始 →
+                      </span>
+                    </div>
                   </div>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Space>
+                </Col>
+              ))}
+            </Row>
+
+            {/* 底部提示 */}
+            <div style={{
+              textAlign: 'center',
+              marginTop: 40,
+              padding: '20px',
+              background: 'rgba(212, 175, 55, 0.05)',
+              border: '1px solid rgba(212, 175, 55, 0.15)',
+              borderRadius: 12,
+              maxWidth: 600,
+              margin: '40px auto 0'
+            }}>
+              <div style={{ color: '#D4AF37', fontSize: 13, marginBottom: 6 }}>
+                💡 小提示
+              </div>
+              <p style={{
+                color: 'rgba(255,255,255,0.5)',
+                fontSize: 12,
+                margin: 0,
+                lineHeight: 1.8
+              }}>
+                调酒师的风格会影响酒名生成、质地判断和呈现方式。
+                <br />
+                你可以多次体验，感受不同调酒师带来的差异。
+              </p>
+            </div>
+          </Space>
+        </div>
       </div>
     );
   }

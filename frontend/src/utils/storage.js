@@ -19,6 +19,7 @@ const defaultData = {
   pokerGames: [],
   bartenderSessions: [],
   billiardsGames: [],
+  billiardsSessions: [],
   fitnessSessions: [],
   coachConversations: [],
   psychologyProfile: {

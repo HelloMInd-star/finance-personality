@@ -20,10 +20,10 @@ const menuItems = [
   { key: '/', icon: <HomeOutlined />, label: '首页' },
   { key: '/psychology', icon: <InfoCircleOutlined />, label: '心理盘面' },
   { key: '/bartender', icon: <TrophyOutlined />, label: '调酒' },
+  { key: '/billiards', icon: <BookOutlined />, label: '台球' },
   { key: '/poker', icon: <PlayCircleOutlined />, label: '德州扑克' },
-  { key: '/stories', icon: <BookOutlined />, label: '故事集' },
-  { key: '/coach-logs', icon: <MessageOutlined />, label: '陪练记录' },
-  { key: '/tools', icon: <SettingOutlined />, label: '系统工具' },
+  { key: '/stories', icon: <MessageOutlined />, label: '故事集' },
+  { key: '/coach-logs', icon: <SettingOutlined />, label: '陪练记录' },
 ];
 
 const AppLayout = ({ children }) => {
