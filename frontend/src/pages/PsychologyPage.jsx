@@ -43,6 +43,10 @@ import {
   generateKLineFromPokerHistory,
   calculateKLineStats
 } from '../utils/musicEngine';
+import {
+  investorEngine,
+  INVESTOR_PROFILES
+} from '../utils/investorEngine';
 import { storage } from '../utils/storage';
 import { logger } from '../utils/logger';
 
@@ -154,6 +158,18 @@ const PsychologyPage = () => {
   }, []);
 
   const industryInfo = INDUSTRY_OPTIONS.find(i => i.key === industry) || INDUSTRY_OPTIONS[0];
+
+  // 投资人匹配
+  const investorMatch = useMemo(() => {
+    const userData = investorEngine.extractUserData();
+    const matches = investorEngine.matchInvestor(userData);
+    const top = matches[0];
+    const commonPoints = investorEngine.generateCommonPoints(userData, top.investor);
+    const diffPoints = investorEngine.generateDifferencePoints(userData, top.investor);
+    return { matches, top, userData, commonPoints, diffPoints };
+  }, [refreshKey]);
+
+  const [showRadar, setShowRadar] = useState(false);
 
   return (
     <div style={{ padding: 24, maxWidth: 1400, margin: '0 auto' }}>
@@ -471,6 +487,171 @@ const PsychologyPage = () => {
             </Space>
           </Col>
         </Row>
+
+        {/* 投资人匹配卡片 */}
+        <Card
+          title={
+            <Space>
+              <span style={{ fontSize: 22 }}>🧑‍💼</span>
+              <span>你今夜最接近的投资人</span>
+            </Space>
+          }
+          extra={
+            <Space>
+              <Tag color="#D4AF37">
+                相似度 {investorMatch.top.similarity}%
+              </Tag>
+            </Space>
+          }
+        >
+          <Row gutter={[24, 16]}>
+            <Col xs={24} md={10}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 16,
+                padding: 16,
+                background: 'linear-gradient(135deg, rgba(212,175,55,0.1), rgba(212,175,55,0.02))',
+                borderRadius: 12,
+                border: '1px solid rgba(212,175,55,0.2)'
+              }}>
+                <div style={{
+                  fontSize: 56,
+                  width: 80,
+                  height: 80,
+                  borderRadius: '50%',
+                  background: 'rgba(0,0,0,0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  {investorMatch.top.investor.emoji}
+                </div>
+                <div>
+                  <Title level={4} style={{ margin: 0, color: '#D4AF37' }}>
+                    {investorMatch.top.investor.name}
+                  </Title>
+                  <Text type="secondary" style={{ fontSize: 13 }}>
+                    {investorMatch.top.investor.mbti} · {investorMatch.top.investor.mbtiLabel}
+                  </Text>
+                  <div style={{ marginTop: 8 }}>
+                    <Text type="secondary" style={{ fontSize: 12 }}>
+                      {investorMatch.top.investor.decisionStyle}
+                    </Text>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{
+                marginTop: 16,
+                padding: 16,
+                background: 'rgba(0,0,0,0.2)',
+                borderRadius: 8,
+                borderLeft: '3px solid #D4AF37'
+              }}>
+                <Text type="secondary" style={{ fontSize: 12 }}>💬 名言</Text>
+                <Paragraph style={{ margin: '4px 0 0', color: '#fff', fontStyle: 'italic' }}>
+                  "{investorMatch.top.investor.famousQuote}"
+                </Paragraph>
+              </div>
+
+              <div style={{ marginTop: 12 }}>
+                <Text type="secondary" style={{ fontSize: 12 }}>
+                  {investorMatch.top.investor.matchDescription}
+                </Text>
+              </div>
+            </Col>
+
+            <Col xs={24} md={14}>
+              <div style={{ marginBottom: 16 }}>
+                <Text strong style={{ color: '#52c41a' }}>📌 你们的共同点：</Text>
+                <Space direction="vertical" size={4} style={{ width: '100%', marginTop: 8 }}>
+                  {investorMatch.commonPoints.length > 0 ? (
+                    investorMatch.commonPoints.map((p, i) => (
+                      <Text key={i} style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13 }}>{p}</Text>
+                    ))
+                  ) : (
+                    <Text type="secondary" style={{ fontSize: 13 }}>多玩几局，系统会识别更多共同点</Text>
+                  )}
+                </Space>
+              </div>
+
+              {investorMatch.diffPoints.length > 0 && (
+                <div style={{ marginBottom: 16 }}>
+                  <Text strong style={{ color: '#faad14' }}>🔍 你们的差异：</Text>
+                  <Space direction="vertical" size={4} style={{ width: '100%', marginTop: 8 }}>
+                    {investorMatch.diffPoints.map((p, i) => (
+                      <Text key={i} style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13 }}>{p}</Text>
+                    ))}
+                  </Space>
+                </div>
+              )}
+
+              {/* 五维对比条 */}
+              <Divider style={{ margin: '8px 0' }} />
+              <Text type="secondary" style={{ fontSize: 12 }}>五维对比（你 vs {investorMatch.top.investor.name}）</Text>
+              <Space direction="vertical" size={8} style={{ width: '100%', marginTop: 8 }}>
+                {[
+                  { key: 'riskTolerance', label: '风险容忍度' },
+                  { key: 'timePreference', label: '时间偏好' },
+                  { key: 'executionDiscipline', label: '执行纪律' },
+                  { key: 'reflectionDeviation', label: '路径预判' },
+                  { key: 'aimPrecision', label: '决策精度' }
+                ].map(dim => {
+                  const userVal = investorMatch.userData[dim.key] || 50;
+                  const invVal = investorMatch.top.investor[dim.key] || 50;
+                  return (
+                    <div key={dim.key}>
+                      <Row gutter={8} align="middle">
+                        <Col span={6}>
+                          <Text type="secondary" style={{ fontSize: 12 }}>{dim.label}</Text>
+                        </Col>
+                        <Col span={9}>
+                          <Progress
+                            percent={userVal}
+                            showInfo={false}
+                            size="small"
+                            strokeColor="#1890ff"
+                          />
+                        </Col>
+                        <Col span={9}>
+                          <Progress
+                            percent={invVal}
+                            showInfo={false}
+                            size="small"
+                            strokeColor="#D4AF37"
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                  );
+                })}
+              </Space>
+              <Row gutter={8} style={{ marginTop: 4 }}>
+                <Col span={6}></Col>
+                <Col span={9}>
+                  <Text type="secondary" style={{ fontSize: 11 }}>你</Text>
+                </Col>
+                <Col span={9}>
+                  <Text type="secondary" style={{ fontSize: 11, color: '#D4AF37' }}>
+                    {investorMatch.top.investor.name}
+                  </Text>
+                </Col>
+              </Row>
+
+              {/* 更多推荐 */}
+              <Divider style={{ margin: '16px 0 8px' }} />
+              <Text type="secondary" style={{ fontSize: 12 }}>其他相似投资人：</Text>
+              <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
+                {investorMatch.matches.slice(1, 4).map((m, i) => (
+                  <Tag key={i} color="default" style={{ padding: '4px 10px', fontSize: 12 }}>
+                    {m.investor.emoji} {m.investor.name} · {m.similarity}%
+                  </Tag>
+                ))}
+              </div>
+            </Col>
+          </Row>
+        </Card>
       </Space>
     </div>
   );
