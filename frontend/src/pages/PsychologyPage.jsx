@@ -12,7 +12,8 @@ import {
   Progress,
   Tooltip,
   Statistic,
-  Radio
+  Radio,
+  Divider
 } from 'antd';
 import {
   PlayCircleOutlined,

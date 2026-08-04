@@ -106,6 +106,14 @@ const HomePage = () => {
           action: () => navigate('/psychology'),
           status: 'idle',
         },
+        {
+          key: 'investor',
+          icon: <UserOutlined />,
+          title: '投资人档案',
+          desc: '你今夜最接近哪位投资人？',
+          action: () => navigate('/psychology'),
+          status: 'idle',
+        },
       ],
     },
   ];
