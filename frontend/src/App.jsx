@@ -12,6 +12,7 @@ import FitnessPage from './pages/FitnessPage';
 import StoriesPage from './pages/StoriesPage';
 import CoachLogsPage from './pages/CoachLogsPage';
 import ToolsPage from './pages/ToolsPage';
+import MindSpeakPage from './pages/MindSpeakPage';
 import './App.css';
 
 function AppRoutes() {
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path="/" element={<HomePage />} />
         <Route path="/poker" element={<PokerPage />} />
         <Route path="/psychology" element={<PsychologyPage />} />
+        <Route path="/mindspeak" element={<MindSpeakPage />} />
         <Route path="/bartender" element={<BartenderPage />} />
         <Route path="/billiards" element={<BilliardsPage />} />
         <Route path="/fitness" element={<FitnessPage />} />

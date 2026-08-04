@@ -8,7 +8,8 @@ import {
   TrophyOutlined,
   PlayCircleOutlined,
   InfoCircleOutlined,
-  ReloadOutlined
+  ReloadOutlined,
+  BulbOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { logger } from '../../utils/logger';
@@ -19,6 +20,7 @@ const { Sider, Content, Header } = Layout;
 const menuItems = [
   { key: '/', icon: <HomeOutlined />, label: '首页' },
   { key: '/psychology', icon: <InfoCircleOutlined />, label: '心理盘面' },
+  { key: '/mindspeak', icon: <BulbOutlined />, label: '认知引擎' },
   { key: '/bartender', icon: <TrophyOutlined />, label: '调酒' },
   { key: '/billiards', icon: <BookOutlined />, label: '台球' },
   { key: '/fitness', icon: <MessageOutlined />, label: '健身' },
