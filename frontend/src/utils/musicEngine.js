@@ -245,3 +245,94 @@ export function generateMockKLine(count = 30, seed = {}) {
 
   return { data, industry };
 }
+
+/**
+ * 从德州扑克历史数据生成 K 线
+ * 筹码变化 → 价格走势
+ */
+export function generateKLineFromPokerHistory(pokerGames = []) {
+  if (!pokerGames || pokerGames.length === 0) {
+    return { data: generateMockKLine(30).data, source: '模拟数据' };
+  }
+
+  // 从每局游戏的筹码变化生成数据点
+  const data = [];
+  let cumulativeChips = 1000; // 初始筹码
+
+  pokerGames.forEach((game, i) => {
+    const profit = game.profit || game.result || 0;
+    const open = cumulativeChips;
+    const close = cumulativeChips + profit;
+    const high = Math.max(open, close) + Math.abs(profit) * 0.3;
+    const low = Math.min(open, close) - Math.abs(profit) * 0.3;
+    const volume = game.hands || Math.floor(20 + Math.random() * 100);
+
+    data.push({
+      time: i,
+      open: +open.toFixed(2),
+      high: +high.toFixed(2),
+      low: +low.toFixed(2),
+      close: +close.toFixed(2),
+      volume,
+      gameId: game.id
+    });
+
+    cumulativeChips = close;
+  });
+
+  // 如果数据点太少，用模拟数据补充
+  if (data.length < 10) {
+    const mock = generateMockKLine(30 - data.length).data;
+    mock.forEach((d, i) => {
+      data.push({
+        ...d,
+        time: data.length + i
+      });
+    });
+  }
+
+  logger.session('生成K线', `数据源:德州历史 ${pokerGames.length}局, 补充模拟:${Math.max(0, 30 - pokerGames.length)}点`);
+
+  return { data, source: `德州历史 ${pokerGames.length} 局` };
+}
+
+/**
+ * 计算 K 线的技术指标
+ */
+export function calculateKLineStats(klineData) {
+  if (!klineData || klineData.length < 2) {
+    return { returnRate: 0, maxDD: 0, volatility: 0, avgVolume: 0 };
+  }
+
+  const start = klineData[0].close;
+  const end = klineData[klineData.length - 1].close;
+  const returnRate = ((end - start) / start) * 100;
+
+  // 最大回撤
+  let peak = klineData[0].close;
+  let maxDD = 0;
+  for (const d of klineData) {
+    if (d.close > peak) peak = d.close;
+    const dd = ((peak - d.close) / peak) * 100;
+    if (dd > maxDD) maxDD = dd;
+  }
+
+  // 波动率（收益率标准差）
+  const returns = [];
+  for (let i = 1; i < klineData.length; i++) {
+    returns.push((klineData[i].close - klineData[i-1].close) / klineData[i-1].close);
+  }
+  const avgReturn = returns.reduce((a, b) => a + b, 0) / returns.length;
+  const variance = returns.reduce((a, b) => a + (b - avgReturn) ** 2, 0) / returns.length;
+  const volatility = Math.sqrt(variance) * 100;
+
+  // 平均成交量
+  const avgVolume = klineData.reduce((a, b) => a + (b.volume || 0), 0) / klineData.length;
+
+  return {
+    returnRate: +returnRate.toFixed(2),
+    maxDD: +maxDD.toFixed(2),
+    volatility: +volatility.toFixed(2),
+    avgVolume: Math.round(avgVolume)
+  };
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Card,
   Button,
@@ -11,8 +11,8 @@ import {
   Col,
   Progress,
   Tooltip,
-  Divider,
-  Statistic
+  Statistic,
+  Radio
 } from 'antd';
 import {
   PlayCircleOutlined,
@@ -22,11 +22,11 @@ import {
   HeartOutlined,
   RiseOutlined,
   FallOutlined,
-  BulbOutlined
+  BulbOutlined,
+  DatabaseOutlined,
+  ExperimentOutlined
 } from '@ant-design/icons';
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -38,7 +38,12 @@ import {
   Area,
   AreaChart
 } from 'recharts';
-import { musicEngine, generateMockKLine } from '../utils/musicEngine';
+import {
+  musicEngine,
+  generateKLineFromPokerHistory,
+  calculateKLineStats
+} from '../utils/musicEngine';
+import { storage } from '../utils/storage';
 import { logger } from '../utils/logger';
 
 const { Title, Text, Paragraph } = Typography;
@@ -63,8 +68,8 @@ const PsychologyPage = () => {
   // 参数状态
   const [industry, setIndustry] = useState('tech');
   const [mood, setMood] = useState(60);
-  const [volatility, setVolatility] = useState(25);
-  const [trend, setTrend] = useState(0);
+  const [dataSource, setDataSource] = useState('auto'); // auto / real / mock
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // 音乐状态
   const [isPlaying, setIsPlaying] = useState(false);
@@ -73,40 +78,33 @@ const PsychologyPage = () => {
   const [currentNote, setCurrentNote] = useState(null);
   const [musicInfo, setMusicInfo] = useState(null);
 
+  // 从 storage 读取德州历史
+  const pokerGames = useMemo(() => {
+    return storage.get('pokerGames') || [];
+  }, [refreshKey]);
+
   // K线数据
   const klineResult = useMemo(() => {
-    return generateMockKLine(30, {
-      startPrice: 100,
-      volatility: volatility / 1000,
-      trend: (trend - 50) / 500,
-      industry
-    });
-  }, [industry, volatility, trend]);
+    if (dataSource === 'mock') {
+      // 强制模拟
+      const { generateMockKLine } = require('../utils/musicEngine');
+      return { ...generateMockKLine(30, { industry }), source: '模拟数据' };
+    }
+    if (dataSource === 'real') {
+      // 强制真实（没有就模拟）
+      return generateKLineFromPokerHistory(pokerGames);
+    }
+    // auto：有真实数据用真实，否则模拟
+    return generateKLineFromPokerHistory(pokerGames);
+  }, [pokerGames, industry, dataSource, refreshKey]);
 
   const klineData = klineResult.data;
+  const klineSource = klineResult.source;
 
-  // 计算统计指标
+  // 统计指标
   const stats = useMemo(() => {
-    if (!klineData.length) return { returnRate: 0, maxDD: 0, volatility: 0 };
-    const start = klineData[0].close;
-    const end = klineData[klineData.length - 1].close;
-    const returnRate = ((end - start) / start) * 100;
-
-    // 最大回撤
-    let peak = klineData[0].close;
-    let maxDD = 0;
-    for (const d of klineData) {
-      if (d.close > peak) peak = d.close;
-      const dd = ((peak - d.close) / peak) * 100;
-      if (dd > maxDD) maxDD = dd;
-    }
-
-    return {
-      returnRate: returnRate.toFixed(2),
-      maxDD: maxDD.toFixed(2),
-      volatility: (volatility / 10).toFixed(1)
-    };
-  }, [klineData, volatility]);
+    return calculateKLineStats(klineData);
+  }, [klineData]);
 
   // 播放控制
   const handlePlay = () => {
@@ -116,7 +114,7 @@ const PsychologyPage = () => {
       return;
     }
 
-    logger.session('播放K线音乐', { 行业: industry, 情绪: mood, 波动率: volatility });
+    logger.session('播放K线音乐', { 行业: industry, 情绪: mood, 数据源: klineSource });
 
     musicEngine.onProgress = (current, total, note) => {
       setProgress(current);
@@ -126,11 +124,12 @@ const PsychologyPage = () => {
     musicEngine.onComplete = () => {
       setIsPlaying(false);
       setProgress(0);
+      setCurrentNote(null);
     };
 
     const info = musicEngine.play(klineData, {
       mood: mood / 100,
-      industry
+      industry: INDUSTRY_OPTIONS.find(i => i.key === industry)?.label.replace(/^[^\s]+\s/, '')
     });
     setMusicInfo(info);
     setIsPlaying(true);
@@ -143,10 +142,8 @@ const PsychologyPage = () => {
     setIsPlaying(false);
     setProgress(0);
     setCurrentNote(null);
-    // 强制重新生成（用时间戳触发）
-    setVolatility(v => v === 25 ? 26 : 25);
-    setTimeout(() => setVolatility(25), 10);
-    logger.session('重新生成K线数据');
+    setRefreshKey(k => k + 1);
+    logger.session('重新生成K线', `数据源:${dataSource}`);
   };
 
   // 清理
@@ -160,19 +157,26 @@ const PsychologyPage = () => {
 
   return (
     <div style={{ padding: 24, maxWidth: 1400, margin: '0 auto' }}>
-      {/* 标题区 */}
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        {/* 标题区 */}
         <Card>
-          <Space align="center">
-            <div style={{ fontSize: 48 }}>🧠</div>
-            <div>
-              <Title level={3} style={{ margin: 0 }}>
-                心理盘面 · K线音乐
-              </Title>
-              <Paragraph style={{ margin: '8px 0 0' }} type="secondary">
-                让数据变成可以听的叙事 —— 调整参数，感受市场情绪的声音表达
-              </Paragraph>
-            </div>
+          <Space align="center" style={{ width: '100%', justifyContent: 'space-between' }}>
+            <Space align="center">
+              <div style={{ fontSize: 48 }}>🧠</div>
+              <div>
+                <Title level={3} style={{ margin: 0 }}>
+                  心理盘面 · K线音乐
+                </Title>
+                <Paragraph style={{ margin: '8px 0 0' }} type="secondary">
+                  让数据变成可以听的叙事 —— K线走势 → 音乐表达
+                </Paragraph>
+              </div>
+            </Space>
+            <Space>
+              <Tag color={klineSource.includes('德州') ? '#52c41a' : '#faad14'}>
+                <DatabaseOutlined /> {klineSource}
+              </Tag>
+            </Space>
           </Space>
         </Card>
 
@@ -180,6 +184,24 @@ const PsychologyPage = () => {
           {/* 左侧：参数控制 */}
           <Col xs={24} lg={8}>
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+              {/* 数据源选择 */}
+              <Card title="数据源" size="small">
+                <Radio.Group
+                  value={dataSource}
+                  onChange={e => setDataSource(e.target.value)}
+                  size="small"
+                >
+                  <Radio.Button value="auto">自动</Radio.Button>
+                  <Radio.Button value="real">真实牌局</Radio.Button>
+                  <Radio.Button value="mock">模拟数据</Radio.Button>
+                </Radio.Group>
+                <div style={{ marginTop: 8 }}>
+                  <Text type="secondary" style={{ fontSize: 12 }}>
+                    历史牌局：{pokerGames.length} 局
+                  </Text>
+                </div>
+              </Card>
+
               {/* 行业选择 */}
               <Card title="行业映射（音色）" size="small">
                 <Select
@@ -227,27 +249,6 @@ const PsychologyPage = () => {
                 </Row>
               </Card>
 
-              {/* 波动率 */}
-              <Card title="波动率（节奏）" size="small">
-                <Slider
-                  value={volatility}
-                  onChange={setVolatility}
-                  min={5}
-                  max={80}
-                  marks={{ 5: '稳', 40: '中', 80: '狂' }}
-                />
-                <Text type="secondary">波动越大，音乐节奏越快</Text>
-              </Card>
-
-              {/* 趋势 */}
-              <Card title="趋势方向" size="small">
-                <Slider
-                  value={trend}
-                  onChange={setTrend}
-                  marks={{ 0: '⬇ 下跌', 50: '→ 震荡', 100: '⬆ 上涨' }}
-                />
-              </Card>
-
               {/* 播放控制 */}
               <Card size="small">
                 <Space direction="vertical" size="middle" style={{ width: '100%' }}>
@@ -263,7 +264,9 @@ const PsychologyPage = () => {
                       </Col>
                       <Col span={8}>
                         <Text type="secondary" style={{ fontSize: 12 }}>音符</Text>
-                        <div style={{ fontWeight: 600 }}>{musicInfo.totalNotes}</div>
+                        <div style={{ fontWeight: 600 }}>
+                          {currentNote ? `${progress}/${totalNotes}` : totalNotes}
+                        </div>
                       </Col>
                     </Row>
                   )}
@@ -271,18 +274,21 @@ const PsychologyPage = () => {
                   <Progress
                     percent={totalNotes ? (progress / totalNotes) * 100 : 0}
                     showInfo={false}
-                    strokeColor="#1890ff"
+                    strokeColor={{
+                      '0%': '#1890ff',
+                      '100%': '#D4AF37',
+                    }}
                   />
 
                   <Space style={{ width: '100%', justifyContent: 'center' }}>
-                    <Tooltip title={isPlaying ? '停止' : '播放'}>
+                    <Tooltip title={isPlaying ? '停止' : '播放K线音乐'}>
                       <Button
                         type="primary"
                         shape="circle"
                         size="large"
                         icon={isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
                         onClick={handlePlay}
-                        style={{ width: 56, height: 56, fontSize: 28 }}
+                        style={{ width: 64, height: 64, fontSize: 32 }}
                       />
                     </Tooltip>
                     <Tooltip title="重新生成K线">
@@ -296,9 +302,21 @@ const PsychologyPage = () => {
                   </Space>
 
                   <Text type="secondary" style={{ textAlign: 'center', display: 'block' }}>
-                    <SoundOutlined /> 点击播放，感受K线的声音
+                    <SoundOutlined /> {isPlaying ? '正在播放...' : '点击播放，感受K线的声音'}
                   </Text>
                 </Space>
+              </Card>
+
+              {/* 映射说明 */}
+              <Card size="small" type="inner">
+                <Text type="secondary" style={{ fontSize: 12, lineHeight: 1.8 }}>
+                  <div><ExperimentOutlined style={{ color: '#D4AF37' }} /> <b>K线 → 音乐映射</b></div>
+                  <div>• 价格位置 → 音高（音阶）</div>
+                  <div>• 波动幅度 → 节奏 BPM</div>
+                  <div>• 行业选择 → 音色（4种波形）</div>
+                  <div>• 情绪值 → 调性（大调/小调）</div>
+                  <div>• 成交量 → 音量</div>
+                </Text>
               </Card>
             </Space>
           </Col>
@@ -308,33 +326,43 @@ const PsychologyPage = () => {
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>
               {/* 统计卡片 */}
               <Row gutter={16}>
-                <Col span={8}>
+                <Col span={6}>
                   <Card size="small">
                     <Statistic
                       title="累计收益"
                       value={stats.returnRate}
                       suffix="%"
-                      valueStyle={{ color: parseFloat(stats.returnRate) >= 0 ? '#52c41a' : '#eb2f96' }}
-                      prefix={parseFloat(stats.returnRate) >= 0 ? <RiseOutlined /> : <FallOutlined />}
+                      valueStyle={{ color: stats.returnRate >= 0 ? '#52c41a' : '#eb2f96', fontSize: 20 }}
+                      prefix={stats.returnRate >= 0 ? <RiseOutlined /> : <FallOutlined />}
                     />
                   </Card>
                 </Col>
-                <Col span={8}>
+                <Col span={6}>
                   <Card size="small">
                     <Statistic
                       title="最大回撤"
                       value={stats.maxDD}
                       suffix="%"
-                      valueStyle={{ color: '#faad14' }}
+                      valueStyle={{ color: '#faad14', fontSize: 20 }}
                     />
                   </Card>
                 </Col>
-                <Col span={8}>
+                <Col span={6}>
                   <Card size="small">
                     <Statistic
                       title="波动率"
                       value={stats.volatility}
                       suffix="%"
+                      valueStyle={{ fontSize: 20 }}
+                    />
+                  </Card>
+                </Col>
+                <Col span={6}>
+                  <Card size="small">
+                    <Statistic
+                      title="数据点"
+                      value={klineData.length}
+                      valueStyle={{ fontSize: 20 }}
                     />
                   </Card>
                 </Col>
@@ -345,14 +373,24 @@ const PsychologyPage = () => {
                 title={
                   <Space>
                     <BulbOutlined style={{ color: '#faad14' }} />
-                    <span>K线价格走势（播放时高亮当前音符位置）</span>
+                    <span>K线价格走势</span>
+                    {isPlaying && (
+                      <Tag color="#1890ff" icon={<SoundOutlined />}>
+                        正在播放 {progress}/{totalNotes}
+                      </Tag>
+                    )}
                   </Space>
                 }
                 size="small"
+                extra={
+                  <Text type="secondary" style={{ fontSize: 12 }}>
+                    {currentNote ? `当前位置: 第${currentNote.index}根K线` : '点击播放查看同步高亮'}
+                  </Text>
+                }
               >
-                <div style={{ height: 300 }}>
+                <div style={{ height: 320 }}>
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={klineData}>
+                    <AreaChart data={klineData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                       <defs>
                         <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#1890ff" stopOpacity={0.3} />
@@ -360,24 +398,29 @@ const PsychologyPage = () => {
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                      <XAxis dataKey="time" tick={{ fontSize: 12 }} />
-                      <YAxis domain={['auto', 'auto']} tick={{ fontSize: 12 }} />
+                      <XAxis
+                        dataKey="time"
+                        tick={{ fontSize: 11 }}
+                        axisLine={{ stroke: '#ddd' }}
+                      />
+                      <YAxis
+                        domain={['auto', 'auto']}
+                        tick={{ fontSize: 11 }}
+                        axisLine={{ stroke: '#ddd' }}
+                        tickFormatter={v => v.toFixed(0)}
+                      />
                       <RTooltip
-                        content={({ active, payload }) => {
-                          if (active && payload && payload.length) {
-                            const d = payload[0].payload;
-                            return (
-                              <div style={{ background: '#fff', padding: 8, border: '1px solid #eee', borderRadius: 4 }}>
-                                <div style={{ fontWeight: 600, marginBottom: 4 }}>第 {d.time} 根K线</div>
-                                <div>开: <b>{d.open}</b></div>
-                                <div>高: <b style={{ color: '#52c41a' }}>{d.high}</b></div>
-                                <div>低: <b style={{ color: '#eb2f96' }}>{d.low}</b></div>
-                                <div>收: <b>{d.close}</b></div>
-                                <div>量: <b>{d.volume}</b></div>
-                              </div>
-                            );
-                          }
-                          return null;
+                        contentStyle={{ borderRadius: 8, border: '1px solid #eee' }}
+                        labelFormatter={label => `第 ${label} 根K线`}
+                        formatter={(value, name) => {
+                          const names = {
+                            close: '收盘价',
+                            open: '开盘价',
+                            high: '最高价',
+                            low: '最低价',
+                            volume: '成交量'
+                          };
+                          return [Number(value).toFixed(2), names[name] || name];
                         }}
                       />
                       <Area
@@ -387,14 +430,20 @@ const PsychologyPage = () => {
                         strokeWidth={2}
                         fill="url(#colorPrice)"
                         dot={false}
-                        activeDot={{ r: 6, fill: '#1890ff' }}
+                        activeDot={{ r: 6, fill: '#1890ff', stroke: '#fff', strokeWidth: 2 }}
                       />
                       {currentNote && (
                         <ReferenceLine
                           x={currentNote.index}
                           stroke="#faad14"
-                          strokeWidth={2}
+                          strokeWidth={3}
                           strokeDasharray="5 5"
+                          label={{
+                            value: '♪',
+                            position: 'top',
+                            fill: '#faad14',
+                            fontSize: 16
+                          }}
                         />
                       )}
                     </AreaChart>
@@ -404,26 +453,20 @@ const PsychologyPage = () => {
 
               {/* 成交量图 */}
               <Card title="成交量" size="small">
-                <div style={{ height: 100 }}>
+                <div style={{ height: 80 }}>
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={klineData}>
-                      <XAxis dataKey="time" tick={{ fontSize: 10 }} />
-                      <YAxis tick={{ fontSize: 10 }} />
-                      <Bar dataKey="volume" fill="#52c41a" opacity={0.6} />
+                    <BarChart data={klineData} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
+                      <XAxis dataKey="time" tick={false} axisLine={false} />
+                      <YAxis tick={false} axisLine={false} />
+                      <Bar
+                        dataKey="volume"
+                        fill={stats.returnRate >= 0 ? '#52c41a' : '#eb2f96'}
+                        opacity={0.7}
+                        radius={[2, 2, 0, 0]}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
-              </Card>
-
-              {/* 说明 */}
-              <Card size="small" type="inner">
-                <Text type="secondary">
-                  💡 <b>音乐映射逻辑：</b>
-                  K线波动幅度 → 节奏BPM &nbsp;|&nbsp;
-                  行业选择 → 音色（方波/正弦/三角/锯齿） &nbsp;|&nbsp;
-                  情绪值 → 调性（大调/小调） &nbsp;|&nbsp;
-                  价格位置 → 音高
-                </Text>
               </Card>
             </Space>
           </Col>
