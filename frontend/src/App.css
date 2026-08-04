@@ -83,7 +83,7 @@
 .game-container.focus-mode .poker-table {
   min-height: 680px;
   padding: 80px 60px 100px;
-  border-radius: 240px;
+  border-radius: 56px;
 }
 
 .game-container.focus-mode .poker-table .board-cards {
