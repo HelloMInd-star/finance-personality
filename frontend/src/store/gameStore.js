@@ -213,10 +213,15 @@ export const useGameStore = create((set, get) => ({
       }
 
       const data = await response.json();
-      const { player_id } = data.data;
+      const { player_id, game_state } = data.data;
       
       // 连接到游戏
       get().connectToGame(gameId, player_id);
+      
+      // 如果游戏还没开始或已结束，自动开始
+      if (!game_state || game_state.hand_over || game_state.board?.length === 0) {
+        await get().startGame(gameId);
+      }
       
       set({ isLoading: false });
       return { playerId: player_id };

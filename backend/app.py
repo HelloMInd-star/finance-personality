@@ -143,6 +143,23 @@ class GameManager:
         """获取游戏"""
         return self.games.get(game_id)
     
+    def list_games(self) -> List[Dict]:
+        """获取所有游戏列表"""
+        result = []
+        for game in self.games.values():
+            state = game.get_state()
+            human_players = [p for p in state["players"] if not p["is_ai"]]
+            result.append({
+                "id": game.id,
+                "name": f"房间 #{game.id}",
+                "players": len(human_players),
+                "maxPlayers": 6,
+                "status": "playing" if not game.hand_over else "waiting",
+                "aiDifficulty": state["players"][1]["ai_difficulty"] if len(state["players"]) > 1 else "medium",
+                "createdAt": game.created_at.strftime("%Y-%m-%d %H:%M")
+            })
+        return result
+    
     def remove_game(self, game_id: str):
         """移除游戏"""
         if game_id in self.games:
@@ -272,6 +289,14 @@ async def health_check():
 # ============================================
 # 游戏 API
 # ============================================
+
+@app.get("/api/games")
+async def list_games():
+    """获取所有游戏列表"""
+    return {
+        "success": True,
+        "data": game_manager.list_games()
+    }
 
 @app.post("/api/game/create")
 async def create_game(request: GameCreate):

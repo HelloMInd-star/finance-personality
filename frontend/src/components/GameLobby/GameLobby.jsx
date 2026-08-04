@@ -21,38 +21,21 @@ const GameLobby = () => {
   const [joinModalVisible, setJoinModalVisible] = useState(false);
   const [form] = Form.useForm();
 
-  // 模拟游戏列表（实际应从API获取）
-  useEffect(() => {
-    const mockGames = [
-      {
-        id: 'ABC123',
-        name: '新手场 #1',
-        players: 2,
-        maxPlayers: 6,
-        status: 'waiting',
-        aiDifficulty: 'easy',
-        createdAt: '2024-01-01 10:00'
-      },
-      {
-        id: 'DEF456',
-        name: '进阶场 #2',
-        players: 3,
-        maxPlayers: 6,
-        status: 'playing',
-        aiDifficulty: 'medium',
-        createdAt: '2024-01-01 09:30'
-      },
-      {
-        id: 'GHI789',
-        name: '高手场 #3',
-        players: 4,
-        maxPlayers: 6,
-        status: 'waiting',
-        aiDifficulty: 'hard',
-        createdAt: '2024-01-01 09:00'
+  // 获取游戏列表
+  const fetchGames = async () => {
+    try {
+      const response = await fetch('/api/games');
+      if (response.ok) {
+        const data = await response.json();
+        setGameList(data.data || []);
       }
-    ];
-    setGameList(mockGames);
+    } catch (error) {
+      console.error('获取游戏列表失败:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGames();
   }, []);
 
   // 创建游戏
@@ -86,10 +69,8 @@ const GameLobby = () => {
 
   // 刷新列表
   const refreshGames = () => {
-    message.loading('刷新中...');
-    setTimeout(() => {
-      message.success('刷新成功');
-    }, 500);
+    fetchGames();
+    message.success('刷新成功');
   };
 
   const columns = [

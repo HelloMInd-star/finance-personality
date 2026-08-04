@@ -124,8 +124,7 @@ poker-egg-fullstack/
 │
 ├── backend/
 │   ├── services/
-│   │   ├── game_engine.py
-│   │   └── deck_manager.py
+│   │   └── game_engine.py
 │   ├── ai/
 │   │   └── ai_engine.py
 │   ├── models/
