@@ -277,10 +277,177 @@ export function createFitnessSession(data) {
   };
 }
 
+// ============= 仓位模拟引擎 =============
+
+/**
+ * 健身动作 ↔ 金融行为对照表
+ *
+ * 设定初始重量    → 初始建仓
+ * 每组增加重量    → 加仓
+ * 每组减轻重量    → 减仓
+ * 完成全部组数    → 持仓纪律
+ * 提前结束        → 减仓/清仓
+ * 增加额外组数    → 加仓/补仓
+ * 缩短休息间隔    → 高频交易
+ * 中途修改计划    → 调仓
+ */
+
+/**
+ * 计算初始仓位
+ * 初始仓位 = Σ (每个动作的重量 × 组数 × 每组次数)
+ * 如果是有氧/计时动作，用时长作为权重
+ */
+export function calculateInitialPosition(plan) {
+  if (!plan || !plan.exercises) return 0;
+
+  let total = 0;
+  for (const ex of plan.exercises) {
+    const weight = ex.weight || 0;
+    const sets = ex.sets || 1;
+    const reps = (ex.repsPerSet?.[0] || ex.duration || 10);
+    // 自重动作用 5kg 作为基准
+    const effectiveWeight = weight > 0 ? weight : 5;
+    total += effectiveWeight * sets * reps;
+  }
+
+  logger.session('健身-初始仓位', `${total} kg·次`);
+  return total;
+}
+
+/**
+ * 计算单组完成后的仓位值
+ * @param {number} initialPosition 初始仓位
+ * @param {number} plannedWeight 计划重量
+ * @param {number} actualWeight 实际重量
+ * @param {number} plannedReps 计划次数
+ * @param {number} actualReps 实际次数
+ */
+export function calculateSetPosition(initialPosition, plannedWeight, actualWeight, plannedReps, actualReps, totalSets) {
+  if (!totalSets || totalSets === 0) return initialPosition;
+
+  // 这一组相对于全部计划的"仓位贡献"
+  const plannedContribution = (plannedWeight || 5) * (plannedReps || 10);
+  const actualContribution = (actualWeight || 5) * (actualReps || 0);
+
+  // 偏差百分比
+  const deviationPercent = plannedContribution > 0
+    ? (actualContribution - plannedContribution) / plannedContribution
+    : 0;
+
+  // 每组对总仓位的影响（平滑处理，避免单组变化太大）
+  const setInfluence = 1 / totalSets;
+  const positionChange = initialPosition * deviationPercent * setInfluence * 0.5;
+
+  return +(initialPosition + positionChange).toFixed(1);
+}
+
+/**
+ * 生成仓位管理行为标签
+ */
+export function generatePositionTags(positionHistory) {
+  if (!positionHistory || positionHistory.length < 2) return ['持仓不变型'];
+
+  const initial = positionHistory[0];
+  const current = positionHistory[positionHistory.length - 1];
+  const changePercent = initial > 0 ? ((current - initial) / initial) * 100 : 0;
+
+  // 分析变化趋势
+  let upCount = 0;
+  let downCount = 0;
+  for (let i = 1; i < positionHistory.length; i++) {
+    if (positionHistory[i] > positionHistory[i - 1]) upCount++;
+    else if (positionHistory[i] < positionHistory[i - 1]) downCount++;
+  }
+
+  const tags = [];
+
+  // 总体变化
+  if (changePercent > 5) tags.push('逐步加仓型');
+  else if (changePercent < -5) tags.push('逐步减仓型');
+  else tags.push('持仓不变型');
+
+  // 激进程度
+  if (upCount > downCount && changePercent > 10) tags.push('激进加仓型');
+  if (downCount > upCount && changePercent < -10) tags.push('防御减仓型');
+
+  // 稳定性
+  const variance = positionHistory.reduce((s, v) => s + (v - initial) ** 2, 0) / positionHistory.length;
+  if (variance < initial * 0.01) tags.push('保守型仓位管理');
+  else if (variance > initial * 0.05) tags.push('活跃型仓位管理');
+
+  logger.session('健身-仓位标签', tags);
+  return [...new Set(tags)];
+}
+
+/**
+ * 根据仓位标签映射行业
+ */
+export function mapPositionToIndustry(tags) {
+  if (!tags || tags.length === 0) return '金融';
+
+  if (tags.includes('激进加仓型') || tags.includes('逐步加仓型')) return '科技';
+  if (tags.includes('逐步减仓型') || tags.includes('防御减仓型')) return '消费';
+  if (tags.includes('持仓不变型') || tags.includes('保守型仓位管理')) return '金融';
+  if (tags.includes('活跃型仓位管理')) return '能源';
+
+  return '消费';
+}
+
+/**
+ * 生成完整的仓位模拟数据
+ */
+export function generatePositionSimulation(plan, setResults) {
+  const initialPosition = calculateInitialPosition(plan);
+  const totalSets = plan?.exercises?.reduce((s, e) => s + (e.sets || 0), 0) || 1;
+
+  const positionHistory = [initialPosition];
+  let currentPosition = initialPosition;
+
+  // 扁平化所有组
+  let flatIdx = 0;
+  for (const ex of plan.exercises) {
+    for (let s = 0; s < ex.sets; s++) {
+      if (setResults && setResults[flatIdx]) {
+        const r = setResults[flatIdx];
+        currentPosition = calculateSetPosition(
+          currentPosition,
+          ex.weight,
+          r.actualWeight || ex.weight,
+          ex.repsPerSet?.[s] || ex.repsPerSet?.[0] || 10,
+          r.actualReps || 0,
+          totalSets
+        );
+        positionHistory.push(+currentPosition.toFixed(1));
+      }
+      flatIdx++;
+    }
+  }
+
+  const behaviorTags = generatePositionTags(positionHistory);
+  const mappedIndustry = mapPositionToIndustry(behaviorTags);
+  const positionChangePercent = initialPosition > 0
+    ? +(((currentPosition - initialPosition) / initialPosition) * 100).toFixed(2)
+    : 0;
+
+  return {
+    initialPosition: +initialPosition.toFixed(1),
+    currentPosition: +currentPosition.toFixed(1),
+    positionHistory,
+    positionChangePercent,
+    behaviorTags,
+    mappedIndustry
+  };
+}
+
 export const fitnessEngine = {
   generatePlan,
   calculateDeviation,
   generateDeviationTag,
   generateFitnessMood,
-  createFitnessSession
+  createFitnessSession,
+  calculateInitialPosition,
+  calculateSetPosition,
+  generatePositionTags,
+  mapPositionToIndustry,
+  generatePositionSimulation
 };

@@ -74,6 +74,9 @@ const FitnessPage = () => {
   const [deviationTag, setDeviationTag] = useState(null);
   const [moodData, setMoodData] = useState(null);
 
+  // 每组结果（用于仓位模拟）
+  const [setResults, setSetResults] = useState([]);
+
   // 选择训练类型
   const handleSelectType = (key) => {
     setTrainingType(key);
@@ -119,6 +122,12 @@ const FitnessPage = () => {
     }
 
     const newCompleted = execution.completedSets + 1;
+    const flatIdx2 = getFlatIndex();
+    setSetResults(prev => {
+      const next = [...prev];
+      next[flatIdx2] = { actualReps: reps, actualWeight: weight };
+      return next;
+    });
     setExecution({
       ...execution,
       actualReps: newReps,
@@ -186,6 +195,9 @@ const FitnessPage = () => {
     });
     setMoodData(mood);
 
+    // 生成仓位模拟数据
+    const positionSim = fitnessEngine.generatePositionSimulation(plan, setResults);
+
     // 存储数据
     const session = fitnessEngine.createFitnessSession({
       trainingType,
@@ -193,7 +205,8 @@ const FitnessPage = () => {
       execution: execData,
       deviation: dev,
       mood,
-      fatigue: execution.fatigue
+      fatigue: execution.fatigue,
+      positionSimulation: positionSim
     });
     storage.update('fitnessSessions', (prev) => [...(prev || []), session]);
     storage.update('psychologyProfile', (prev) => ({
@@ -362,6 +375,12 @@ const FitnessPage = () => {
       (execution.completedSets + (totalSets - execution.completedSets) * 0.8) / totalSets * 100
     );
 
+    // 实时仓位模拟
+    const positionSim = useMemo(
+      () => fitnessEngine.generatePositionSimulation(plan, setResults),
+      [plan, setResults]
+    );
+
     const [tempReps, setTempReps] = useState(currentExercise.repsPerSet?.[execution.currentSetIdx] || 10);
     const [tempWeight, setTempWeight] = useState(currentExercise.weight || 0);
 
@@ -499,7 +518,95 @@ const FitnessPage = () => {
             </Space>
           </Card>
 
-          {/* 进度检测 */}
+          {/* 模拟持仓面板 */}
+          <Card
+            size="small"
+            title={
+              <Space>
+                <TrophyOutlined style={{ color: '#D4AF37' }} />
+                <span>模拟仓位 · 同步显示</span>
+                <Tag color="#D4AF37" style={{ marginLeft: 8 }}>
+                  初始仓位：{positionSim.initialPosition.toFixed(0)} kg·次
+                </Tag>
+              </Space>
+            }
+          >
+            <Row gutter={[16, 12]} style={{ marginBottom: 16 }}>
+              <Col span={8}>
+              <Statistic
+                title="当前仓位"
+                value={positionSim.currentPosition.toFixed(0)}
+                suffix="kg·次"
+                valueStyle={{
+                  color: positionSim.positionChangePercent >= 0 ? '#52c41a' : '#eb2f96',
+                  fontSize: 20
+                }}
+                prefix={positionSim.positionChangePercent >= 0 ? '↑' : '↓'}
+              />
+            </Col>
+            <Col span={8}>
+              <Statistic
+                title="仓位变化"
+                value={positionSim.positionChangePercent}
+                suffix="%"
+                valueStyle={{
+                  color: positionSim.positionChangePercent >= 0 ? '#52c41a' : '#eb2f96',
+                  fontSize: 20
+                }}
+                prefix={positionSim.positionChangePercent >= 0 ? '+' : ''}
+              />
+            </Col>
+            <Col span={8}>
+              <Text type="secondary">行业映射</Text>
+              <div style={{ marginTop: 4 }}>
+                <Tag color="blue">{positionSim.mappedIndustry}</Tag>
+              </div>
+            </Col>
+          </Row>
+
+          {/* 仓位变化轨迹 */}
+          <div style={{ marginBottom: 12 }}>
+            <Text type="secondary" style={{ fontSize: 12 }}>
+              仓位变化轨迹：
+            </Text>
+            <Space size={4} wrap>
+              {positionSim.positionHistory.map((v, i) => (
+                <React.Fragment key={i}>
+                  <Text style={{
+                    color: i === 0 ? '#D4AF37' :
+                           (v > positionSim.positionHistory[i - 1] ? '#52c41a' :
+                            v < positionSim.positionHistory[i - 1] ? '#eb2f96' : '#fff'),
+                    fontWeight: i === positionSim.positionHistory.length - 1 ? 700 : 400
+                  }}>
+                    {v.toFixed(0)}
+                  </Text>
+                  {i < positionSim.positionHistory.length - 1 && (
+                    <Text type="secondary" style={{ fontSize: 11 }}>→</Text>
+                  )}
+                </React.Fragment>
+              ))}
+            </Space>
+          </div>
+
+          {/* 行为标签 */}
+          <div>
+            <Text type="secondary" style={{ fontSize: 12 }}>仓位管理行为标签：</Text>
+            <div style={{ marginTop: 4 }}>
+              {positionSim.behaviorTags.map((tag, i) => (
+              <Tag key={i} color={
+                tag.includes('加仓') ? 'red' :
+                tag.includes('减仓') ? 'orange' :
+                tag.includes('保守') ? 'green' :
+                tag.includes('活跃') ? 'purple' : 'default'
+              }>
+                {tag}
+              </Tag>
+            ))}
+            </div>
+          </div>
+        </Card>
+
+        {/* 进度检测 */}
           <Card size="small" title={<span><BulbOutlined style={{ color: '#D4AF37' }} /> 计划偏离检测</span>}>
             <Row gutter={[16, 8]}>
               <Col span={8}>
