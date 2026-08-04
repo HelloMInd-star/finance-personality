@@ -1,0 +1,96 @@
+.app-sider {
+  background: linear-gradient(180deg, #1a1030 0%, #0f0820 100%) !important;
+  border-right: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.sider-logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+  margin-bottom: 8px;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #a78bfa 0%, #f0abfc 50%, #fde68a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+}
+
+.logo-text-collapsed {
+  font-size: 28px;
+  font-weight: 800;
+  color: #a78bfa;
+}
+
+.sider-menu {
+  background: transparent !important;
+  border-right: none !important;
+}
+
+.sider-menu .ant-menu-item {
+  margin: 4px 8px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sider-menu .ant-menu-item:hover {
+  background: rgba(139, 92, 246, 0.15) !important;
+  color: #fff !important;
+}
+
+.sider-menu .ant-menu-item-selected {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(236, 72, 153, 0.3)) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.sider-menu .ant-menu-item .anticon {
+  font-size: 18px;
+}
+
+.app-header {
+  background: rgba(15, 8, 32, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.breadcrumb {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+
+.user-info:hover {
+  background: rgba(139, 92, 246, 0.15);
+}
+
+.user-name {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+}
+
+.app-content {
+  background: linear-gradient(135deg, #0f0820 0%, #1a1030 50%, #0f0820 100%);
+  padding: 24px;
+  overflow: auto;
+}

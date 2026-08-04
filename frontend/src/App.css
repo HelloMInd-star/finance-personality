@@ -423,3 +423,210 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+/* ======== Y.Mine 首页新样式 ======== */
+
+/* 状态锚点卡片 */
+.status-anchor-card {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(236, 72, 153, 0.1)) !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+  border-radius: 16px !important;
+  margin-bottom: 16px !important;
+  backdrop-filter: blur(10px);
+}
+
+.anchor-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.anchor-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.anchor-icon {
+  font-size: 28px;
+  color: #a78bfa;
+}
+
+.anchor-main {
+  color: #fff !important;
+  font-size: 16px;
+  font-weight: 600;
+  display: block;
+}
+
+.anchor-main .highlight {
+  color: #fbbf24;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 4px;
+}
+
+.anchor-sub {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  display: block;
+  margin-top: 2px;
+}
+
+.status-tag {
+  font-size: 14px !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+}
+
+/* 任务提醒 */
+.task-reminder-card {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(236, 72, 153, 0.08)) !important;
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+  border-radius: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+.reminder-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.reminder-icon {
+  font-size: 24px;
+  color: #fbbf24;
+}
+
+.reminder-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 故事选择入口 */
+.story-entry-card {
+  background: linear-gradient(135deg, rgba(30, 19, 64, 0.9), rgba(49, 28, 96, 0.8)) !important;
+  border: 1px solid rgba(139, 92, 246, 0.25) !important;
+  border-radius: 16px !important;
+  margin-bottom: 24px !important;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.story-entry-card:hover {
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  transform: translateY(-2px);
+}
+
+.story-entry-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* 模块分组 */
+.module-group {
+  margin-bottom: 28px;
+}
+
+.module-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.group-icon {
+  font-size: 22px;
+}
+
+.module-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.module-card {
+  background: rgba(30, 19, 64, 0.7) !important;
+  border: 1px solid rgba(139, 92, 246, 0.18) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.module-card:hover {
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  background: rgba(49, 28, 96, 0.8) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+}
+
+.module-card > .ant-card-body {
+  padding: 18px !important;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.module-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #a78bfa;
+  flex-shrink: 0;
+}
+
+.module-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.module-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.module-status-tag {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* 故事选择弹窗 */
+.story-select-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.story-option-card {
+  background: rgba(30, 19, 64, 0.6) !important;
+  border: 2px solid transparent !important;
+  border-radius: 14px !important;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.story-option-card.selected {
+  border-color: #a78bfa !important;
+  background: rgba(139, 92, 246, 0.15) !important;
+}
+
+.story-option-card:hover {
+  transform: translateY(-3px);
+}
+
+.story-option-icon {
+  font-size: 56px;
+  margin-bottom: 12px;
+}
