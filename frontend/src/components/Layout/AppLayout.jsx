@@ -21,6 +21,7 @@ const menuItems = [
   { key: '/psychology', icon: <InfoCircleOutlined />, label: '心理盘面' },
   { key: '/bartender', icon: <TrophyOutlined />, label: '调酒' },
   { key: '/billiards', icon: <BookOutlined />, label: '台球' },
+  { key: '/fitness', icon: <MessageOutlined />, label: '健身' },
   { key: '/poker', icon: <PlayCircleOutlined />, label: '德州扑克' },
   { key: '/stories', icon: <MessageOutlined />, label: '故事集' },
   { key: '/coach-logs', icon: <SettingOutlined />, label: '陪练记录' },

@@ -8,6 +8,7 @@ import PokerPage from './pages/PokerPage';
 import PsychologyPage from './pages/PsychologyPage';
 import BartenderPage from './pages/BartenderPage';
 import BilliardsPage from './pages/BilliardsPage';
+import FitnessPage from './pages/FitnessPage';
 import StoriesPage from './pages/StoriesPage';
 import CoachLogsPage from './pages/CoachLogsPage';
 import ToolsPage from './pages/ToolsPage';
@@ -22,6 +23,7 @@ function AppRoutes() {
         <Route path="/psychology" element={<PsychologyPage />} />
         <Route path="/bartender" element={<BartenderPage />} />
         <Route path="/billiards" element={<BilliardsPage />} />
+        <Route path="/fitness" element={<FitnessPage />} />
         <Route path="/stories" element={<StoriesPage />} />
         <Route path="/coach-logs" element={<CoachLogsPage />} />
         <Route path="/tools" element={<ToolsPage />} />
