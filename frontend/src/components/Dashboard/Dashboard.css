@@ -1,13 +1,20 @@
 .dashboard-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
 }
 
 .dashboard-card {
-  background: rgba(255, 255, 255, 0.03) !important;
+  background: rgba(20, 18, 37, 0.5) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(167, 139, 250, 0.1) !important;
   border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-card .ant-card-body {
+  padding: 16px !important;
 }
 
 .dashboard-card .ant-card-head {
@@ -352,6 +359,30 @@
   font-family: 'SF Mono', monospace;
 }
 
+/* 宽屏：仪表盘 2 列卡片，防溢出 */
+@media (min-width: 1400px) {
+  .game-container {
+    grid-template-columns: 1fr 680px !important;
+  }
+
+  .dashboard-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .dashboard-container > .dashboard-card:first-child,
+  .dashboard-container > .dashboard-card:nth-child(2) {
+    grid-column: span 2;
+  }
+}
+
+/* 中等屏：仪表盘稍宽 */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .game-container {
+    grid-template-columns: 1fr 360px !important;
+  }
+}
+
 @media (max-width: 720px) {
   .metrics-grid {
     grid-template-columns: 1fr 1fr;
@@ -363,5 +394,9 @@
 
   .mood-panel .mood-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kelly-number {
+    font-size: 22px !important;
   }
 }
