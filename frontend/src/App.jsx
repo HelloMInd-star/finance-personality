@@ -37,7 +37,8 @@ function App() {
     connectToGame,
     disconnectGame,
     currentGameId,
-    setCurrentGameId
+    setCurrentGameId,
+    playerId  // 从 store 获取真实的 playerId
   } = useGameStore();
 
   // 登录处理
@@ -196,7 +197,7 @@ function App() {
                   <div className="game-container">
                     <PokerTable 
                       gameState={gameState} 
-                      playerId={user?.id || 'player1'}
+                      playerId={playerId}
                     />
                     <Dashboard gameState={gameState} />
                   </div>
