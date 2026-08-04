@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { logger } from '../utils/logger';
 
 export const useGameStore = create((set, get) => ({
   // 状态
@@ -135,6 +136,7 @@ export const useGameStore = create((set, get) => ({
 
   // 断开游戏
   disconnectGame: () => {
+    logger.game('断开游戏连接');
     const { socket, pingInterval } = get();
     if (pingInterval) {
       clearInterval(pingInterval);
@@ -168,6 +170,7 @@ export const useGameStore = create((set, get) => ({
 
   // 发送行动
   sendAction: (action, amount = 0) => {
+    logger.game('玩家行动', `action:${action}`, amount > 0 ? `amount:${amount}` : '');
     const { playerId } = get();
     get()._sendMessage({
       type: 'action',
@@ -192,6 +195,7 @@ export const useGameStore = create((set, get) => ({
 
   // 创建游戏
   createGame: async (playerName, aiDifficulty = 'medium') => {
+    const done = logger.flow('创建牌局', `开始 - 玩家:${playerName}`, `难度:${aiDifficulty}`);
     set({ isLoading: true, error: null });
     try {
       const response = await fetch('/api/game/create', {
@@ -217,9 +221,11 @@ export const useGameStore = create((set, get) => ({
       await get().startGame(game_id);
       
       set({ isLoading: false });
+      done('成功', `gameId:${game_id} playerId:${player_id}`);
       return { gameId: game_id, playerId: player_id };
     } catch (error) {
       set({ error: error.message, isLoading: false });
+      done('失败', error.message);
       throw error;
     }
   },
@@ -261,6 +267,7 @@ export const useGameStore = create((set, get) => ({
 
   // 开始游戏
   startGame: async (gameId) => {
+    logger.game('开始游戏', `gameId:${gameId}`);
     set({ isLoading: true, error: null });
     try {
       const response = await fetch(`/api/game/${gameId}/start`, {
@@ -272,9 +279,11 @@ export const useGameStore = create((set, get) => ({
       }
 
       const data = await response.json();
+      logger.game('游戏已开始', `阶段:${data.data?.stage || 'preflop'}`, `玩家数:${data.data?.players?.length || 0}`);
       set({ gameState: data.data, isLoading: false });
       return data;
     } catch (error) {
+      logger.error('开始游戏失败', error.message);
       set({ error: error.message, isLoading: false });
       throw error;
     }
@@ -283,7 +292,11 @@ export const useGameStore = create((set, get) => ({
   // 再来一局
   startNewHand: async () => {
     const { currentGameId } = get();
-    if (!currentGameId) return;
+    if (!currentGameId) {
+      logger.game('开始新局失败: 无当前 gameId');
+      return;
+    }
+    logger.game('开始新局', `gameId:${currentGameId}`);
     set({ handResult: null, actionHistory: [], isLoading: true });
     try {
       const response = await fetch(`/api/game/${currentGameId}/start`, {
@@ -291,9 +304,11 @@ export const useGameStore = create((set, get) => ({
       });
       if (!response.ok) throw new Error('开始新局失败');
       const data = await response.json();
+      logger.game('新局已开始');
       set({ gameState: data.data, isLoading: false });
       return data;
     } catch (error) {
+      logger.error('开始新局失败', error.message);
       set({ error: error.message, isLoading: false });
       throw error;
     }
@@ -301,6 +316,7 @@ export const useGameStore = create((set, get) => ({
 
   // 离开游戏
   leaveGame: () => {
+    logger.game('离开游戏');
     get().disconnectGame();
   },
 

@@ -47,7 +47,7 @@
 .sider-menu .ant-menu-item-selected {
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(236, 72, 153, 0.3)) !important;
   color: #fff !important;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(41, 29, 70, 0.3);
 }
 
 .sider-menu .ant-menu-item .anticon {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Tooltip, Avatar, Dropdown } from 'antd';
 import {
   HomeOutlined,
@@ -11,6 +11,7 @@ import {
   ReloadOutlined
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { logger } from '../../utils/logger';
 import './Layout.css';
 
 const { Sider, Content, Header } = Layout;
@@ -30,15 +31,24 @@ const AppLayout = ({ children }) => {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
 
+  useEffect(() => {
+    logger.route(`页面加载: ${location.pathname}`);
+  }, [location.pathname]);
+
   const userMenuItems = [
     { key: 'profile', icon: <Avatar size="small" style={{ backgroundColor: '#722ed1' }}>Y</Avatar>, label: '个人中心' },
     { type: 'divider' },
-    { key: 'export', icon: <ReloadOutlined />, label: '导出数据' },
+    { key: 'export', icon: <ReloadOutlined />, label: '导出数据', onClick: () => logger.ui('点击导出数据') },
   ];
 
   const selectedKey = menuItems.find(m => location.pathname.startsWith(m.key) && m.key !== '/')
     ? location.pathname
     : '/';
+
+  const handleMenuClick = ({ key }) => {
+    logger.route(`导航到: ${key}`);
+    navigate(key);
+  };
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -62,7 +72,7 @@ const AppLayout = ({ children }) => {
           mode="inline"
           selectedKeys={[selectedKey]}
           items={menuItems}
-          onClick={({ key }) => navigate(key)}
+          onClick={handleMenuClick}
           className="sider-menu"
         />
       </Sider>

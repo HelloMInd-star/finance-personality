@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import { useAppStore } from '../store/appStore';
 import { useGameStore } from '../store/gameStore';
+import { logger } from '../utils/logger';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -30,23 +31,28 @@ const HomePage = () => {
   const session = data.currentSession;
 
   const handleSelectStory = (mode) => {
+    logger.session('选择故事模式', mode === 'cigar' ? '雪茄故事（慢）' : '烟火故事（快）');
     setCurrentSession({ storyMode: mode, startTime: Date.now() });
     setStoryModalOpen(false);
     message.success(mode === 'cigar' ? '已选择「雪茄故事」慢模式' : '已选择「烟火故事」快模式');
   };
 
   const handleStartPoker = async (name) => {
+    logger.session('开始德州扑克', `难度:${pokerDifficulty}`);
     try {
       await createGame(name || '隐士', pokerDifficulty);
       setQuickPokerOpen(false);
+      logger.route('跳转到德州扑克页面');
       navigate('/poker');
       message.success('牌局已创建！');
     } catch (e) {
+      logger.error('创建牌局失败', e.message);
       message.error('创建失败');
     }
   };
 
   const handleResumePoker = () => {
+    logger.session('继续未完成牌局');
     navigate('/poker');
   };
 
