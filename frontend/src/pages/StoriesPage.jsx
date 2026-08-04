@@ -10,9 +10,11 @@ import {
   Empty,
   Tooltip
 } from 'antd';
-import { ArrowLeftOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, DeleteOutlined, PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import CocktailCard from '../components/CocktailCard/CocktailCard';
+import { generateCocktailKLine } from '../utils/molecularEngine';
+import { musicEngine } from '../utils/musicEngine';
 import { storage } from '../utils/storage';
 import { logger } from '../utils/logger';
 
@@ -21,6 +23,34 @@ const { Title, Text, Paragraph } = Typography;
 const StoriesPage = () => {
   const navigate = useNavigate();
   const [sessions, setSessions] = useState([]);
+  const [playingId, setPlayingId] = useState(null);
+
+  // 播放单杯配方的音乐
+  const handlePlaySession = (session) => {
+    if (playingId === session.id) {
+      musicEngine.stop();
+      setPlayingId(null);
+      return;
+    }
+
+    const kline = generateCocktailKLine(session.cocktail);
+    if (!kline.data || kline.data.length === 0) return;
+
+    musicEngine.stop();
+    musicEngine.onComplete = () => setPlayingId(null);
+
+    musicEngine.play(kline.data, {
+      mood: kline.moodHint || 0.5,
+      industry: kline.industryHint || '科技'
+    });
+
+    setPlayingId(session.id);
+    logger.session('故事集播放配方音乐', session.cocktail?.name);
+  };
+
+  useEffect(() => {
+    return () => musicEngine.stop();
+  }, []);
 
   useEffect(() => {
     const data = storage.get('bartenderSessions') || [];
@@ -96,15 +126,25 @@ const StoriesPage = () => {
                           {formatDate(session.createdAt)}
                         </Text>
                       </Space>
-                      <Tooltip title="删除">
-                        <Button
-                          type="text"
-                          size="small"
-                          danger
-                          icon={<DeleteOutlined />}
-                          onClick={() => handleDelete(session.id)}
-                        />
-                      </Tooltip>
+                      <Space>
+                        <Tooltip title={playingId === session.id ? '停止' : '播放这杯酒'}>
+                          <Button
+                            type={playingId === session.id ? 'primary' : 'text'}
+                            size="small"
+                            icon={playingId === session.id ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+                            onClick={() => handlePlaySession(session)}
+                          />
+                        </Tooltip>
+                        <Tooltip title="删除">
+                          <Button
+                            type="text"
+                            size="small"
+                            danger
+                            icon={<DeleteOutlined />}
+                            onClick={() => handleDelete(session.id)}
+                          />
+                        </Tooltip>
+                      </Space>
                     </Space>
                   }
                   extra={

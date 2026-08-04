@@ -286,3 +286,125 @@ export class MolecularEngine {
 }
 
 export const molecularEngine = new MolecularEngine();
+
+/**
+ * 把鸡尾酒配方转成"风味 K 线"
+ * 让配方也能有对应的听觉叙事
+ *
+ * 映射逻辑：
+ * - 风味层次 → 价格走势（不同风味对应不同的起伏模式）
+ * - 质地（厚重/轻盈）→ 趋势方向
+ * - 温度 → 基准线偏移
+ * - 呈现方式 → 波动率
+ * - 成分数量 → 成交量
+ */
+export function generateCocktailKLine(cocktail, input = {}) {
+  if (!cocktail) {
+    return { data: [], source: '无配方' };
+  }
+
+  // 风味特征 → 波动模式
+  const flavorVolatility = {
+    '烟熏': 0.04, '橙皮': 0.02, '黑巧克力': 0.03,
+    '热带水果': 0.05, '辣椒': 0.06, '蜂蜜': 0.02,
+    '薄荷': 0.03, '泥煤': 0.05,
+    '木质': 0.03, '焦糖': 0.02, '香料': 0.04,
+    '草本': 0.03, '柑橘': 0.02, '杜松子': 0.03,
+    '浆果': 0.03, '单宁': 0.04, '黑樱桃': 0.03,
+    '花香': 0.02, '坚果': 0.02, '可可': 0.03,
+    '肉桂': 0.04, '牛奶': 0.01, '生姜': 0.04,
+    '柠檬草': 0.03, '苏打': 0.02, '香草': 0.02,
+    '烤杏仁': 0.03
+  };
+
+  // 计算这杯酒的综合波动率
+  let totalVolatility = 0.025; // 基础波动
+  const allFlavors = cocktail.flavor || '';
+  Object.entries(flavorVolatility).forEach(([flavor, vol]) => {
+    if (allFlavors.includes(flavor)) {
+      totalVolatility += vol;
+    }
+  });
+
+  // 质地 → 趋势
+  let trend = 0;
+  const texture = cocktail.texture || '';
+  if (texture.includes('厚重') || texture.includes('沉淀')) trend = -0.002;
+  if (texture.includes('轻盈') || texture.includes('悬浮')) trend = 0.003;
+  if (texture.includes('分层')) trend = 0.001;
+  if (texture.includes('融合')) trend = 0;
+
+  // 温度 → 基准价格
+  let basePrice = 100;
+  const temp = cocktail.temperature || '';
+  if (temp.includes('冰') || temp.includes('霜')) basePrice = 90;
+  if (temp.includes('热') || temp.includes('烫')) basePrice = 110;
+  if (temp.includes('温')) basePrice = 105;
+
+  // 呈现方式 → 额外波动
+  const presentation = cocktail.presentation || '';
+  if (presentation.includes('火焰') || presentation.includes('烟')) totalVolatility += 0.02;
+  if (presentation.includes('气泡')) totalVolatility += 0.01;
+  if (presentation.includes('分层')) totalVolatility += 0.015;
+
+  // 成分数量 → 数据长度和成交量基准
+  const ingredientCount = cocktail.ingredients?.length || 5;
+  const dataPoints = Math.max(20, ingredientCount * 4);
+  const baseVolume = ingredientCount * 60;
+
+  // 生成 K 线
+  const data = [];
+  let price = basePrice;
+
+  for (let i = 0; i < dataPoints; i++) {
+    // 添加周期性波动（模拟风味层次的起伏）
+    const cycle1 = Math.sin(i * 0.3) * totalVolatility * price * 0.5;
+    const cycle2 = Math.sin(i * 0.7 + 1) * totalVolatility * price * 0.3;
+    const random = (Math.random() - 0.5) * totalVolatility * price;
+    const trendChange = trend * price;
+
+    const open = price;
+    const close = price + cycle1 + cycle2 + random + trendChange;
+    const high = Math.max(open, close) + Math.abs(random) * 0.5;
+    const low = Math.min(open, close) - Math.abs(random) * 0.5;
+
+    // 成交量：随波动变化
+    const volMultiplier = 1 + Math.abs(close - open) / price * 20;
+    const volume = Math.floor(baseVolume * volMultiplier * (0.7 + Math.random() * 0.6));
+
+    data.push({
+      time: i,
+      open: +open.toFixed(2),
+      high: +high.toFixed(2),
+      low: +low.toFixed(2),
+      close: +close.toFixed(2),
+      volume
+    });
+
+    price = close;
+  }
+
+  // 生成音乐参数提示
+  const moodHint = trend >= 0 ? 0.7 : 0.3;
+  const industryHint = (() => {
+    if (allFlavors.includes('烟熏') || allFlavors.includes('木质')) return '能源';
+    if (allFlavors.includes('花香') || allFlavors.includes('草本')) return '消费';
+    if (allFlavors.includes('辣椒') || allFlavors.includes('火焰')) return '能源';
+    return '科技';
+  })();
+
+  logger.session('生成风味K线', {
+    酒名: cocktail.name,
+    数据点: dataPoints,
+    综合波动率: totalVolatility.toFixed(4),
+    趋势: trend >= 0 ? '上行' : '下行',
+    情绪倾向: moodHint >= 0.5 ? '大调' : '小调'
+  });
+
+  return {
+    data,
+    source: `「${cocktail.name}」风味曲线`,
+    moodHint,
+    industryHint
+  };
+}

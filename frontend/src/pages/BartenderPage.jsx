@@ -23,11 +23,15 @@ import {
   HomeOutlined,
   ExperimentOutlined,
   SaveOutlined,
-  CheckOutlined
+  CheckOutlined,
+  PlayCircleOutlined,
+  PauseCircleOutlined,
+  SoundOutlined
 } from '@ant-design/icons';
 import CocktailCard from '../components/CocktailCard/CocktailCard';
 import {
   molecularEngine,
+  generateCocktailKLine,
   BARTENDERS,
   EMOTION_OPTIONS,
   BASE_SPIRITS,
@@ -35,8 +39,14 @@ import {
   STORY_SEEDS,
   ZODIAC_SIGNS
 } from '../utils/molecularEngine';
+import { musicEngine } from '../utils/musicEngine';
 import { logger } from '../utils/logger';
 import { storage } from '../utils/storage';
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area
+} from 'recharts';
 
 const { Title, Text, Paragraph } = Typography;
 const { Step } = Steps;
@@ -71,6 +81,16 @@ const BartenderPage = () => {
   // 最终配方
   const [cocktail, setCocktail] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
+
+  // 音乐播放状态
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [musicProgress, setMusicProgress] = useState(0);
+
+  // 配方转风味 K 线
+  const cocktailKLine = useMemo(() => {
+    if (!cocktail) return { data: [], source: '' };
+    return generateCocktailKLine(cocktail);
+  }, [cocktail]);
 
   // 进入调酒师选择
   const handleSelectBartender = (key) => {
@@ -151,8 +171,39 @@ const BartenderPage = () => {
     logger.session('配方已存档到故事集', cocktail.name);
   };
 
+  // 播放配方音乐
+  const handlePlayMusic = () => {
+    if (isMusicPlaying) {
+      musicEngine.stop();
+      setIsMusicPlaying(false);
+      return;
+    }
+
+    if (!cocktailKLine.data || cocktailKLine.data.length === 0) return;
+
+    musicEngine.onProgress = (current) => {
+      setMusicProgress(current);
+    };
+    musicEngine.onComplete = () => {
+      setIsMusicPlaying(false);
+      setMusicProgress(0);
+    };
+
+    musicEngine.play(cocktailKLine.data, {
+      mood: cocktailKLine.moodHint || 0.5,
+      industry: cocktailKLine.industryHint || '科技'
+    });
+
+    setIsMusicPlaying(true);
+    setMusicProgress(0);
+    logger.session('播放配方音乐', cocktail.name);
+  };
+
   // 重新开始
   const handleRestart = () => {
+    musicEngine.stop();
+    setIsMusicPlaying(false);
+    setMusicProgress(0);
     setStage('select-bartender');
     setBartender(null);
     setCurrentStep(0);
@@ -270,6 +321,68 @@ const BartenderPage = () => {
               {isSaved ? '已存档到故事集' : '存档到故事集'}
             </Button>
           </div>
+
+          {/* 音乐播放区域 */}
+          <Card
+            size="small"
+            title={
+              <Space>
+                <SoundOutlined style={{ color: '#D4AF37' }} />
+                <span>听觉叙事</span>
+                {isMusicPlaying && (
+                  <Tag color="#1890ff">播放中 {musicProgress}/{cocktailKLine.data.length}</Tag>
+                )}
+              </Space>
+            }
+            extra={
+              <Tooltip title={isMusicPlaying ? '停止' : '播放这杯酒的声音'}>
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={isMusicPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+                  onClick={handlePlayMusic}
+                  size="large"
+                />
+              </Tooltip>
+            }
+          >
+            <div style={{ height: 80 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={cocktailKLine.data.slice(0, 30)}>
+                  <defs>
+                    <linearGradient id="cocktailColor" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#D4AF37" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    type="monotone"
+                    dataKey="close"
+                    stroke="#D4AF37"
+                    strokeWidth={2}
+                    fill="url(#cocktailColor)"
+                    dot={false}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <Row gutter={8} style={{ marginTop: 4 }}>
+              <Col span={8}>
+                <Text type="secondary" style={{ fontSize: 11 }}>数据源</Text>
+                <div style={{ fontSize: 12 }}>{cocktailKLine.source}</div>
+              </Col>
+              <Col span={8}>
+                <Text type="secondary" style={{ fontSize: 11 }}>情绪倾向</Text>
+                <div style={{ fontSize: 12, color: (cocktailKLine.moodHint || 0.5) >= 0.5 ? '#52c41a' : '#eb2f96' }}>
+                  {(cocktailKLine.moodHint || 0.5) >= 0.5 ? '大调（上行）' : '小调（下行）'}
+                </div>
+              </Col>
+              <Col span={8}>
+                <Text type="secondary" style={{ fontSize: 11 }}>音色映射</Text>
+                <div style={{ fontSize: 12 }}>{cocktailKLine.industryHint || '科技'}</div>
+              </Col>
+            </Row>
+          </Card>
 
           {/* 采集的数据回顾 */}
           <Card size="small" title="本次采集的数据">
