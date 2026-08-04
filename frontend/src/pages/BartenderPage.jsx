@@ -21,7 +21,9 @@ import {
   UserOutlined,
   BulbOutlined,
   HomeOutlined,
-  ExperimentOutlined
+  ExperimentOutlined,
+  SaveOutlined,
+  CheckOutlined
 } from '@ant-design/icons';
 import CocktailCard from '../components/CocktailCard/CocktailCard';
 import {
@@ -34,6 +36,7 @@ import {
   ZODIAC_SIGNS
 } from '../utils/molecularEngine';
 import { logger } from '../utils/logger';
+import { storage } from '../utils/storage';
 
 const { Title, Text, Paragraph } = Typography;
 const { Step } = Steps;
@@ -67,6 +70,7 @@ const BartenderPage = () => {
 
   // 最终配方
   const [cocktail, setCocktail] = useState(null);
+  const [isSaved, setIsSaved] = useState(false);
 
   // 进入调酒师选择
   const handleSelectBartender = (key) => {
@@ -122,7 +126,29 @@ const BartenderPage = () => {
     const result = molecularEngine.generate(input);
     setCocktail(result);
     setStage('result');
+    setIsSaved(false);
     logger.session('配方生成完成', result.name);
+  };
+
+  // 存档到故事集
+  const handleSaveToStories = () => {
+    if (!cocktail || isSaved) return;
+
+    const session = {
+      bartender: bartender?.key,
+      bartenderName: bartender?.name,
+      emotion: EMOTION_OPTIONS.find(e => e.key === emotion)?.label,
+      baseSpirit: BASE_SPIRITS.find(b => b.key === baseSpirit)?.label,
+      storySeed: STORY_SEEDS.find(s => s.key === storySeed)?.label,
+      specialNote,
+      zodiacCorrect: zodiacGuess === userZodiac,
+      cocktail,
+      createdAt: Date.now()
+    };
+
+    storage.addBartenderSession(session);
+    setIsSaved(true);
+    logger.session('配方已存档到故事集', cocktail.name);
   };
 
   // 重新开始
@@ -231,6 +257,19 @@ const BartenderPage = () => {
           </Card>
 
           <CocktailCard data={cocktail} bartender={bartender} />
+
+          {/* 存档按钮 */}
+          <div style={{ textAlign: 'center' }}>
+            <Button
+              type={isSaved ? 'default' : 'primary'}
+              icon={isSaved ? <CheckOutlined /> : <SaveOutlined />}
+              onClick={handleSaveToStories}
+              disabled={isSaved}
+              size="large"
+            >
+              {isSaved ? '已存档到故事集' : '存档到故事集'}
+            </Button>
+          </div>
 
           {/* 采集的数据回顾 */}
           <Card size="small" title="本次采集的数据">
@@ -468,14 +507,18 @@ const BartenderPage = () => {
                 >
                   <Row gutter={[8, 8]}>
                     {STORY_SEEDS.map(s => (
-                      <Col xs={12} key={s.key}>
+                      <Col xs={24} sm={12} key={s.key}>
                         <Radio.Button
                           value={s.key}
                           style={{
                             width: '100%',
                             padding: '12px 16px',
                             borderRadius: 8,
-                            borderColor: storySeed === s.key ? '#D4AF37' : '#d9d9d9'
+                            borderColor: storySeed === s.key ? '#D4AF37' : '#d9d9d9',
+                            height: 'auto',
+                            whiteSpace: 'normal',
+                            lineHeight: 1.4,
+                            textAlign: 'left'
                           }}
                         >
                           {s.label}

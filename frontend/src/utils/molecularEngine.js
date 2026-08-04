@@ -112,19 +112,19 @@ export const ZODIAC_SIGNS = [
 // ============ 风味映射 ============
 
 const EMOTION_FLAVOR = {
-  '冷静观察者': '烟熏 + 橙皮',
-  '热烈探索者': '热带水果 + 辣椒',
-  '深邃沉思者': '黑巧克力 + 薄荷',
-  '疲惫归人': '蜂蜜 + 肉桂',
-  '期待冒险': '生姜 + 柠檬草',
-  '怀旧旅人': '香草 + 烤杏仁'
+  '冷静观察者': '烟熏 + 橙皮 + 黑巧克力',
+  '热烈探索者': '热带水果 + 辣椒 + 蜂蜜',
+  '深邃沉思者': '黑巧克力 + 薄荷 + 泥煤',
+  '疲惫归人': '蜂蜜 + 肉桂 + 牛奶',
+  '期待冒险': '生姜 + 柠檬草 + 苏打',
+  '怀旧旅人': '香草 + 烤杏仁 + 焦糖'
 };
 
 const BASE_FLAVOR = {
-  '威士忌': '木质 + 焦糖',
-  '金酒': '草本 + 柑橘',
-  '红酒': '浆果 + 单宁',
-  '手冲': '花香 + 坚果'
+  '威士忌': '木质 + 焦糖 + 香料',
+  '金酒': '草本 + 柑橘 + 杜松子',
+  '红酒': '浆果 + 单宁 + 黑樱桃',
+  '手冲': '花香 + 坚果 + 可可'
 };
 
 const TEMPERATURE_MAP = {
@@ -168,10 +168,11 @@ const INGREDIENTS_POOL = [
 // ============ 映射函数 ============
 
 function mapFlavor(emotion, baseSpirit) {
-  const emotionFlavor = EMOTION_FLAVOR[emotion] || '';
-  const baseFlavor = BASE_FLAVOR[baseSpirit] || '';
-  if (emotionFlavor && baseFlavor) return `${emotionFlavor} + ${baseFlavor}`;
-  return emotionFlavor || baseFlavor || '经典平衡';
+  // 优先用情绪的完整风味
+  if (EMOTION_FLAVOR[emotion]) return EMOTION_FLAVOR[emotion];
+  // 其次用基酒的
+  if (BASE_FLAVOR[baseSpirit]) return BASE_FLAVOR[baseSpirit];
+  return '经典平衡';
 }
 
 function mapTexture(personality, baseSpirit, transitionNote) {
@@ -201,11 +202,10 @@ function generateCocktailName(storySeed, bartenderStyle, emotion) {
   const seedParts = NAME_PARTS[storySeed] || ['无名'];
   const bartenderParts = NAME_PARTS[bartenderStyle] || ['调'];
 
-  const prefix = seedParts[Math.floor(Math.random() * seedParts.length)];
-  const suffix = bartenderParts[Math.floor(Math.random() * bartenderParts.length)];
-
-  // 组合规则：前缀 + 之 + 后缀
-  const name = `${prefix}之${suffix}`;
+  // 组合规则：从 storySeed 取第一个词 + 从 bartenderStyle 取第一个词，用 · 连接
+  const prefix = seedParts[0];
+  const suffix = bartenderParts[0];
+  const name = `${prefix}·${suffix}`;
 
   logger.session('生成酒名', { 故事: storySeed, 调酒师: bartenderStyle, 结果: name });
   return name;
