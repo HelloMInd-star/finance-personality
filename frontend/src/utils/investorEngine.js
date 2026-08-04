@@ -9,6 +9,7 @@
  */
 
 import { logger } from './logger';
+import { storage } from './storage';
 
 // ============= 10位投资人档案库 =============
 
@@ -192,8 +193,7 @@ export const INVESTOR_PROFILES = [
  */
 export function extractUserData() {
   try {
-    const data = localStorage.getItem('y_mine_data');
-    const parsed = data ? JSON.parse(data) : {};
+    const parsed = storage.get() || {};
 
     // 德州数据
     const pokerGames = parsed.pokerGames || [];
