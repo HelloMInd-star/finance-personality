@@ -81,26 +81,49 @@
 }
 
 .game-container.focus-mode .poker-table {
-  min-height: 600px;
+  min-height: 680px;
+  padding: 80px 60px 100px;
+  border-radius: 240px;
+}
+
+.game-container.focus-mode .poker-table .board-cards {
+  gap: 24px;
+  padding-top: 32px;
+  min-height: 200px;
 }
 
 .game-container.focus-mode .poker-table .card {
-  width: 100px;
-  height: 140px;
+  width: 130px;
+  height: 182px;
+  border-radius: 16px;
 }
 
 .game-container.focus-mode .poker-table .card-slot {
-  width: 100px;
-  height: 140px;
+  width: 130px;
+  height: 182px;
+  border-radius: 16px;
 }
 
 .game-container.focus-mode .poker-table .card .card-suit {
-  font-size: 44px;
+  font-size: 56px;
 }
 
 .game-container.focus-mode .poker-table .card .card-rank,
 .game-container.focus-mode .poker-table .card .card-rank-bottom {
-  font-size: 24px;
+  font-size: 30px;
+}
+
+.game-container.focus-mode .poker-table .pot-amount {
+  font-size: 44px;
+}
+
+.game-container.focus-mode .poker-table .pot-icon {
+  font-size: 32px;
+}
+
+.game-container.focus-mode .poker-table .stage-tag {
+  font-size: 16px !important;
+  padding: 6px 20px !important;
 }
 
 .welcome-section {
