@@ -1,15 +1,22 @@
-import React from 'react';
-import { Card, Progress, Tag, Space, Statistic, Row, Col } from 'antd';
+import React, { useMemo } from 'react';
+import { Card, Progress, Tag } from 'antd';
 import { 
   RiseOutlined, 
   FallOutlined, 
-  WarningOutlined,
-  CheckCircleOutlined
+  WarningOutlined
 } from '@ant-design/icons';
 import { motion } from 'framer-motion';
+import { useGameStore } from '../../store/gameStore';
+import { calculateGameMetrics } from '../../utils/pokerUtils';
 import './Dashboard.css';
 
 const Dashboard = ({ gameState }) => {
+  const { playerId } = useGameStore();
+
+  const metrics = useMemo(() => {
+    return calculateGameMetrics(gameState, playerId);
+  }, [gameState, playerId]);
+
   if (!gameState) {
     return (
       <Card className="dashboard-container">
@@ -21,19 +28,27 @@ const Dashboard = ({ gameState }) => {
     );
   }
 
-  // 模拟数据（实际应从游戏状态计算）
-  const kellyIndex = Math.random() * 0.5 + 0.1;
-  const winRate = Math.random() * 0.4 + 0.3;
-  const tension = Math.random() * 0.8 + 0.2;
-  const dcf = Math.random() * 0.3 - 0.1;
+  const {
+    winRate,
+    kellyIndex,
+    potOdds,
+    callAmount,
+    handStrength,
+    handName,
+    expectedValue,
+    tension
+  } = metrics;
 
   const getKellyStatus = (value) => {
-    if (value > 0.3) return { color: '#22c55e', text: '高', icon: <RiseOutlined /> };
-    if (value > 0.15) return { color: '#fbbf24', text: '中', icon: <WarningOutlined /> };
-    return { color: '#fca5a5', text: '低', icon: <FallOutlined /> };
+    if (value > 0.3) return { color: '#22c55e', text: '高', icon: <RiseOutlined />, tag: 'success' };
+    if (value > 0.15) return { color: '#fbbf24', text: '中', icon: <WarningOutlined />, tag: 'warning' };
+    return { color: '#fca5a5', text: '低', icon: <FallOutlined />, tag: 'error' };
   };
 
   const kellyStatus = getKellyStatus(kellyIndex);
+
+  // DCF折价（简化：1 - 凯利指数）
+  const dcf = (1 - kellyIndex - winRate) * 0.5;
 
   return (
     <div className="dashboard-container">
@@ -41,7 +56,7 @@ const Dashboard = ({ gameState }) => {
         <div className="kelly-display">
           <div className="kelly-value">
             <span className="kelly-number">{(kellyIndex * 100).toFixed(1)}%</span>
-            <Tag color={kellyStatus.color === '#22c55e' ? 'success' : 'warning'}>
+            <Tag color={kellyStatus.tag}>
               {kellyStatus.icon} {kellyStatus.text}
             </Tag>
           </div>
@@ -68,10 +83,14 @@ const Dashboard = ({ gameState }) => {
             <span className="metric-value tension">{(tension * 100).toFixed(0)}%</span>
           </div>
           <div className="metric-item">
-            <span className="metric-label">⚠️ DCF折价</span>
-            <span className={`metric-value ${dcf < 0 ? 'bad' : 'good'}`}>
-              {(dcf * 100).toFixed(1)}%
+            <span className="metric-label">💰 底池赔率</span>
+            <span className="metric-value">
+              {potOdds > 0 ? potOdds.toFixed(1) + ' : 1' : '-'}
             </span>
+          </div>
+          <div className="metric-item">
+            <span className="metric-label">🎯 需跟注</span>
+            <span className="metric-value">{callAmount}</span>
           </div>
         </div>
       </Card>
@@ -87,8 +106,8 @@ const Dashboard = ({ gameState }) => {
             <span className="bridge-value">{(tension * 100).toFixed(0)}%</span>
           </div>
           <div className="bridge-item">
-            <span className="bridge-label">🔄 波动率</span>
-            <span className="bridge-value">{(Math.random() * 0.5 + 0.2).toFixed(2)}</span>
+            <span className="bridge-label">🃏 牌力</span>
+            <span className="bridge-value">{handName}</span>
           </div>
           <div className="bridge-item">
             <span className="bridge-label">📉 折价预警</span>
@@ -98,11 +117,15 @@ const Dashboard = ({ gameState }) => {
           </div>
           <div className="bridge-item">
             <span className="bridge-label">💹 期望值</span>
-            <span className="bridge-value good">+{(Math.random() * 2 + 0.5).toFixed(1)}</span>
+            <span className={`bridge-value ${expectedValue >= 0 ? 'good' : 'bad'}`}>
+              {expectedValue >= 0 ? '+' : ''}{expectedValue.toFixed(1)}
+            </span>
           </div>
           <div className="bridge-item">
             <span className="bridge-label">🎯 安全边际</span>
-            <span className="bridge-value good">{(Math.random() * 20 + 10).toFixed(0)}%</span>
+            <span className={`bridge-value ${kellyIndex > 0.2 ? 'good' : 'bad'}`}>
+              {Math.max(0, (kellyIndex - 0.1) * 100).toFixed(0)}%
+            </span>
           </div>
         </div>
       </Card>
@@ -120,6 +143,12 @@ const Dashboard = ({ gameState }) => {
             </span>
           </div>
           <div className="info-item">
+            <span className="info-label">牌型</span>
+            <span className="info-value">
+              <Tag color="blue">{handName}</Tag>
+            </span>
+          </div>
+          <div className="info-item">
             <span className="info-label">玩家数</span>
             <span className="info-value">{gameState.players?.length || 0}</span>
           </div>
@@ -128,6 +157,10 @@ const Dashboard = ({ gameState }) => {
             <span className="info-value">
               {gameState.players?.filter(p => p.is_ai).length || 0} 个
             </span>
+          </div>
+          <div className="info-item">
+            <span className="info-label">大盲</span>
+            <span className="info-value">{gameState.big_blind || 20}</span>
           </div>
         </div>
       </Card>
