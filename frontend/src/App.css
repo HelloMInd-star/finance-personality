@@ -71,6 +71,36 @@
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: 24px;
+  transition: all 0.3s ease;
+}
+
+/* 专注模式：隐藏仪表盘，牌桌全宽 */
+.game-container.focus-mode {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.game-container.focus-mode .poker-table {
+  min-height: 600px;
+}
+
+.game-container.focus-mode .poker-table .card {
+  width: 100px;
+  height: 140px;
+}
+
+.game-container.focus-mode .poker-table .card-slot {
+  width: 100px;
+  height: 140px;
+}
+
+.game-container.focus-mode .poker-table .card .card-suit {
+  font-size: 44px;
+}
+
+.game-container.focus-mode .poker-table .card .card-rank,
+.game-container.focus-mode .poker-table .card .card-rank-bottom {
+  font-size: 24px;
 }
 
 .welcome-section {

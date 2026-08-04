@@ -9,12 +9,14 @@ import {
   LogoutOutlined,
   ReloadOutlined,
   InfoCircleOutlined,
-  HistoryOutlined
+  HistoryOutlined,
+  ColumnWidthOutlined,
+  AppstoreOutlined
 } from '@ant-design/icons';
 import { useGameStore } from '../../store/gameStore';
 import './PokerTable.css';
 
-const PokerTable = ({ gameState, playerId }) => {
+const PokerTable = ({ gameState, playerId, showDashboard = true, onToggleDashboard }) => {
   const [showRaiseModal, setShowRaiseModal] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [raiseAmount, setRaiseAmount] = useState(20);
@@ -215,15 +217,26 @@ const PokerTable = ({ gameState, playerId }) => {
       <div className="poker-table">
         {/* 顶部工具栏 */}
         <div className="table-toolbar">
-          <Tooltip title="查看行动历史">
-            <Button 
-              icon={<HistoryOutlined />} 
-              size="small" 
-              onClick={() => setShowHistory(true)}
-            >
-              历史
-            </Button>
-          </Tooltip>
+          <Space size={8}>
+            <Tooltip title="查看行动历史">
+              <Button 
+                icon={<HistoryOutlined />} 
+                size="small" 
+                onClick={() => setShowHistory(true)}
+              >
+                历史
+              </Button>
+            </Tooltip>
+            <Tooltip title={showDashboard ? '专注模式（隐藏仪表盘）' : '完整模式（显示仪表盘）'}>
+              <Button 
+                icon={showDashboard ? <ColumnWidthOutlined /> : <AppstoreOutlined />} 
+                size="small"
+                onClick={onToggleDashboard}
+              >
+                {showDashboard ? '专注' : '完整'}
+              </Button>
+            </Tooltip>
+          </Space>
           <Space>
             <Tooltip title="退出游戏">
               <Button 
