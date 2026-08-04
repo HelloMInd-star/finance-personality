@@ -4,26 +4,46 @@
 
 .poker-table {
   position: relative;
-  background: radial-gradient(ellipse at center, #0f4c3a 0%, #0a3328 60%, #051e18 100%);
-  border: 8px solid #5c3a1e;
-  border-radius: 180px;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(16, 185, 129, 0.25), transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(5, 150, 105, 0.3), transparent 50%),
+    linear-gradient(145deg, #0d5c44 0%, #0a4230 40%, #073526 100%);
+  border: 12px solid;
+  border-image: linear-gradient(135deg, #6b4423, #8b5a2b, #6b4423, #5c3a1e, #6b4423) 1;
+  border-radius: 200px;
   padding: 60px 40px 80px;
   min-height: 520px;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.8),
-    inset 0 0 60px rgba(0, 0, 0, 0.3),
-    0 0 0 2px rgba(255, 215, 0, 0.05) inset;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.7),
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    inset 0 2px 10px rgba(255, 215, 0, 0.08),
+    inset 0 -2px 20px rgba(0, 0, 0, 0.4),
+    0 0 0 4px rgba(255, 215, 0, 0.05);
   margin-bottom: 20px;
 }
 
-/* 桌面纹理 */
+/* 绒布纹理 */
+.poker-table::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 200px;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 4px);
+}
+
+/* 桌面内发光环 */
 .poker-table::before {
   content: '';
   position: absolute;
-  inset: 12px;
-  border: 1px dashed rgba(255, 255, 255, 0.05);
-  border-radius: 170px;
+  inset: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.08);
+  border-radius: 180px;
   pointer-events: none;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.2);
 }
 
 /* 阶段标识 */
@@ -61,18 +81,24 @@
 }
 
 .pot-amount {
-  font-size: 28px;
-  font-weight: 700;
-  color: #ffd700;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb700 50%, #ff9500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
   display: block;
+  letter-spacing: -0.5px;
 }
 
 .pot-label {
   font-size: 11px;
-  color: rgba(255, 215, 0, 0.6);
-  letter-spacing: 2px;
+  color: rgba(255, 215, 0, 0.5);
+  letter-spacing: 3px;
   text-transform: uppercase;
+  font-weight: 500;
 }
 
 /* 玩家座位 */
@@ -254,46 +280,70 @@
 }
 
 .action-btn {
-  min-width: 80px;
-  height: 40px;
-  border-radius: 20px !important;
+  min-width: 90px;
+  height: 44px;
+  border-radius: 22px !important;
   font-weight: 600 !important;
-  transition: all 0.3s !important;
+  font-size: 14px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-width: 2px !important;
+  letter-spacing: 0.5px;
+}
+
+.action-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.action-btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .action-btn.fold {
   color: #fca5a5 !important;
-  border-color: rgba(239, 68, 68, 0.3) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  background: rgba(239, 68, 68, 0.05) !important;
 }
 
-.action-btn.fold:hover {
-  background: rgba(239, 68, 68, 0.15) !important;
+.action-btn.fold:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2) !important;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.6) !important;
 }
 
 .action-btn.call {
   color: #93c5fd !important;
-  border-color: rgba(59, 130, 246, 0.3) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  background: rgba(59, 130, 246, 0.05) !important;
 }
 
-.action-btn.call:hover {
-  background: rgba(59, 130, 246, 0.15) !important;
+.action-btn.call:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.2) !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.6) !important;
 }
 
 .action-btn.raise {
   color: #c4b5fd !important;
-  border-color: rgba(167, 139, 250, 0.3) !important;
+  border-color: rgba(167, 139, 250, 0.4) !important;
+  background: rgba(167, 139, 250, 0.05) !important;
 }
 
-.action-btn.raise:hover {
-  background: rgba(167, 139, 250, 0.15) !important;
+.action-btn.raise:hover:not(:disabled) {
+  background: rgba(167, 139, 250, 0.2) !important;
+  box-shadow: 0 6px 20px rgba(167, 139, 250, 0.3);
+  border-color: rgba(167, 139, 250, 0.6) !important;
 }
 
 .action-btn.allin {
-  background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%) !important;
   border-color: #ef4444 !important;
   color: #fff !important;
   font-weight: 700 !important;
   animation: allinGlow 2s ease-in-out infinite;
+}
+
+.action-btn.allin:hover:not(:disabled) {
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.5) !important;
 }
 
 @keyframes allinGlow {

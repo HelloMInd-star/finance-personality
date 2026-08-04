@@ -4,35 +4,29 @@
 }
 
 .app-header {
-  background: rgba(15, 12, 36, 0.95) !important;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+  background: rgba(10, 8, 24, 0.75) !important;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(167, 139, 250, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
-  height: 64px;
+  padding: 0 28px;
+  height: 68px;
   position: sticky;
   top: 0;
   z-index: 100;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.logo-link {
-  text-decoration: none;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #a78bfa, #ef4444);
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: -0.5px;
 }
 
 .header-menu {
@@ -84,42 +78,66 @@
 }
 
 .welcome-card {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(167, 139, 250, 0.15) !important;
-  border-radius: 24px !important;
+  background: rgba(20, 18, 37, 0.6) !important;
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(167, 139, 250, 0.18) !important;
+  border-radius: 28px !important;
   text-align: center;
-  padding: 60px 40px !important;
+  padding: 72px 48px !important;
   margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(167, 139, 250, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.welcome-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.5), transparent);
 }
 
 .welcome-icon {
-  font-size: 80px;
-  margin-bottom: 16px;
+  font-size: 88px;
+  margin-bottom: 20px;
   display: inline-block;
+  filter: drop-shadow(0 4px 20px rgba(167, 139, 250, 0.4));
   animation: pulse 2s ease-in-out infinite;
 }
 
 .welcome-title {
   color: #fff !important;
   font-weight: 800 !important;
-  margin-bottom: 8px !important;
-  background: linear-gradient(135deg, #a78bfa, #ef4444);
+  margin-bottom: 10px !important;
+  font-size: 48px !important;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #fbbf24 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 0 80px rgba(167, 139, 250, 0.3);
 }
 
 .welcome-subtitle {
-  color: rgba(255, 255, 255, 0.6) !important;
-  font-size: 18px !important;
-  letter-spacing: 2px !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+  font-size: 17px !important;
+  letter-spacing: 3px !important;
+  font-weight: 400;
 }
 
 .welcome-divider {
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #a78bfa, transparent);
-  margin: 20px auto 32px;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #a78bfa, #f472b6, transparent);
+  margin: 24px auto 36px;
+  border-radius: 2px;
 }
 
 .welcome-actions {
@@ -133,24 +151,52 @@
 }
 
 .feature-card {
-  background: rgba(255, 255, 255, 0.03) !important;
+  background: rgba(20, 18, 37, 0.5) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(167, 139, 250, 0.1) !important;
-  border-radius: 16px !important;
+  border-radius: 20px !important;
   text-align: center;
-  padding: 32px 24px !important;
-  transition: all 0.3s ease;
+  padding: 36px 28px !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
 }
 
 .feature-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(167, 139, 250, 0.3) !important;
-  box-shadow: 0 12px 40px rgba(167, 139, 250, 0.1);
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(167, 139, 250, 0.35) !important;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(167, 139, 250, 0.15);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
 }
 
 .feature-icon {
-  font-size: 40px;
-  margin-bottom: 12px;
+  font-size: 48px;
+  margin-bottom: 16px;
   display: block;
+  filter: drop-shadow(0 4px 16px rgba(167, 139, 250, 0.3));
+  transition: transform 0.4s;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.15);
 }
 
 .feature-card .ant-typography {
