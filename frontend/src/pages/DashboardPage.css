@@ -1,0 +1,1817 @@
+/* Dashboard 首页样式 */
+
+.dashboard-page {
+  padding: 20px 0;
+}
+
+/* ======== Hero + 统计卡片样式（覆盖全局） ======== */
+.dashboard-page .stat-card {
+  height: 112px;
+}
+
+.dashboard-page .stat-card > .ant-card-body {
+  height: 100%;
+  padding: 20px !important;
+  gap: 16px !important;
+}
+
+.dashboard-page .stat-icon {
+  width: 56px !important;
+  height: 56px !important;
+  font-size: 24px !important;
+}
+
+.dashboard-page .stat-value {
+  font-size: 28px !important;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.dashboard-page .stat-label {
+  font-size: 13px !important;
+}
+
+.dashboard-hero {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(236, 72, 153, 0.15) 50%, rgba(251, 191, 36, 0.1) 100%) !important;
+  border: 1px solid rgba(167, 139, 250, 0.3) !important;
+  border-radius: 24px !important;
+  margin-bottom: 20px !important;
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.6), rgba(236, 72, 153, 0.6), rgba(251, 191, 36, 0.6), transparent);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ======== 区块通用样式 ======== */
+.section-block {
+  margin-bottom: 28px;
+}
+
+.section-header {
+  margin-bottom: 16px;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.section-indicator {
+  width: 4px;
+  height: 18px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #fbbf24, #d97706);
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+.section-indicator-blue {
+  background: linear-gradient(180deg, #60a5fa, #3b82f6);
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
+}
+
+.section-title {
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: 18px !important;
+}
+
+.section-tag {
+  background: rgba(251, 191, 36, 0.12) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+  font-size: 10px !important;
+  padding: 0 6px !important;
+  letter-spacing: 1.5px !important;
+  font-weight: 600;
+}
+
+.section-tag-blue {
+  background: rgba(96, 165, 250, 0.12) !important;
+  color: #60a5fa !important;
+  border: 1px solid rgba(96, 165, 250, 0.3) !important;
+}
+
+.section-desc {
+  font-size: 13px !important;
+  margin-left: 14px;
+}
+
+/* ======== 核心系统卡片 ======== */
+.system-card {
+  background: rgba(30, 19, 64, 0.6) !important;
+  border: 1px solid rgba(139, 92, 246, 0.18) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.system-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.system-card-banner {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.system-card-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+}
+
+.system-card-icon {
+  font-size: 36px;
+  color: #fff;
+  z-index: 1;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+}
+
+.system-card-badge {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(10px);
+  z-index: 1;
+  font-weight: 500;
+}
+
+.system-card-body {
+  padding: 18px 20px 20px;
+}
+
+.system-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.system-card-title {
+  color: #fff !important;
+  font-size: 17px !important;
+}
+
+.system-card-subtitle-tag {
+  background: rgba(139, 92, 246, 0.15) !important;
+  color: #a78bfa !important;
+  border: 1px solid rgba(139, 92, 246, 0.3) !important;
+  font-size: 10px !important;
+}
+
+.system-card-desc {
+  font-size: 13px !important;
+  display: block;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.system-card-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.enter-btn {
+  color: #a78bfa !important;
+  font-weight: 500;
+  padding: 0 !important;
+}
+
+.enter-btn:hover {
+  color: #c4b5fd !important;
+}
+
+/* ======== 时间线样式 ======== */
+.timeline-card {
+  background: rgba(30, 19, 64, 0.5) !important;
+  border: 1px solid rgba(139, 92, 246, 0.12) !important;
+  border-radius: 16px !important;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.08);
+  position: relative;
+}
+
+.timeline-item:last-child {
+  border-bottom: none;
+}
+
+.timeline-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.timeline-title {
+  color: #fff !important;
+  font-size: 15px !important;
+}
+
+.timeline-time {
+  font-size: 12px !important;
+  flex-shrink: 0;
+}
+
+.timeline-subtitle {
+  font-size: 13px !important;
+}
+
+.timeline-empty {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 响应式 */
+@media (max-width: 720px) {
+  .dashboard-hero .hero-content {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .dashboard-hero .hero-title {
+    font-size: 24px !important;
+  }
+
+  .dashboard-hero .hero-right {
+    display: none;
+  }
+
+  .system-card-banner {
+    height: 80px;
+  }
+}
+
+/* ============================================================
+   === Dashboard 页面精致化升级 v2: 低饱和紫金配色
+   ============================================================ */
+
+/* === Section 标题装饰线 === */
+.dashboard-page .section-block { margin-bottom: 28px; }
+.dashboard-page .section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.dashboard-page .section-header::after {
+  /* 底部渐隐分隔线 — 紫金调 */
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(212, 175, 55, 0.65) 0%,
+    rgba(168, 85, 247, 0.45) 30%,
+    rgba(255, 255, 255, 0.08) 55%,
+    transparent 100%);
+}
+.dashboard-page .section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  padding-left: 14px;
+}
+.dashboard-page .section-indicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, #a855f7 0%, #D4AF37 100%);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.55), 0 0 4px rgba(212, 175, 55, 0.45);
+}
+.dashboard-page .section-indicator-purple {
+  background: linear-gradient(180deg, #D4AF37 0%, #a855f7 100%);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.55), 0 0 4px rgba(168, 85, 247, 0.45);
+}
+.dashboard-page .section-title {
+  color: #fff !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  margin: 0 !important;
+  background: linear-gradient(135deg, #fff 0%, rgba(212, 175, 55, 0.95) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+}
+.dashboard-page .section-tag {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(212, 175, 55, 0.18)) !important;
+  color: #fff !important;
+  border: 1px solid rgba(212, 175, 55, 0.32) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
+  padding: 2px 8px !important;
+  border-radius: 6px !important;
+  text-transform: uppercase;
+}
+.dashboard-page .section-tag-purple {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(168, 85, 247, 0.2)) !important;
+  border-color: rgba(168, 85, 247, 0.32) !important;
+}
+.dashboard-page .section-desc {
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: 13px !important;
+  letter-spacing: 0.2px;
+  margin: 0 !important;
+  padding-bottom: 2px;
+}
+
+/* === 4 张核心数据卡 — 低饱和紫金融合图标配色 === */
+.dashboard-page .stat-card {
+  background: rgba(18, 16, 40, 0.55) !important;
+  backdrop-filter: blur(18px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--shadow-layer-1) !important;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  overflow: hidden;
+  position: relative;
+}
+.dashboard-page .stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 150px; height: 150px;
+  pointer-events: none;
+}
+.dashboard-page .stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(168, 85, 247, 0.3) !important;
+  box-shadow: var(--shadow-layer-2) !important;
+}
+/* 4 张卡分别设左上角落角光晕 (低饱和) */
+.dashboard-page .stat-bartender::before {
+  background: radial-gradient(circle at top left, rgba(251, 191, 36, 0.2), transparent 62%);
+}
+.dashboard-page .stat-billiards::before {
+  background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.2), transparent 62%);
+}
+.dashboard-page .stat-stock::before {
+  background: radial-gradient(circle at top left, rgba(52, 211, 153, 0.2), transparent 62%);
+}
+.dashboard-page .stat-ability::before {
+  background: radial-gradient(circle at top left, rgba(168, 85, 247, 0.22), transparent 62%);
+}
+
+/* 图标圆盘 — 低饱和紫金融合原色系 (不再是纯实心橙蓝绿紫) */
+.dashboard-page .stat-icon {
+  position: relative;
+  border-radius: 14px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+.dashboard-page .stat-bartender .stat-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(251, 191, 36, 0.4), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(212, 175, 55, 0.58));
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.18);
+}
+.dashboard-page .stat-billiards .stat-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(147, 197, 253, 0.4), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.5));
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.18);
+}
+.dashboard-page .stat-stock .stat-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(110, 231, 183, 0.42), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(16, 185, 129, 0.5));
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.18);
+}
+.dashboard-page .stat-ability .stat-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(196, 181, 253, 0.45), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.22), rgba(124, 58, 237, 0.55));
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.22);
+}
+.dashboard-page .stat-value {
+  background: linear-gradient(135deg, #a855f7 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+}
+.dashboard-page .stat-label {
+  color: rgba(255, 255, 255, 0.62) !important;
+  font-size: 13px !important;
+  letter-spacing: 0.6px;
+  font-weight: 500;
+}
+
+/* === 3 张核心系统卡 banner — 低饱和紫金渐变 (不再是纯橙蓝绿) === */
+.dashboard-page .system-card {
+  background: rgba(18, 16, 40, 0.55) !important;
+  backdrop-filter: blur(16px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  box-shadow: var(--shadow-layer-1);
+}
+.dashboard-page .system-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(168, 85, 247, 0.32) !important;
+  box-shadow: var(--shadow-layer-2), var(--glow-gold) !important;
+}
+.dashboard-page .system-card-banner {
+  position: relative;
+  overflow: hidden;
+  background: rgba(168, 85, 247, 0.2);
+}
+/* 分子调酒 banner — 紫金融合古金 (低饱和) */
+.dashboard-page .system-bartender .system-card-banner {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(251, 191, 36, 0.42), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.32) 0%, rgba(212, 175, 55, 0.62) 100%);
+}
+/* 台球模拟 banner — 紫金+靛青 (低饱和) */
+.dashboard-page .system-billiards .system-card-banner {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(147, 197, 253, 0.42), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.34) 0%, rgba(59, 130, 246, 0.58) 100%);
+}
+/* 股价模拟 banner — 紫金+翡翠 (低饱和) */
+.dashboard-page .system-stock .system-card-banner {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(110, 231, 183, 0.44), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.32) 0%, rgba(16, 185, 129, 0.56) 100%);
+}
+.dashboard-page .system-card-icon {
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.25));
+}
+.dashboard-page .system-card-badge {
+  background: rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  color: #fff !important;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+.dashboard-page .system-card-title {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  letter-spacing: 0.2px;
+}
+.dashboard-page .system-card-subtitle-tag {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(212, 175, 55, 0.18)) !important;
+  color: #fff !important;
+  border: 1px solid rgba(212, 175, 55, 0.32) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.4px;
+  padding: 2px 8px !important;
+  border-radius: 6px;
+}
+.dashboard-page .system-card-desc {
+  color: rgba(255, 255, 255, 0.65) !important;
+  line-height: 1.6;
+}
+.dashboard-page .enter-btn {
+  color: #fff !important;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(212, 175, 55, 0.18));
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 10px !important;
+  padding: 6px 14px !important;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.4px;
+}
+.dashboard-page .enter-btn:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.28), rgba(212, 175, 55, 0.28));
+  border-color: rgba(212, 175, 55, 0.45);
+  transform: translateX(2px);
+  color: #fff !important;
+}
+
+/* === 最近活动时间线卡 — 磨砂紫金 === */
+.dashboard-page .timeline-card {
+  background: rgba(18, 16, 40, 0.55) !important;
+  backdrop-filter: blur(16px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--shadow-layer-1);
+}
+.dashboard-page .timeline-card > .ant-card-body {
+  background: transparent !important;
+}
+.dashboard-page .timeline-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.dashboard-page .timeline-dot {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(251, 191, 36, 0.35), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.24), rgba(212, 175, 55, 0.4));
+  border: 1px solid rgba(212, 175, 55, 0.22);
+}
+.dashboard-page .timeline-title { color: #fff !important; font-weight: 600 !important; }
+.dashboard-page .timeline-time { color: rgba(255, 255, 255, 0.5) !important; }
+.dashboard-page .timeline-subtitle { color: rgba(255, 255, 255, 0.65) !important; }
+
+/* ============================================================
+   === Dashboard v3: 数据沉浸升级（认知画圈+六维+塔罗）
+   ============================================================ */
+
+/* Hero 欢迎区 — 左右分栏布局 */
+.dashboard-page .dashboard-hero {
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(168, 85, 247, 0.18), transparent 55%),
+    radial-gradient(ellipse at 85% 80%, rgba(212, 175, 55, 0.1), transparent 55%),
+    rgba(10, 10, 20, 0.55) !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
+  border-radius: 20px !important;
+  margin-bottom: 20px !important;
+  backdrop-filter: blur(18px);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-page .dashboard-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), rgba(168, 85, 247, 0.5), transparent);
+}
+
+.dashboard-page .hero-content {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  padding: 8px 4px;
+}
+
+.dashboard-page .hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-page .hero-greeting {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(212, 175, 55, 0.1));
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 999px;
+  padding: 4px 14px;
+  width: fit-content;
+}
+
+.dashboard-page .greeting-text {
+  color: #fde68a;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.dashboard-page .greeting-emoji {
+  font-size: 16px;
+}
+
+.dashboard-page .hero-title {
+  font-size: 34px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.5px;
+  margin: 0 !important;
+}
+
+.dashboard-page .hero-subtitle {
+  color: rgba(255, 255, 255, 0.55) !important;
+  font-size: 14px !important;
+  letter-spacing: 0.3px;
+}
+
+.dashboard-page .hero-tags {
+  margin: 4px 0 10px;
+}
+
+.dashboard-page .hero-tag {
+  background: rgba(212, 175, 55, 0.12) !important;
+  border: 1px solid rgba(212, 175, 55, 0.28) !important;
+  color: #fde68a !important;
+  border-radius: 999px !important;
+  font-weight: 600;
+  padding: 3px 12px !important;
+}
+
+.dashboard-page .hero-tag-mbti {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(212, 175, 55, 0.15)) !important;
+  color: #fde68a !important;
+}
+
+.dashboard-page .hero-tag-source {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 11px !important;
+}
+
+.dashboard-page .hero-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.dashboard-page .hero-primary-btn {
+  height: 40px !important;
+  padding: 0 22px !important;
+  font-weight: 600 !important;
+  background: linear-gradient(135deg, #a855f7, #D4AF37) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3);
+  transition: all 0.2s ease;
+}
+
+.dashboard-page .hero-primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+}
+
+.dashboard-page .hero-ghost-btn {
+  height: 40px !important;
+  padding: 0 20px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  color: #fde68a !important;
+  border-radius: 10px !important;
+}
+
+.dashboard-page .hero-ghost-btn:hover {
+  background: rgba(212, 175, 55, 0.12) !important;
+  border-color: rgba(212, 175, 55, 0.5) !important;
+}
+
+/* 右侧：数据沉浸面板 */
+.dashboard-page .hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 认知画圈缩略图 */
+.dashboard-page .hero-circle-card {
+  background: rgba(18, 16, 40, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 14px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-page .hero-circle-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6), transparent);
+}
+
+.dashboard-page .hero-circle-card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.dashboard-page .hero-circle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #fde68a;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.dashboard-page .hero-circle-synergy {
+  font-size: 11px;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.dashboard-page .hero-circle-svg {
+  width: 100%;
+  aspect-ratio: 1;
+  max-height: 200px;
+}
+
+.dashboard-page .hc-ring {
+  fill: none;
+  stroke-width: 1;
+}
+
+.dashboard-page .hc-ring.core    { stroke: rgba(212, 175, 55, 0.45); }
+.dashboard-page .hc-ring.support { stroke: rgba(168, 85, 247, 0.28); stroke-dasharray: 3 4; }
+.dashboard-page .hc-ring.edge    { stroke: rgba(96, 165, 250, 0.2); stroke-dasharray: 3 5; }
+
+.dashboard-page .hc-edge {
+  stroke-width: 1.2;
+  opacity: 0.55;
+  fill: none;
+  transition: all 0.3s ease;
+}
+.dashboard-page .hc-edge.active {
+  stroke-width: 2.5;
+  opacity: 1;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+.dashboard-page .hc-edge.reinforce  { stroke: #22d3ee; }
+.dashboard-page .hc-edge.balance    { stroke: #f59e0b; opacity: 0.4; }
+.dashboard-page .hc-edge.complement { stroke: #34d399; }
+.dashboard-page .hc-edge.conflict   { stroke: #fb7185; stroke-dasharray: 3 2; }
+
+/* 节点交互样式 */
+.dashboard-page .hc-node-group {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-page .hc-node-group:hover circle {
+  filter: brightness(1.2) drop-shadow(0 0 12px currentColor);
+}
+
+/* 环形动画 */
+.dashboard-page .hc-ring {
+  fill: none;
+  stroke-width: 1;
+  animation: ringPulse 4s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* 核心环旋转动画 */
+.dashboard-page .hc-ring.core {
+  stroke-dasharray: 5 8;
+  animation: ringRotate 20s linear infinite, ringPulse 4s ease-in-out infinite;
+  transform-origin: 100px 100px;
+}
+
+@keyframes ringRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 支撑环反向旋转 */
+.dashboard-page .hc-ring.support {
+  animation-duration: 30s, 4s;
+  animation-direction: reverse;
+}
+
+/* 边缘环快速旋转 */
+.dashboard-page .hc-ring.edge {
+  animation-duration: 25s, 4s;
+}
+
+/* 节点浮动动画 */
+@keyframes nodeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+/* 连线流动效果 */
+.dashboard-page .hc-edge.reinforce {
+  stroke-dasharray: 5 3;
+  animation: dashFlow 1.5s linear infinite;
+}
+
+.dashboard-page .hc-edge.complement {
+  stroke-dasharray: 4 4;
+  animation: dashFlow 2s linear infinite;
+}
+
+@keyframes dashFlow {
+  to { stroke-dashoffset: -20; }
+}
+
+.dashboard-page .hero-circle-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* 六维向量面板 */
+.dashboard-page .vector-row {
+  margin-bottom: 20px;
+}
+
+.dashboard-page .vector-card {
+  background: rgba(18, 16, 40, 0.55) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
+  border-radius: 14px !important;
+}
+
+.dashboard-page .vector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #e9d5ff;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+}
+
+.dashboard-page .vector-source {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.dashboard-page .vector-dim {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dashboard-page .vector-dim-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.dashboard-page .vector-dim-val {
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* 塔罗底色卡片 */
+.dashboard-page .tarot-card {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(212, 175, 55, 0.12)) !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  border-radius: 14px !important;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  height: 100%;
+}
+
+.dashboard-page .tarot-card:hover {
+  border-color: rgba(212, 175, 55, 0.55) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18);
+}
+
+.dashboard-page .tarot-card-empty {
+  background: rgba(18, 16, 40, 0.5) !important;
+  border: 1px dashed rgba(212, 175, 55, 0.3) !important;
+}
+
+.dashboard-page .tarot-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-page .tarot-emoji {
+  font-size: 28px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.3));
+}
+
+.dashboard-page .tarot-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dashboard-page .tarot-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+}
+
+.dashboard-page .tarot-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fde68a;
+  margin: 1px 0;
+}
+
+.dashboard-page .tarot-meaning {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.5;
+}
+
+.dashboard-page .tarot-arrow {
+  color: rgba(212, 175, 55, 0.5);
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.dashboard-page .tarot-card:hover .tarot-arrow {
+  color: #fde68a;
+  transform: translateX(3px);
+}
+
+/* === 4 张核心数据卡 v3 === */
+.dashboard-page .stats-row {
+  margin-bottom: 24px;
+}
+
+.dashboard-page .stat-card {
+  height: 96px;
+}
+
+.dashboard-page .stat-card > .ant-card-body {
+  height: 100%;
+  padding: 14px 18px !important;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dashboard-page .stat-poker .stat-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(147, 197, 253, 0.4), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(59, 130, 246, 0.5));
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.18);
+}
+
+.dashboard-page .stat-fitness .stat-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(110, 231, 183, 0.4), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(16, 185, 129, 0.5));
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.18);
+}
+
+.dashboard-page .stat-icon {
+  font-size: 26px !important;
+}
+
+.dashboard-page .stat-value {
+  font-size: 28px !important;
+}
+
+/* === 核心系统卡 v3 === */
+.dashboard-page .system-card {
+  position: relative;
+}
+
+.dashboard-page .system-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.dashboard-page .system-card.accent-gold::after {
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6), transparent);
+}
+.dashboard-page .system-card.accent-purple::after {
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.6), transparent);
+}
+.dashboard-page .system-card.accent-green::after {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6), transparent);
+}
+.dashboard-page .system-card.accent-blue::after {
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+}
+
+.dashboard-page .system-card:hover::after {
+  opacity: 1;
+}
+
+.dashboard-page .system-card-emoji {
+  font-size: 32px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+}
+
+.dashboard-page .system-card-badge {
+  background: rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  color: #fff !important;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+
+/* badgeTone 状态徽章颜色 */
+.dashboard-page .system-card-badge.badge-gold {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.28), rgba(251, 191, 36, 0.18)) !important;
+  border-color: rgba(212, 175, 55, 0.45) !important;
+  color: #fde68a !important;
+}
+.dashboard-page .system-card-badge.badge-purple {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.28), rgba(139, 92, 246, 0.18)) !important;
+  border-color: rgba(168, 85, 247, 0.45) !important;
+  color: #e9d5ff !important;
+}
+.dashboard-page .system-card-badge.badge-blue {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.28), rgba(96, 165, 250, 0.18)) !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+  color: #bae6fd !important;
+}
+.dashboard-page .system-card-badge.badge-green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.28), rgba(52, 211, 153, 0.18)) !important;
+  border-color: rgba(16, 185, 129, 0.45) !important;
+  color: #bbf7d0 !important;
+}
+.dashboard-page .system-card-badge.badge-muted {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.45) !important;
+  font-weight: 400;
+}
+
+/* accent-blue 卡片 banner */
+.dashboard-page .system-music .system-card-banner {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(125, 211, 252, 0.42), transparent 55%),
+    linear-gradient(135deg, rgba(56, 189, 248, 0.3) 0%, rgba(168, 85, 247, 0.5) 100%);
+}
+.dashboard-page .system-chakra .system-card-banner {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(216, 180, 254, 0.42), transparent 55%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.35) 0%, rgba(236, 72, 153, 0.45) 100%);
+}
+.dashboard-page .system-tarot .system-card-banner {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(251, 191, 36, 0.42), transparent 55%),
+    linear-gradient(135deg, rgba(212, 175, 55, 0.3) 0%, rgba(168, 85, 247, 0.4) 100%);
+}
+.dashboard-page .system-mirror .system-card-banner {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(196, 181, 253, 0.42), transparent 55%),
+    linear-gradient(135deg, rgba(212, 175, 55, 0.28) 0%, rgba(139, 92, 246, 0.45) 100%);
+}
+
+/* === 最近活动 v3 === */
+.dashboard-page .timeline-item {
+  cursor: pointer;
+  transition: background 0.2s ease;
+  padding: 10px 0;
+}
+
+.dashboard-page .timeline-item:hover {
+  background: rgba(168, 85, 247, 0.06);
+  border-radius: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* === 响应式 === */
+@media (max-width: 900px) {
+  .dashboard-page .hero-content {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-page .hero-right {
+    flex-direction: row;
+  }
+  .dashboard-page .hero-circle-card {
+    flex: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-page .hero-title {
+    font-size: 26px !important;
+  }
+  .dashboard-page .hero-actions {
+    flex-direction: column;
+  }
+  .dashboard-page .hero-right {
+    flex-direction: column;
+  }
+  .dashboard-page .stat-card {
+    height: auto;
+    min-height: 72px;
+  }
+  .dashboard-page .stat-card > .ant-card-body {
+    padding: 12px !important;
+    gap: 10px;
+  }
+}
+
+/* === P1 升级：洞察简报样式 === */
+
+.dashboard-page .insight-card {
+  background: rgba(18, 16, 40, 0.55) !important;
+  border: 1px solid rgba(212, 175, 55, 0.2) !important;
+  border-radius: 14px !important;
+}
+
+.dashboard-page .insight-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #fde68a;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.dashboard-page .insight-summary {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  background: rgba(168, 85, 247, 0.08);
+  border-radius: 8px;
+  border-left: 3px solid rgba(168, 85, 247, 0.5);
+}
+
+/* 紧凑维度显示 */
+.dashboard-page .vector-dim-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dashboard-page .vector-dim-label {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.dashboard-page .vector-dim-value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* 塔罗联动块 */
+.dashboard-page .tarot-insight-block {
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(212, 175, 55, 0.08));
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.dashboard-page .tarot-insight-block:hover {
+  transform: translateY(-1px);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15);
+}
+
+.dashboard-page .tarot-insight-block.empty {
+  background: rgba(18, 16, 40, 0.4);
+  border-style: dashed;
+}
+
+.dashboard-page .tarot-insight-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-page .tarot-insight-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.dashboard-page .tarot-insight-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fde68a;
+}
+
+.dashboard-page .tarot-insight-sub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dashboard-page .tarot-influence {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 音乐联动块 */
+.dashboard-page .music-insight-block {
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(96, 165, 250, 0.08));
+  border-radius: 10px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-page .music-insight-block:hover {
+  transform: translateY(-1px);
+  border-color: rgba(124, 58, 237, 0.45);
+}
+
+.dashboard-page .music-insight-block.empty {
+  background: rgba(18, 16, 40, 0.4);
+  border-style: dashed;
+}
+
+.dashboard-page .insight-block-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-page .insight-block-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #e9d5ff;
+}
+
+.dashboard-page .insight-block-sub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 洞察列 */
+.dashboard-page .insight-column {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dashboard-page .insight-col-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dashboard-page .insight-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.dashboard-page .insight-item-dim {
+  color: rgba(255, 255, 255, 0.75);
+  flex: 1;
+}
+
+.dashboard-page .insight-item-level {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* 建议项 */
+.dashboard-page .insight-suggestion {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(251, 191, 36, 0.06);
+  border-radius: 8px;
+  border-left: 3px solid rgba(251, 191, 36, 0.4);
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dashboard-page .insight-suggestion.type-tarot {
+  background: rgba(212, 175, 55, 0.08);
+  border-left-color: rgba(212, 175, 55, 0.5);
+}
+
+.dashboard-page .insight-suggestion.type-warning {
+  background: rgba(251, 113, 133, 0.06);
+  border-left-color: rgba(251, 113, 133, 0.5);
+}
+
+.dashboard-page .insight-suggestion.type-strength {
+  background: rgba(52, 211, 153, 0.06);
+  border-left-color: rgba(52, 211, 153, 0.5);
+}
+
+.dashboard-page .insight-suggestion.type-development {
+  background: rgba(96, 165, 250, 0.06);
+  border-left-color: rgba(96, 165, 250, 0.5);
+}
+
+.dashboard-page .suggestion-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.dashboard-page .suggestion-text {
+  flex: 1;
+}
+
+/* PersonaRadar 组件样式 */
+.persona-radar {
+  position: relative;
+}
+
+.persona-radar::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.8);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* 雷达卡片响应式 */
+@media (max-width: 900px) {
+  .dashboard-page .insight-summary {
+    font-size: 11px;
+  }
+  .dashboard-page .persona-radar {
+    height: 240px !important;
+  }
+}
+
+/* ============================================
+   P2-2 Dashboard 移动端布局修复 (375px)
+   ============================================ */
+
+/* 平板端适配 (768px - 1024px) */
+@media (max-width: 1024px) {
+  .dashboard-page .vector-row .ant-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .dashboard-page .insight-card .ant-row > .ant-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 12px;
+  }
+  
+  .dashboard-page .stats-row .ant-col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  
+  .dashboard-page .section-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 移动端适配 (≤ 640px) */
+@media (max-width: 640px) {
+  /* Hero 区布局 */
+  .dashboard-page .hero-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .dashboard-page .hero-left {
+    text-align: center;
+  }
+  
+  .dashboard-page .hero-title {
+    font-size: 24px !important;
+    line-height: 1.3;
+  }
+  
+  .dashboard-page .hero-subtitle {
+    font-size: 14px !important;
+  }
+  
+  .dashboard-page .hero-tags {
+    justify-content: center;
+  }
+  
+  .dashboard-page .hero-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .dashboard-page .hero-right {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* 认知画圈缩略图 */
+  .dashboard-page .hero-circle-card {
+    min-height: 200px;
+  }
+  
+  .dashboard-page .hero-circle-header {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .dashboard-page .hero-circle-synergy {
+    font-size: 11px;
+  }
+  
+  .dashboard-page .hero-circle-svg {
+    max-width: 160px;
+    max-height: 160px;
+  }
+  
+  .dashboard-page .hero-circle-footer {
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 10px;
+  }
+  
+  /* 六维向量雷达图 */
+  .dashboard-page .radar-card .vector-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .dashboard-page .persona-radar {
+    height: 200px !important;
+  }
+  
+  .dashboard-page .vector-dim-compact {
+    padding: 3px 4px;
+  }
+  
+  .dashboard-page .vector-dim-label {
+    font-size: 10px;
+  }
+  
+  .dashboard-page .vector-dim-value {
+    font-size: 12px;
+  }
+  
+  /* 洞察简报 */
+  .dashboard-page .insight-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .dashboard-page .insight-summary {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  
+  .dashboard-page .tarot-insight-block,
+  .dashboard-page .music-insight-block {
+    padding: 10px;
+  }
+  
+  .dashboard-page .tarot-insight-icon,
+  .dashboard-page .insight-block-header > span:first-child {
+    font-size: 24px;
+  }
+  
+  .dashboard-page .tarot-insight-title,
+  .dashboard-page .insight-block-title {
+    font-size: 13px;
+  }
+  
+  .dashboard-page .insight-column {
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .dashboard-page .insight-col-header {
+    font-size: 11px;
+  }
+  
+  .dashboard-page .insight-item {
+    font-size: 11px;
+  }
+  
+  .dashboard-page .insight-suggestion {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  
+  /* 统计卡片 */
+  .dashboard-page .stats-row .ant-col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  
+  .dashboard-page .stat-card {
+    height: auto;
+    min-height: 80px;
+  }
+  
+  .dashboard-page .stat-card > .ant-card-body {
+    padding: 10px !important;
+    gap: 8px;
+  }
+  
+  .dashboard-page .stat-icon {
+    font-size: 28px;
+  }
+  
+  .dashboard-page .stat-value {
+    font-size: 22px;
+  }
+  
+  .dashboard-page .stat-label {
+    font-size: 11px;
+  }
+  
+  /* 核心系统卡片 */
+  .dashboard-page .section-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .dashboard-page .section-card {
+    padding: 14px;
+  }
+  
+  .dashboard-page .section-card-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+  
+  .dashboard-page .section-card-title {
+    font-size: 14px;
+  }
+  
+  .dashboard-page .section-card-desc {
+    font-size: 11px;
+  }
+  
+  .dashboard-page .section-card-stats {
+    font-size: 10px;
+  }
+  
+  /* 最近活动 */
+  .dashboard-page .activity-item {
+    padding: 10px;
+  }
+  
+  .dashboard-page .activity-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  .dashboard-page .activity-title {
+    font-size: 13px;
+  }
+  
+  .dashboard-page .activity-desc {
+    font-size: 11px;
+  }
+}
+
+/* 超小屏幕适配 (≤ 375px, iPhone SE) */
+@media (max-width: 400px) {
+  .dashboard-page {
+    padding: 12px 10px;
+  }
+  
+  .dashboard-page .hero-title {
+    font-size: 22px !important;
+  }
+  
+  .dashboard-page .hero-subtitle {
+    font-size: 13px !important;
+  }
+  
+  .dashboard-page .hero-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+  
+  .dashboard-page .hero-circle-card {
+    min-height: 180px;
+  }
+  
+  .dashboard-page .hero-circle-svg {
+    max-width: 140px;
+    max-height: 140px;
+  }
+  
+  .dashboard-page .persona-radar {
+    height: 180px !important;
+  }
+  
+  .dashboard-page .insight-summary {
+    font-size: 10px;
+  }
+  
+  .dashboard-page .stat-icon {
+    font-size: 24px;
+  }
+  
+  .dashboard-page .stat-value {
+    font-size: 20px;
+  }
+  
+  .dashboard-page .stat-label {
+    font-size: 10px;
+  }
+  
+  .dashboard-page .section-card {
+    padding: 12px;
+  }
+  
+  .dashboard-page .section-card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+/* 横屏适配 */
+@media (max-width: 900px) and (orientation: landscape) {
+  .dashboard-page .hero-content {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .dashboard-page .persona-radar {
+    height: 200px !important;
+  }
+  
+  .dashboard-page .stats-row .ant-col {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  
+  .dashboard-page .section-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 触控优化 */
+@media (hover: none) and (pointer: coarse) {
+  .dashboard-page .hero-circle-card,
+  .dashboard-page .tarot-insight-block,
+  .dashboard-page .music-insight-block,
+  .dashboard-page .section-card {
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(168, 85, 247, 0.2);
+  }
+  
+  .dashboard-page .hero-circle-card:active,
+  .dashboard-page .section-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  /* 增大触摸目标 */
+  .dashboard-page .ant-btn {
+    min-height: 44px;
+  }
+  
+  .dashboard-page .ant-tag {
+    min-height: 32px;
+    line-height: 32px;
+    padding: 0 12px;
+  }
+}
+
+/* 深色模式下的移动端优化 */
+@media (max-width: 640px) and (prefers-color-scheme: dark) {
+  .dashboard-page .hero-circle-card {
+    background: rgba(18, 16, 40, 0.9) !important;
+  }
+  
+  .dashboard-page .insight-card {
+    background: rgba(18, 16, 40, 0.95) !important;
+  }
+  
+  .dashboard-page .stat-card {
+    background: rgba(18, 16, 40, 0.9) !important;
+  }
+}

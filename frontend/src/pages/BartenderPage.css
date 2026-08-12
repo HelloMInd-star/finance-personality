@@ -1,0 +1,380 @@
+/* ======== BartenderPage 调酒页面样式（与系统风格统一） ======== */
+
+/* 去掉自定义背景，继承系统背景 */
+.bartender-page {
+  padding: 0;
+}
+
+/* ======== 调酒师选择页 ======== */
+.bartender-select-hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.bartender-select-icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 4px 20px rgba(212, 175, 55, 0.3));
+}
+
+.bartender-select-title {
+  color: #fff !important;
+  margin: 0 !important;
+  font-weight: 300 !important;
+  letter-spacing: 2px;
+}
+
+.bartender-select-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  margin: 16px auto;
+}
+
+.bartender-select-desc {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* 调酒师卡片 - 与 system-card 风格统一 */
+.bartender-card {
+  position: relative;
+  background: rgba(30, 19, 64, 0.6) !important;
+  border: 1px solid rgba(139, 92, 246, 0.18) !important;
+  border-radius: 16px !important;
+  padding: 32px 24px 24px;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.bartender-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.bartender-card-number {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 48px;
+  font-weight: 700;
+  opacity: 0.15;
+  line-height: 1;
+  font-family: Georgia, serif;
+}
+
+.bartender-card-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin-bottom: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.bartender-card-name {
+  color: #fff !important;
+  margin: 0 0 4px !important;
+  font-weight: 500 !important;
+}
+
+.bartender-card-title-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.bartender-card-mbti {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.bartender-card-style {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0 0 16px;
+  min-height: 44px;
+}
+
+.bartender-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.bartender-card-tag {
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bartender-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+.bartender-card-hint {
+  font-size: 12px;
+}
+
+.bartender-card-cta {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 提示卡片 */
+.bartender-tip-card {
+  text-align: center;
+  padding: 20px;
+  background: rgba(212, 175, 55, 0.05) !important;
+  border: 1px solid rgba(212, 175, 55, 0.15) !important;
+  border-radius: 12px !important;
+  max-width: 600px;
+  margin: 40px auto 0;
+}
+
+.bartender-tip-title {
+  color: #D4AF37;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.bartender-tip-text {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.8;
+}
+
+/* ======== 流程页通用 ======== */
+.bartender-flow-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.bartender-step-card {
+  border-radius: 16px !important;
+}
+
+.step-content {
+  padding: 8px 0;
+}
+
+.step-content-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.step-content-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.step-content-title {
+  color: #fff !important;
+  margin: 0 0 8px !important;
+}
+
+.step-content-desc {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* 选项按钮 - 统一样式 */
+.option-btn {
+  width: 100%;
+  height: auto;
+  padding: 16px 20px;
+  text-align: left;
+  line-height: 1.5;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.option-btn-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+}
+
+.option-btn-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 4px;
+}
+
+/* 基酒选择卡片 */
+.base-spirit-card {
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 12px !important;
+}
+
+.base-spirit-card:hover {
+  transform: translateY(-2px);
+}
+
+.base-spirit-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.base-spirit-label {
+  font-weight: 600;
+  color: #fff;
+}
+
+.base-spirit-flavor {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 4px;
+}
+
+/* 故事种子按钮 */
+.story-seed-btn {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  height: auto;
+  white-space: normal;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* ======== 结果页 ======== */
+.bartender-result-container {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 第二层/第三层入口卡片 - 与系统统一 */
+.layer-entry-card {
+  border-radius: 16px !important;
+}
+
+.layer-entry-title {
+  color: #fff !important;
+  margin: 0 !important;
+}
+
+.layer-entry-desc {
+  font-size: 13px;
+}
+
+.layer-entry-btn {
+  border: none !important;
+}
+
+/* ======== 挑战赛 ======== */
+.challenge-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.challenge-timer {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: monospace;
+}
+
+.challenge-theme-card {
+  border-radius: 16px !important;
+}
+
+.challenge-theme-content {
+  text-align: center;
+}
+
+.challenge-theme-title {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  color: #fff !important;
+}
+
+/* 选择卡片网格 */
+.choice-card {
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  border-radius: 12px !important;
+}
+
+.choice-card:hover {
+  transform: translateY(-2px);
+}
+
+.choice-card-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.choice-card-label {
+  font-size: 13px;
+}
+
+/* 挑战赛结果 */
+.challenge-result-card {
+  border-radius: 16px !important;
+}
+
+.challenge-score-big {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.challenge-score-number {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+/* 评委卡片 */
+.judge-card {
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.judge-comment {
+  margin-top: 12px;
+  margin-bottom: 0;
+  color: #cbd5e0;
+  font-size: 14px;
+}
+
+/* ======== 沙盘 ======== */
+.sandbox-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 通用工具类 */
+.text-center { text-align: center; }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mb-0 { margin-bottom: 0; }

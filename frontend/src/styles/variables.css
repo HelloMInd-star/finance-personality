@@ -1,0 +1,195 @@
+/* ============================================
+   Y.Mine Design System — Design Tokens
+   统一的设计变量系统
+   ============================================ */
+
+:root {
+  /* ===== Color Palette ===== */
+  /* 主色:酒局紫 #a855f7(比原 #a78bfa 更深更优雅) */
+  --primary: #a855f7;
+  --primary-light: #c4b5fd;
+  --primary-dark: #7c3aed;
+  --secondary: #f59e0b;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #fbbf24;
+
+  /* 强调色 — 金色采用塔罗古金 #D4AF37(比原 #fbbf24 更克制优雅) */
+  --accent-gold: #D4AF37;
+  --accent-gold-light: #F5F5F0;
+  --accent-pink: #f472b6;
+  --accent-green: #34d399;
+  --accent-blue: #60a5fa;
+
+  /* ===== 紫金渐变(全局核心渐变)===== */
+  --gradient-purple-gold: linear-gradient(135deg, #a855f7 0%, #D4AF37 100%);
+  --gradient-purple-gold-soft: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(212, 175, 55, 0.08) 100%);
+  --gradient-title: linear-gradient(135deg, #D4AF37 0%, #F5F5F0 50%, #a855f7 100%);
+  --gradient-title-purple-gold: linear-gradient(135deg, #a855f7 0%, #D4AF37 100%);
+  --gradient-btn-primary: linear-gradient(135deg, #a855f7 0%, #D4AF37 100%);
+  --gradient-btn-hover: linear-gradient(135deg, #c084fc 0%, #f0d878 100%);
+
+  /* ===== Spacing Scale（五级间距）===== */
+  --space-xs: 4px;    /* 紧凑元素内部 */
+  --space-sm: 8px;    /* 标签/小间距 */
+  --space-md: 16px;   /* 标准间距 */
+  --space-lg: 24px;   /* 区块间距 */
+  --space-xl: 40px;   /* 页面级间距 */
+
+  /* ===== Radius Scale（三级圆角）===== */
+  --radius-sm: 8px;   /* 按钮/小标签 */
+  --radius-md: 16px;  /* 卡片/容器 */
+  --radius-lg: 24px;  /* 大卡片/Hero */
+
+  /* ===== Shadow Scale（三级阴影）===== */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+
+  /* ===== Glow Scale（霓虹光晕）===== */
+  --glow-purple: 0 0 24px rgba(168, 85, 247, 0.2);
+  --glow-purple-strong: 0 0 40px rgba(168, 85, 247, 0.35);
+  --glow-gold: 0 0 24px rgba(212, 175, 55, 0.2);
+  --glow-gold-strong: 0 0 40px rgba(212, 175, 55, 0.3);
+  --glow-pink: 0 0 24px rgba(244, 114, 182, 0.2);
+  --glow-green: 0 0 24px rgba(52, 211, 153, 0.2);
+
+  /* ===== 背景色 — 深空黑系(融合塔罗 #0A0A0F)===== */
+  --bg-deep: #0A0A0F;        /* 最深层(塔罗深空黑) */
+  --bg-dark: #0f0f1a;        /* 次深层 */
+  --bg-mid: #14141e;         /* 中层 */
+  --bg-card: rgba(20, 20, 30, 0.6);          /* 磨砂玻璃卡片背景 */
+  --bg-card-hover: rgba(30, 30, 45, 0.7);    /* 磨砂玻璃卡片 hover */
+  --bg-elevated: rgba(20, 18, 37, 0.75);     /* 抬升层(保留紫调) */
+  --bg-elevated-hover: rgba(35, 25, 60, 0.85);
+
+  /* ===== 磨砂玻璃 token(新增)===== */
+  --glass-bg: rgba(20, 20, 30, 0.6);
+  --glass-bg-strong: rgba(20, 18, 37, 0.85);
+  --glass-border: rgba(212, 175, 55, 0.2);       /* 金色玻璃边框 */
+  --glass-border-purple: rgba(168, 85, 247, 0.2); /* 紫色玻璃边框 */
+  --glass-blur: blur(20px) saturate(180%);
+  --glass-blur-strong: blur(30px) saturate(200%);
+
+  /* ===== 边框 ===== */
+  --border-subtle: rgba(168, 85, 247, 0.08);
+  --border-light: rgba(168, 85, 247, 0.15);
+  --border-medium: rgba(168, 85, 247, 0.2);
+  --border-strong: rgba(168, 85, 247, 0.3);
+  --border-gold: rgba(212, 175, 55, 0.25);       /* 金色边框(新增) */
+  --border-gold-strong: rgba(212, 175, 55, 0.4); /* 金色强边框(新增) */
+
+  /* ===== 文字 ===== */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-tertiary: rgba(255, 255, 255, 0.4);
+
+  /* ===== 装饰线颜色（侧边栏分组 + 首页区块）===== */
+  --line-purple: rgba(167, 139, 250, 0.4);
+  --line-gold: rgba(251, 191, 36, 0.4);
+  --line-blue: rgba(96, 165, 250, 0.4);
+  --line-pink: rgba(244, 114, 182, 0.4);
+  --line-green: rgba(52, 211, 153, 0.4);
+  --line-gray: rgba(255, 255, 255, 0.15);
+
+  /* ===== 过渡动画 ===== */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ============================================
+     === 新增:语义化组件级 Token (借鉴 daisyUI)===
+     ============================================ */
+
+  /* ===== Badge / Tag ===== */
+  --badge-radius: 999px;
+  --badge-pad-x: 12px;
+  --badge-pad-y: 4px;
+  --badge-border: rgba(212, 175, 55, 0.25);
+  --badge-bg-purple: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(168, 85, 247, 0.06));
+  --badge-bg-gold: linear-gradient(135deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.06));
+  --badge-bg-green: linear-gradient(135deg, rgba(52, 211, 153, 0.18), rgba(52, 211, 153, 0.06));
+  --badge-bg-blue: linear-gradient(135deg, rgba(96, 165, 250, 0.18), rgba(96, 165, 250, 0.06));
+  --badge-bg-pink: linear-gradient(135deg, rgba(244, 114, 182, 0.18), rgba(244, 114, 182, 0.06));
+  --badge-line-purple: #a855f7;
+  --badge-line-gold: #D4AF37;
+  --badge-line-green: #34d399;
+  --badge-line-blue: #60a5fa;
+  --badge-line-pink: #f472b6;
+
+  /* ===== 按钮内高光 / 光泽 ===== */
+  --btn-inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --btn-inner-highlight-strong: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  --btn-text-color: #ffffff;
+
+  /* ===== 卡片金边扫描 / 顶部装饰条 ===== */
+  --card-top-line: linear-gradient(90deg, transparent 0%, #a855f7 20%, #D4AF37 50%, #a855f7 80%, transparent 100%);
+  --card-corner-glow: radial-gradient(circle at 0% 0%, rgba(168, 85, 247, 0.25), transparent 50%),
+                       radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.2), transparent 50%);
+
+  /* ===== 进度条双层渐变 ===== */
+  --progress-track: rgba(255, 255, 255, 0.06);
+  --progress-fill: linear-gradient(90deg, #a855f7 0%, #D4AF37 100%);
+  --progress-fill-highlight: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, transparent 40%);
+
+  /* ===== 统计图标圆盘 ===== */
+  --stat-icon-disc-bg: rgba(255, 255, 255, 0.04);
+  --stat-icon-disc-border: rgba(255, 255, 255, 0.08);
+  --stat-icon-disc-size: 52px;
+
+  /* ===== Section 标题装饰线 ===== */
+  --section-title-line: linear-gradient(90deg, #D4AF37 0%, rgba(212, 175, 55, 0) 100%);
+  --section-title-line-short: linear-gradient(180deg, #a855f7, #D4AF37);
+
+  /* ===== Hero 欢迎卡装饰 ===== */
+  --hero-left-arc: radial-gradient(circle at 0% 50%, rgba(168, 85, 247, 0.35), transparent 60%);
+  --hero-right-avatar-ring: linear-gradient(135deg, #a855f7, #D4AF37, #a855f7);
+
+  /* ===== 内阴影文字 ===== */
+  --text-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+  /* ============================================
+     === 再新增: 字体排版节奏 + 侧边栏/头部装饰  ===
+     ============================================ */
+
+  /* ===== 字体字号节奏（9 级） ===== */
+  --fz-xxs: 10px;   /* 极小辅助（角标/Badge小字） */
+  --fz-xs: 11px;    /* 辅助说明（菜单项分组标签英文副标题） */
+  --fz-sm: 12px;    /* 辅助信息（说明/次要文字） */
+  --fz-md: 14px;    /* 正文基准（正文/菜单项） */
+  --fz-lg: 16px;    /* 重点正文（面包屑/按钮） */
+  --fz-xl: 18px;    /* 小组件标题（卡片副标题） */
+  --fz-2xl: 22px;   /* 区块标题（Section 标题 h4） */
+  --fz-3xl: 28px;   /* 页面主标题（h2） */
+  --fz-4xl: 38px;   /* 大号标题（Hero h2 数字） */
+
+  /* ===== 字重等级 ===== */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* ===== 行距与字距 ===== */
+  --lh-tight: 1.25;
+  --lh-normal: 1.55;
+  --lh-relaxed: 1.75;
+  --ls-tight: -0.02em;
+  --ls-normal: 0;
+  --ls-wide: 0.04em;
+  --ls-extrawide: 0.14em;  /* 英文 uppercase 副标题 */
+
+  /* ===== 侧边栏选中态: 左侧紫金渐变竖条 ===== */
+  --sider-selected-indicator: linear-gradient(180deg, #a855f7 0%, #D4AF37 100%);
+  --sider-indicator-width: 3px;
+
+  /* ===== 顶部用户头像光环 ===== */
+  --avatar-ring: linear-gradient(135deg, #a855f7, #D4AF37, #a855f7);
+  --avatar-ring-width: 2px;
+  --avatar-glow: 0 0 14px rgba(168, 85, 247, 0.45), 0 0 6px rgba(212, 175, 55, 0.35);
+
+  /* ===== 卡片分层阴影(三层, 增强深度感) ===== */
+  --shadow-layer-1: 0 1px 2px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-layer-2: 0 4px 10px rgba(0, 0, 0, 0.5), 0 10px 28px rgba(168, 85, 247, 0.12);
+  --shadow-layer-3: 0 12px 28px rgba(0, 0, 0, 0.58), 0 24px 60px rgba(168, 85, 247, 0.18), 0 0 0 1px rgba(212, 175, 55, 0.06);
+}

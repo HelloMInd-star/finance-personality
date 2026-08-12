@@ -1,0 +1,1863 @@
+/* ============================================
+   Y.Mine Design System — Components
+   通用组件样式 + 玻璃拟态 + 认证弹窗
+   ============================================ */
+
+/* ===== 玻璃拟态通用类 ===== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border: 1px solid var(--glass-border-purple);
+  border-radius: var(--radius-md);
+}
+
+/* 金色玻璃变体(新增) */
+.glass-gold {
+  background: rgba(20, 20, 30, 0.7);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  box-shadow: var(--glow-gold);
+}
+
+/* ===== 文字渐变 — 紫金渐变 ===== */
+.text-gradient {
+  background: var(--gradient-purple-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 标题渐变(塔罗金白紫) */
+.text-gradient-title {
+  background: var(--gradient-title);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== 紫金渐变按钮(新增) ===== */
+.btn-purple-gold {
+  height: 42px;
+  padding: 0 28px;
+  border-radius: 22px;
+  border: 1px solid var(--border-gold-strong);
+  background: var(--gradient-btn-primary);
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.25);
+}
+
+.btn-purple-gold:hover {
+  background: var(--gradient-btn-hover);
+  box-shadow: 0 6px 28px rgba(168, 85, 247, 0.4), 0 0 16px rgba(212, 175, 55, 0.25);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.btn-purple-gold:active {
+  transform: translateY(0);
+}
+
+.btn-purple-gold:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 次级按钮(金色描边) */
+.btn-gold-outline {
+  height: 42px;
+  padding: 0 28px;
+  border-radius: 22px;
+  border: 1px solid var(--border-gold-strong);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
+  color: var(--accent-gold);
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.btn-gold-outline:hover {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
+  border-color: var(--accent-gold);
+  box-shadow: var(--glow-gold);
+  color: var(--accent-gold-light);
+}
+
+/* ===== 认证弹窗 ===== */
+.auth-modal .ant-modal-content {
+  background: linear-gradient(160deg, #1a1333, #0d0a1e) !important;
+  border: 1px solid rgba(167, 139, 250, 0.2) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.auth-modal .ant-modal-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border-light) !important;
+}
+
+.auth-modal .ant-modal-title {
+  color: #fff !important;
+}
+
+.auth-modal .ant-form-item-label label {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.auth-modal .ant-input,
+.auth-modal .ant-input-password {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(167, 139, 250, 0.2) !important;
+  color: #fff !important;
+}
+
+.auth-modal .ant-input:hover,
+.auth-modal .ant-input-password:hover {
+  border-color: rgba(167, 139, 250, 0.4) !important;
+}
+
+.auth-modal .ant-input:focus,
+.auth-modal .ant-input-password:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2) !important;
+}
+
+.auth-modal .ant-select-selector {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(167, 139, 250, 0.2) !important;
+  color: #fff !important;
+}
+
+.auth-modal .ant-select-selection-item {
+  color: #fff !important;
+}
+
+.auth-modal .ant-select-arrow {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.auth-modal .ant-modal-close-x {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.auth-modal .ant-modal-close:hover .ant-modal-close-x {
+  color: #fff !important;
+}
+
+.auth-modal .guide-section {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.auth-modal .guide-section h4 {
+  color: #fff !important;
+}
+
+.auth-modal .guide-section code {
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--primary);
+}
+
+/* ============================================
+   通用组件 — DS Component Library
+   ============================================ */
+
+/* ===== DS PageHeader ===== */
+.ds-page-header {
+  background: var(--gradient-purple-gold-soft);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  margin-bottom: var(--space-lg);
+}
+
+.ds-page-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary) 30%, var(--accent-gold) 70%, transparent);
+}
+
+.ds-page-header::after {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 120px; height: 120px;
+  background-image:
+    linear-gradient(rgba(212, 175, 55, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.06) 1px, transparent 1px);
+  background-size: 16px 16px;
+  pointer-events: none;
+}
+
+.ds-page-header-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  position: relative;
+  z-index: 1;
+}
+
+.ds-page-header-icon {
+  width: 52px; height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-purple-gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+  box-shadow: var(--glow-purple), var(--glow-gold);
+}
+
+.ds-page-header-title {
+  font-size: 24px;
+  font-weight: 800;
+  background: var(--gradient-title);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+
+.ds-page-header-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ===== DS SectionCard ===== */
+.ds-section-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: all var(--transition-slow);
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-section-card:hover {
+  border-color: var(--border-gold-strong);
+  box-shadow: var(--shadow-md), var(--glow-gold);
+  transform: translateY(-4px);
+}
+
+.ds-section-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+}
+
+.ds-section-card:hover::before {
+  opacity: 1;
+}
+
+.ds-section-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ds-section-card-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.ds-section-card-title .icon {
+  color: var(--primary);
+  font-size: 18px;
+}
+
+.ds-section-card-body {
+  padding: var(--space-lg);
+}
+
+/* ===== DS StatCard ===== */
+.ds-stat-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(16px);
+  transition: all var(--transition-normal);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ds-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, 0.35);
+  box-shadow: var(--shadow-md);
+}
+
+.ds-stat-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.ds-stat-icon.purple { background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(167,139,250,0.15)); color: var(--primary); box-shadow: 0 0 16px rgba(124,58,237,0.2); }
+.ds-stat-icon.gold { background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(251,191,36,0.1)); color: var(--accent-gold); box-shadow: 0 0 16px rgba(251,191,36,0.15); }
+.ds-stat-icon.green { background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(52,211,153,0.1)); color: var(--accent-green); box-shadow: 0 0 16px rgba(16,185,129,0.15); }
+.ds-stat-icon.pink { background: linear-gradient(135deg, rgba(236,72,153,0.25), rgba(244,114,182,0.1)); color: var(--accent-pink); box-shadow: 0 0 16px rgba(236,72,153,0.15); }
+.ds-stat-icon.blue { background: linear-gradient(135deg, rgba(96,165,250,0.25), rgba(96,165,250,0.1)); color: var(--accent-blue); box-shadow: 0 0 16px rgba(96,165,250,0.15); }
+
+.ds-stat-info { flex: 1; min-width: 0; }
+
+.ds-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.ds-stat-suffix {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 2px;
+}
+
+.ds-stat-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ===== DS SectionTitle ===== */
+.ds-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--space-md);
+}
+
+.ds-section-title .line {
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--gradient-purple-gold);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+  flex-shrink: 0;
+}
+
+.ds-section-title .line.gold {
+  background: linear-gradient(180deg, var(--accent-gold), var(--accent-gold-light));
+  box-shadow: var(--glow-gold);
+}
+
+.ds-section-title .line.green {
+  background: linear-gradient(180deg, var(--accent-green), var(--accent-blue));
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+}
+
+.ds-section-title .line.pink {
+  background: linear-gradient(180deg, var(--accent-pink), var(--primary));
+  box-shadow: 0 0 8px rgba(244, 114, 182, 0.4);
+}
+
+.ds-section-title h3 {
+  font-size: var(--space-md);
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.ds-section-title .extra {
+  margin-left: auto;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ===== DS EmptyState ===== */
+.ds-empty-state {
+  text-align: center;
+  padding: var(--space-xl) 20px;
+}
+
+.ds-empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.4;
+  filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.15));
+}
+
+.ds-empty-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ===== Neon Card（科技感卡片） ===== */
+.ds-neon-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-slow);
+}
+
+.ds-neon-card:hover {
+  border-color: var(--accent-gold);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.3),
+    0 0 20px rgba(212, 175, 55, 0.2),
+    0 0 40px rgba(168, 85, 247, 0.1);
+}
+
+.ds-neon-card::after {
+  content: '';
+  position: absolute;
+  top: -100%; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), var(--accent-gold), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.ds-neon-card:hover::after {
+  opacity: 1;
+  animation: scanDown 1.5s ease-in-out infinite;
+}
+
+/* ============================================
+   全局 Ant Design 组件覆盖 — 紫金磨砂风格
+   ============================================ */
+
+/* Ant Design Card 全局磨砂玻璃化 */
+.ant-card {
+  background: var(--bg-elevated) !important;
+  border: 1px solid var(--border-gold) !important;
+  border-radius: var(--radius-md) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: all var(--transition-normal);
+}
+
+.ant-card:hover {
+  border-color: var(--border-gold-strong) !important;
+  box-shadow: var(--shadow-md), var(--glow-gold) !important;
+}
+
+.ant-card-head {
+  border-bottom: 1px solid var(--border-gold) !important;
+  color: var(--accent-gold) !important;
+}
+
+.ant-card-head-title {
+  color: var(--accent-gold-light) !important;
+}
+
+/* Ant Design Button 紫金渐变 */
+.ant-btn-primary {
+  background: var(--gradient-btn-primary) !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.25) !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.ant-btn-primary:hover {
+  background: var(--gradient-btn-hover) !important;
+  box-shadow: 0 6px 24px rgba(168, 85, 247, 0.4), 0 0 12px rgba(212, 175, 55, 0.25) !important;
+  transform: translateY(-1px);
+}
+
+.ant-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* 次级按钮金色描边 */
+.ant-btn-default {
+  border-color: var(--border-gold) !important;
+  color: var(--accent-gold) !important;
+  background: rgba(212, 175, 55, 0.04) !important;
+}
+
+.ant-btn-default:hover {
+  border-color: var(--accent-gold) !important;
+  color: var(--accent-gold-light) !important;
+  background: rgba(212, 175, 55, 0.1) !important;
+  box-shadow: var(--glow-gold) !important;
+}
+
+/* Tag 紫金色调 */
+.ant-tag-gold, .ant-tag-purple {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Modal 磨砂玻璃 */
+.ant-modal-content {
+  background: var(--glass-bg-strong) !important;
+  backdrop-filter: var(--glass-blur-strong);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  border: 1px solid var(--border-gold) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.ant-modal-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border-gold) !important;
+}
+
+.ant-modal-title {
+  background: var(--gradient-title);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700 !important;
+}
+
+/* Progress 进度条紫金渐变 */
+.ant-progress-bg {
+  background: var(--gradient-purple-gold) !important;
+}
+
+/* ============================================
+   全局文字对比度保底 — 防止"阴影化"模糊
+   确保深色背景上文字最低可读性
+   ============================================ */
+
+/* Ant Design 次要文字提亮(不覆盖主文字,避免破坏 Title 等有意颜色) */
+.ant-typography-secondary {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* 列表项描述/标题 */
+.ant-list-item-meta-description {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.ant-list-item-meta-title > a {
+  color: #fff !important;
+}
+
+/* 卡片正文 */
+.ant-card-body {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 空状态描述 */
+.ant-empty-description {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* 统计组件 */
+.ant-statistic-content {
+  color: #fff !important;
+}
+
+.ant-statistic-title {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* 分割线文字 */
+.ant-divider-inner-text {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* 表单标签 */
+.ant-form-item-label > label {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* 描述列表 */
+.ant-descriptions-item-content {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ant-descriptions-item-label {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* ============================================
+   === 精致化升级:组件视觉细节 (借鉴 daisyUI)===
+   ============================================ */
+
+/* ===== 1. 按钮内高光 + 光泽 ===== */
+.btn-purple-gold {
+  box-shadow:
+    var(--btn-inner-highlight),
+    0 4px 20px rgba(168, 85, 247, 0.25);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+}
+
+.btn-purple-gold:hover {
+  box-shadow:
+    var(--btn-inner-highlight-strong),
+    0 6px 28px rgba(168, 85, 247, 0.4),
+    0 0 16px rgba(212, 175, 55, 0.25);
+  background-position: 100% 50%;
+}
+
+.btn-gold-outline {
+  box-shadow: var(--btn-inner-highlight);
+}
+
+.btn-gold-outline:hover {
+  box-shadow: var(--btn-inner-highlight-strong), var(--glow-gold);
+}
+
+/* Ant Design 主按钮高光 */
+.ant-btn-primary {
+  box-shadow:
+    var(--btn-inner-highlight),
+    0 4px 16px rgba(168, 85, 247, 0.25) !important;
+  background-size: 200% 200% !important;
+}
+
+.ant-btn-primary:hover {
+  box-shadow:
+    var(--btn-inner-highlight-strong),
+    0 6px 24px rgba(168, 85, 247, 0.4),
+    0 0 12px rgba(212, 175, 55, 0.25) !important;
+}
+
+/* ===== 2. 卡片金边扫描线 + 角落光晕 ===== */
+.ant-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.ant-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: var(--card-top-line);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ant-card:hover::before {
+  opacity: 1;
+  animation: card-scan-line 2.8s ease-in-out infinite;
+}
+
+@keyframes card-scan-line {
+  0%   { background-position: 200% 0; }
+  50%  { background-position: -100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.ant-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-corner-glow);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ant-card:hover::after {
+  opacity: 1;
+}
+
+/* DS SectionCard 也同步 */
+.ds-section-card {
+  position: relative;
+  overflow: hidden;
+}
+.ds-section-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: var(--card-top-line);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.ds-section-card:hover::before {
+  opacity: 1;
+  animation: card-scan-line 2.8s ease-in-out infinite;
+}
+.ds-section-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-corner-glow);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.ds-section-card:hover::after { opacity: 1; }
+
+/* ===== 3. Badge / Tag:左侧彩色竖条 + 磨砂胶囊 ===== */
+.ant-tag {
+  position: relative;
+  padding-left: 18px !important;
+  padding-right: 14px !important;
+  border-radius: var(--badge-radius) !important;
+  border: 1px solid var(--badge-border) !important;
+  background: var(--badge-bg-gold) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.9) !important;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* 左侧竖条 — 按Tag颜色分类 */
+.ant-tag::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--badge-line-gold);
+  box-shadow: 0 0 6px var(--badge-line-gold);
+}
+
+.ant-tag-purple {
+  background: var(--badge-bg-purple) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+}
+.ant-tag-purple::before {
+  background: var(--badge-line-purple);
+  box-shadow: 0 0 6px var(--badge-line-purple);
+}
+
+.ant-tag-green {
+  background: var(--badge-bg-green) !important;
+  border-color: rgba(52, 211, 153, 0.3) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.ant-tag-green::before {
+  background: var(--badge-line-green);
+  box-shadow: 0 0 6px var(--badge-line-green);
+}
+
+.ant-tag-blue {
+  background: var(--badge-bg-blue) !important;
+  border-color: rgba(96, 165, 250, 0.3) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.ant-tag-blue::before {
+  background: var(--badge-line-blue);
+  box-shadow: 0 0 6px var(--badge-line-blue);
+}
+
+.ant-tag-pink,
+.ant-tag-magenta {
+  background: var(--badge-bg-pink) !important;
+  border-color: rgba(244, 114, 182, 0.3) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.ant-tag-pink::before,
+.ant-tag-magenta::before {
+  background: var(--badge-line-pink);
+  box-shadow: 0 0 6px var(--badge-line-pink);
+}
+
+/* ===== 4. 进度条:双层渐变 + 高光条 ===== */
+.ant-progress-outer {
+  padding: 2px 0 !important;
+}
+
+.ant-progress-inner {
+  background: var(--progress-track) !important;
+  border-radius: 999px !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.ant-progress-bg {
+  background: var(--progress-fill) !important;
+  background-size: 200% 100% !important;
+  animation: progress-flow 4s linear infinite;
+  position: relative;
+  border-radius: 999px !important;
+  overflow: hidden;
+}
+
+/* 高光条 */
+.ant-progress-bg::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: var(--progress-fill-highlight);
+  border-radius: 999px 999px 0 0;
+  pointer-events: none;
+}
+
+/* 进度头闪光 */
+.ant-progress-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 20px; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45));
+  border-radius: 0 999px 999px 0;
+  pointer-events: none;
+}
+
+@keyframes progress-flow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ===== 5. StatCard 图标圆盘化 ===== */
+.ds-stat-card {
+  position: relative;
+  overflow: hidden;
+}
+.ds-stat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-corner-glow);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.ds-stat-card:hover::after { opacity: 1; }
+
+.ds-stat-icon {
+  width: var(--stat-icon-disc-size);
+  height: var(--stat-icon-disc-size);
+  border-radius: 50%;
+  background: var(--stat-icon-disc-bg);
+  border: 1px solid var(--stat-icon-disc-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ds-stat-icon::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(14px);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/* ===== 6. Section 标题双色渐变装饰线 ===== */
+.ds-section-title {
+  margin-bottom: var(--space-md);
+  padding-bottom: 12px;
+  position: relative;
+}
+
+.ds-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 180px;
+  height: 1.5px;
+  background: var(--section-title-line);
+  border-radius: 2px;
+}
+
+.ds-section-title .line {
+  width: 4px;
+  height: 22px;
+  border-radius: 3px;
+  background: var(--section-title-line-short) !important;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+  margin-right: 2px;
+}
+
+/* ===== 7. 通用 Hero 欢迎卡(首页/培养方案复用) ===== */
+.hero-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  background:
+    var(--hero-left-arc),
+    var(--card-corner-glow),
+    linear-gradient(135deg, rgba(124, 58, 237, 0.22), rgba(20, 20, 30, 0.85));
+  border: 1px solid var(--border-gold);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-md), var(--glow-purple);
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--card-top-line);
+  background-size: 200% 100%;
+  animation: card-scan-line 3.5s ease-in-out infinite;
+}
+
+.hero-card-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.hero-card-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-greeting {
+  font-size: 14px;
+  color: var(--accent-gold);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-title {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 10px;
+  background: var(--gradient-title);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+}
+
+.hero-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px 6px 18px;
+  border-radius: var(--badge-radius);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  position: relative;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--badge-border);
+  color: rgba(255, 255, 255, 0.9);
+}
+.hero-badge::before {
+  content: '';
+  position: absolute;
+  left: 6px; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 12px;
+  border-radius: 2px;
+  background: var(--badge-line-gold);
+  box-shadow: 0 0 6px var(--badge-line-gold);
+}
+.hero-badge.purple { background: var(--badge-bg-purple); border-color: rgba(168,85,247,0.3); }
+.hero-badge.purple::before { background: var(--badge-line-purple); box-shadow: 0 0 6px var(--badge-line-purple); }
+.hero-badge.green  { background: var(--badge-bg-green);  border-color: rgba(52,211,153,0.3); }
+.hero-badge.green::before  { background: var(--badge-line-green);  box-shadow: 0 0 6px var(--badge-line-green); }
+.hero-badge.blue   { background: var(--badge-bg-blue);   border-color: rgba(96,165,250,0.3); }
+.hero-badge.blue::before   { background: var(--badge-line-blue);   box-shadow: 0 0 6px var(--badge-line-blue); }
+.hero-badge.pink   { background: var(--badge-bg-pink);   border-color: rgba(244,114,182,0.3); }
+.hero-badge.pink::before   { background: var(--badge-line-pink);   box-shadow: 0 0 6px var(--badge-line-pink); }
+
+.hero-avatar-wrap {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.hero-avatar-ring {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--hero-right-avatar-ring);
+  background-size: 200% 200%;
+  animation: ring-rotate 6s linear infinite;
+  box-shadow: var(--glow-purple-strong);
+}
+
+@keyframes ring-rotate {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 200%; }
+}
+
+.hero-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a1030 0%, #2a1a55 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* ===== 响应式:Hero ===== */
+@media (max-width: 680px) {
+  .hero-card {
+    padding: 24px 20px;
+  }
+  .hero-card-body {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .hero-title { font-size: 24px; }
+  .hero-avatar-ring { width: 80px; height: 80px; }
+  .hero-avatar { font-size: 34px; }
+}
+
+/* ============================================
+   === 再升级: 字体排版节奏 + 卡片分层阴影 + 表单/Modal统一
+   ============================================ */
+
+/* ===== 1. 全局字体排版基准节奏 ===== */
+html, body {
+  font-size: var(--fz-md);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.01em;
+}
+
+/* Heading 节奏 — 更统一的字距/字重 */
+h1, h2, h3, h4, h5, h6 {
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  margin: 0;
+}
+h1 { font-size: var(--fz-4xl); font-weight: var(--fw-extrabold); }
+h2 { font-size: var(--fz-3xl); font-weight: var(--fw-extrabold); letter-spacing: -0.015em; }
+h3 { font-size: var(--fz-2xl); font-weight: var(--fw-bold); }
+h4 { font-size: var(--fz-xl); font-weight: var(--fw-semibold); }
+h5 { font-size: var(--fz-lg); font-weight: var(--fw-semibold); }
+
+/* 数字 — 使用 tabular-nums 保证对齐 */
+.digit, .num, [class*="-value"]:not([class*="-values"]) {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* ===== 2. Ant Card 升级 — 统一圆角 + 分层阴影 + 悬停动效 ===== */
+.ant-card {
+  border-radius: var(--radius-md) !important;
+  background:
+    var(--card-corner-glow),
+    var(--bg-elevated) !important;
+  border: 1px solid rgba(212, 175, 55, 0.14) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-layer-1);
+  transition:
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal),
+    border-color var(--transition-normal),
+    background var(--transition-normal);
+}
+.ant-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-gold-strong) !important;
+  box-shadow: var(--shadow-layer-2), var(--glow-gold) !important;
+  background:
+    var(--card-corner-glow),
+    var(--bg-elevated-hover) !important;
+}
+.ant-card-head {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  padding: 16px 24px !important;
+  min-height: 58px !important;
+}
+.ant-card-head-title {
+  font-size: var(--fz-lg) !important;
+  font-weight: var(--fw-semibold) !important;
+  letter-spacing: 0.2px;
+}
+.ant-card-body {
+  padding: 24px !important;
+  color: rgba(255, 255, 255, 0.9);
+}
+.ant-card-head-wrapper {
+  position: relative;
+  z-index: 2;
+}
+.ant-card-extra {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: var(--fz-sm);
+}
+
+/* ===== 3. 通用 Section 标题 (首页 h4, 培养方案子标题等) ===== */
+.home-section-title,
+.page-section-title,
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  padding-bottom: 14px;
+  position: relative;
+}
+.home-section-title::before,
+.page-section-title::before,
+.section-head::before {
+  content: '';
+  width: 4px;
+  height: 22px;
+  border-radius: 3px;
+  background: var(--section-title-line-short);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.45);
+  flex-shrink: 0;
+}
+.home-section-title::after,
+.page-section-title::after,
+.section-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  max-width: 40%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.55), rgba(168, 85, 247, 0.35), transparent);
+  border-radius: 1px;
+}
+.home-section-title h4,
+.home-section-title > .title,
+.page-section-title h4,
+.section-head h4 {
+  font-size: var(--fz-2xl);
+  font-weight: var(--fw-bold);
+  color: #fff;
+  margin: 0;
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.home-section-title .en-sub,
+.page-section-title .en-sub,
+.section-head .en-sub {
+  font-size: var(--fz-xs);
+  color: rgba(255, 255, 255, 0.42);
+  letter-spacing: var(--ls-extrawide);
+  text-transform: uppercase;
+  font-weight: var(--fw-bold);
+  padding-left: 12px;
+  margin-left: 2px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  line-height: 14px;
+}
+
+/* ===== 4. 首页核心系统卡配色升级 — 融入紫金配色降低饱和度 ===== */
+.core-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md) !important;
+  transition: all var(--transition-normal);
+  background:
+    var(--card-corner-glow),
+    rgba(18, 14, 38, 0.72) !important;
+  border: 1px solid rgba(168, 85, 247, 0.18) !important;
+}
+.core-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.38) !important;
+  box-shadow: var(--shadow-layer-2), var(--glow-purple) !important;
+}
+/* 顶部色块 — 降饱和融入紫金(替代原高饱和金/蓝/绿) */
+.core-card .cc-icon {
+  position: relative;
+  overflow: hidden;
+  padding: 24px 20px 20px;
+  margin: -1px;
+  margin-bottom: 0;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+/* 金(调酒/入口) — 紫金调古金 */
+.core-card.gold .cc-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(251, 191, 36, 0.35), transparent 60%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(212, 175, 55, 0.55));
+  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+}
+/* 蓝(台球/行为) — 紫金调靛青 */
+.core-card.blue .cc-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(96, 165, 250, 0.32), transparent 60%),
+    linear-gradient(135deg, rgba(124, 58, 237, 0.22), rgba(59, 130, 246, 0.55));
+  border-bottom: 1px solid rgba(96, 165, 250, 0.28);
+}
+/* 绿(股价模拟/行为) — 紫金调翡翠 */
+.core-card.green .cc-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(52, 211, 153, 0.3), transparent 60%),
+    linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(16, 185, 129, 0.5));
+  border-bottom: 1px solid rgba(52, 211, 153, 0.28);
+}
+/* 粉(人格/认知) */
+.core-card.pink .cc-icon {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(244, 114, 182, 0.32), transparent 60%),
+    linear-gradient(135deg, rgba(168, 85, 247, 0.22), rgba(236, 72, 153, 0.55));
+  border-bottom: 1px solid rgba(244, 114, 182, 0.28);
+}
+.core-card .cc-icon svg,
+.core-card .cc-icon [role="img"],
+.core-card .cc-icon .icon-glyph {
+  color: #fff !important;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+}
+/* 标签 Badge */
+.core-card .cc-tier {
+  font-size: var(--fz-xs);
+  letter-spacing: var(--ls-wide);
+  font-weight: var(--fw-bold);
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 3px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+.core-card.gold .cc-tier { border-color: rgba(251, 191, 36, 0.5); color: #fde68a; }
+.core-card.blue .cc-tier { border-color: rgba(96, 165, 250, 0.5); color: #bfdbfe; }
+.core-card.green .cc-tier { border-color: rgba(52, 211, 153, 0.5); color: #a7f3d0; }
+.core-card.pink .cc-tier { border-color: rgba(244, 114, 182, 0.5); color: #fbcfe8; }
+
+/* Layer 标签(Entrance Layer / Behavior Layer) */
+.core-card .cc-layer {
+  display: inline-block;
+  font-size: var(--fz-xxs);
+  letter-spacing: var(--ls-extrawide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: var(--fw-bold);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* 标题 */
+.core-card .cc-title {
+  font-size: var(--fz-2xl);
+  font-weight: var(--fw-bold);
+  color: #fff;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+  margin: 14px 20px 6px;
+}
+/* 描述 */
+.core-card .cc-desc {
+  font-size: var(--fz-sm);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: var(--lh-relaxed);
+  margin: 0 20px;
+}
+/* 底部进入按钮 */
+.core-card .cc-enter {
+  margin: 18px 20px 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fz-md);
+  font-weight: var(--fw-semibold);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(212, 175, 55, 0.08));
+  color: var(--accent-gold-light);
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow: var(--btn-inner-highlight);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+}
+.core-card .cc-enter:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(212, 175, 55, 0.18));
+  border-color: rgba(212, 175, 55, 0.55);
+  color: #fff;
+  box-shadow: var(--btn-inner-highlight-strong), 0 0 14px rgba(212, 175, 55, 0.25);
+  transform: translateX(3px);
+}
+
+/* ===== 5. Ant Modal 统一玻璃拟态 ===== */
+.ant-modal-mask {
+  background: rgba(5, 3, 15, 0.7) !important;
+  backdrop-filter: blur(6px);
+}
+.ant-modal-content {
+  background:
+    var(--card-corner-glow),
+    rgba(22, 16, 46, 0.92) !important;
+  border: 1px solid rgba(212, 175, 55, 0.22) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-layer-3) !important;
+  backdrop-filter: var(--glass-blur-strong) !important;
+  -webkit-backdrop-filter: var(--glass-blur-strong) !important;
+}
+.ant-modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  padding: 20px 24px !important;
+}
+.ant-modal-title {
+  font-size: var(--fz-xl) !important;
+  letter-spacing: 0.3px;
+}
+.ant-modal-body {
+  padding: 24px !important;
+  color: rgba(255, 255, 255, 0.9);
+}
+.ant-modal-close-x {
+  color: rgba(255, 255, 255, 0.55) !important;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+}
+.ant-modal-close-x:hover {
+  color: #fff !important;
+  transform: rotate(90deg);
+}
+.ant-modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  padding: 14px 24px !important;
+}
+
+/* ===== 6. Ant Input / Select / Form 统一玻璃拟态 ===== */
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-number-input,
+.ant-picker,
+.ant-cascader-picker,
+.ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.ant-select-selector {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  transition: all var(--transition-fast) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.ant-input::placeholder,
+.ant-select-selection-placeholder,
+.ant-picker-input > input::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+.ant-input-affix-wrapper .anticon,
+.ant-input-prefix,
+.ant-input-suffix,
+.ant-select-arrow,
+.ant-picker-suffix {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+.ant-input:hover,
+.ant-input-affix-wrapper:hover,
+.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):hover .ant-select-selector,
+.ant-picker:hover,
+.ant-select-selector:hover {
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+}
+.ant-input:focus,
+.ant-input-affix-wrapper-focused,
+.ant-select-focused:not(.ant-select-disabled):not(.ant-select-customize-input) .ant-select-selector,
+.ant-picker-focused,
+.ant-select-selector:focus-within {
+  border-color: rgba(212, 175, 55, 0.5) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow:
+    0 0 0 3px rgba(168, 85, 247, 0.14),
+    0 0 16px rgba(168, 85, 247, 0.18),
+    inset 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+.ant-input-number,
+.ant-picker {
+  border-radius: 10px !important;
+}
+.ant-form-item-label > label {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-weight: var(--fw-medium) !important;
+  font-size: var(--fz-md) !important;
+}
+.ant-select-dropdown,
+.ant-picker-dropdown,
+.ant-dropdown-menu {
+  background: rgba(22, 16, 46, 0.96) !important;
+  border: 1px solid rgba(168, 85, 247, 0.22) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-layer-2) !important;
+  backdrop-filter: var(--glass-blur-strong) !important;
+}
+.ant-select-item,
+.ant-dropdown-menu-item,
+.ant-select-item-option-content,
+.ant-picker-cell-inner {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: var(--gradient-purple-gold-soft) !important;
+  color: #fff !important;
+}
+.ant-select-item-option-active:not(.ant-select-item-option-disabled),
+.ant-dropdown-menu-item:hover,
+.ant-picker-cell:hover .ant-picker-cell-inner {
+  background: rgba(168, 85, 247, 0.18) !important;
+  color: #fff !important;
+}
+
+/* ===== 7. 页面通用容器 — 最大宽度限制 + 居中 ===== */
+.page-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ===== 8. 动画:页面首屏卡片入场(可选,用类 opt-in) ===== */
+.anim-fade-up > * {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.anim-fade-up > *:nth-child(1) { animation-delay: 0.02s; }
+.anim-fade-up > *:nth-child(2) { animation-delay: 0.08s; }
+.anim-fade-up > *:nth-child(3) { animation-delay: 0.14s; }
+.anim-fade-up > *:nth-child(4) { animation-delay: 0.20s; }
+.anim-fade-up > *:nth-child(5) { animation-delay: 0.26s; }
+.anim-fade-up > *:nth-child(6) { animation-delay: 0.32s; }
+.anim-fade-up > *:nth-child(7) { animation-delay: 0.38s; }
+.anim-fade-up > *:nth-child(8) { animation-delay: 0.44s; }
+
+@keyframes fade-up {
+  to { opacity: 1; transform: none; }
+}
+
+/* ===== 9. 空态/禁用/加载时的文字统一 ===== */
+.ant-spin-dot-item {
+  background-color: var(--primary) !important;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+}
+.ant-empty-image svg path { fill: rgba(168, 85, 247, 0.35); }
+.ant-empty-description {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* ============================================
+   === 白底修复补丁: Alert / Statistic / Tabs / Steps / Result / Timeline
+   ============================================ */
+
+/* ===== Alert 组件 — 彻底去除白底 ===== */
+.ant-alert {
+  background: rgba(20, 18, 40, 0.65) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  backdrop-filter: blur(8px);
+  padding: 12px 16px !important;
+}
+.ant-alert-message { color: #fff !important; font-weight: var(--fw-semibold); }
+.ant-alert-description { color: rgba(255, 255, 255, 0.78) !important; margin-top: 4px; line-height: 1.6; }
+.ant-alert-info {
+  background:
+    linear-gradient(135deg, rgba(96, 165, 250, 0.18), rgba(96, 165, 250, 0.04)),
+    rgba(18, 16, 42, 0.6) !important;
+  border-color: rgba(96, 165, 250, 0.3) !important;
+}
+.ant-alert-info .ant-alert-icon { color: #60a5fa !important; }
+.ant-alert-success {
+  background:
+    linear-gradient(135deg, rgba(52, 211, 153, 0.18), rgba(52, 211, 153, 0.04)),
+    rgba(18, 16, 42, 0.6) !important;
+  border-color: rgba(52, 211, 153, 0.3) !important;
+}
+.ant-alert-success .ant-alert-icon { color: #34d399 !important; }
+.ant-alert-warning {
+  background:
+    linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.04)),
+    rgba(18, 16, 42, 0.6) !important;
+  border-color: rgba(251, 191, 36, 0.35) !important;
+}
+.ant-alert-warning .ant-alert-icon { color: #fbbf24 !important; }
+.ant-alert-error {
+  background:
+    linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(239, 68, 68, 0.04)),
+    rgba(18, 16, 42, 0.6) !important;
+  border-color: rgba(239, 68, 68, 0.38) !important;
+}
+.ant-alert-error .ant-alert-icon { color: #ef4444 !important; }
+
+/* ===== Ant Statistic — 去除白底 + 紫金数字 ===== */
+.ant-statistic {
+  background: transparent !important;
+}
+.ant-statistic-content {
+  color: #fff !important;
+  font-family: inherit;
+  line-height: 1.15;
+}
+.ant-statistic-content-value {
+  background: var(--gradient-title);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: var(--fw-extrabold) !important;
+  letter-spacing: -0.02em;
+}
+.ant-statistic-title {
+  color: rgba(255, 255, 255, 0.62) !important;
+  font-size: var(--fz-sm) !important;
+  letter-spacing: 0.8px;
+  font-weight: var(--fw-medium);
+  margin-bottom: 6px;
+}
+.ant-statistic-content-suffix,
+.ant-statistic-content-prefix {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* ===== Ant Tabs — 去除白底/灰底 ===== */
+.ant-tabs-nav {
+  background: transparent !important;
+  margin-bottom: 16px !important;
+}
+.ant-tabs-tab {
+  color: rgba(255, 255, 255, 0.55) !important;
+  font-weight: var(--fw-medium) !important;
+  letter-spacing: 0.4px;
+  padding: 10px 16px !important;
+  transition: all var(--transition-fast);
+  background: transparent !important;
+}
+.ant-tabs-tab:hover { color: rgba(255, 255, 255, 0.9) !important; }
+.ant-tabs-tab-active {
+  color: #fff !important;
+  font-weight: var(--fw-semibold) !important;
+}
+.ant-tabs-ink-bar {
+  background: var(--gradient-purple-gold) !important;
+  height: 3px !important;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.55);
+}
+.ant-tabs-content-holder {
+  background: transparent !important;
+  padding: 0;
+}
+.ant-tabs-tabpane {
+  background: transparent !important;
+}
+.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 10px 10px 0 0 !important;
+  margin-right: 4px;
+}
+.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active {
+  background: var(--gradient-purple-gold-soft) !important;
+  border-color: rgba(212, 175, 55, 0.3) !important;
+  color: #fff !important;
+}
+.ant-tabs-card > .ant-tabs-content-holder {
+  background: rgba(20, 18, 38, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 0 12px 12px 12px !important;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* ===== Steps / Result / Divider 白底修复 ===== */
+.ant-steps-item-title,
+.ant-steps-item-subtitle { color: #fff !important; }
+.ant-steps-item-description { color: rgba(255, 255, 255, 0.6) !important; }
+.ant-steps-item-process .ant-steps-item-icon {
+  background: var(--gradient-purple-gold) !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.35);
+}
+.ant-steps-item-finish .ant-steps-item-icon {
+  background: rgba(52, 211, 153, 0.18) !important;
+  border-color: rgba(52, 211, 153, 0.4) !important;
+}
+.ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon { color: #34d399 !important; }
+.ant-steps-item-wait .ant-steps-item-icon {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.ant-result { padding: 32px 24px !important; }
+.ant-result-title { color: #fff !important; font-size: 22px !important; }
+.ant-result-subtitle { color: rgba(255, 255, 255, 0.7) !important; line-height: 1.6; }
+.ant-divider { border-color: rgba(255, 255, 255, 0.08) !important; }
+.ant-divider-inner-text {
+  color: rgba(255, 255, 255, 0.78) !important;
+  background: transparent !important;
+}
+
+/* ===== Timeline 组件 — 修复灰/白底 ===== */
+.ant-timeline-item-head {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(168, 85, 247, 0.5) !important;
+}
+.ant-timeline-item-head-blue {
+  background: var(--gradient-purple-gold) !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+.ant-timeline-item-tail { border-color: rgba(255, 255, 255, 0.08) !important; border-left-width: 2px; }
+.ant-timeline-item-content { color: rgba(255, 255, 255, 0.88); line-height: 1.65; }
+
+/* ============================================================
+   === 全局页面质感统一补丁: 首页紫金磨砂 → 应用到所有页面
+   (覆盖所有页面专属的高饱和彩色渐变/背景/按钮)
+   ============================================================ */
+
+/* === 1) 全局渐变文字 — 统一紫金(紫→粉→金) === */
+[class*="-page"] [class*="gradient-text"],
+[class*="-page"] [class*="text-gradient"],
+[class*="-page"] .gradient-text,
+[class*="Page"] .gradient-text,
+.page-title-gradient {
+  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #fbbf24 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* === 2) 所有页面 Hero 卡 / PageHeader 背景统一为 — 紫金磨砂低饱和 (类似 dashboard-hero) === */
+[class*="-page"] [class*="-hero-card"],
+[class*="-page"] [class*="page-hero"],
+[class*="-page"] [class*="-page-header"],
+.psychology-hero,
+.mindspeak-hero,
+.billiards-hero-card,
+.billiards-page-header,
+.bartender-page-header,
+.fitness-page-header,
+.fitness-hero-card,
+.music-page-header,
+.music-hero-card,
+.poker-page-header,
+.poker-hero-card,
+.gametable-page-header,
+.gametable-hero-card,
+.entertainment-hero-card {
+  background:
+    linear-gradient(135deg, rgba(124, 58, 237, 0.18) 0%, rgba(236, 72, 153, 0.12) 45%, rgba(251, 191, 36, 0.1) 100%),
+    rgba(18, 16, 40, 0.52) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.28) !important;
+  border-radius: 18px !important;
+  position: relative;
+  overflow: hidden;
+}
+/* Hero 顶部渐变描边 */
+[class*="-page"] [class*="-hero-card"]::before,
+[class*="-page"] [class*="page-hero"]::before,
+[class*="-page"] [class*="-page-header"]::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.55), rgba(236, 72, 153, 0.45), rgba(212, 175, 55, 0.55), transparent);
+  pointer-events: none;
+}
+
+/* === 3) 所有页面 主按钮 / 快速启动按钮 — 统一紫金低饱和渐变(非高饱和青橙红) === */
+[class*="-page"] [class*="quick-start-btn"],
+[class*="-page"] [class*="-btn-primary"],
+[class*="-page"] [class*="primary-btn"],
+.billiards-page .quick-start-btn,
+.bartender-page .quick-start-btn,
+.fitness-page .quick-start-btn,
+.music-page .quick-start-btn,
+.poker-page .quick-start-btn,
+.gametable-page .quick-start-btn,
+.primary-action-btn {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.92), rgba(212, 175, 55, 0.88)) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  box-shadow:
+    0 4px 14px rgba(168, 85, 247, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+  color: #fff !important;
+  transition: all var(--transition-normal) !important;
+}
+[class*="-page"] [class*="quick-start-btn"]:hover,
+[class*="-page"] [class*="-btn-primary"]:hover,
+[class*="-page"] [class*="primary-btn"]:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 1), rgba(212, 175, 55, 0.95)) !important;
+  box-shadow:
+    0 6px 22px rgba(168, 85, 247, 0.42),
+    0 0 18px rgba(212, 175, 55, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
+  transform: translateY(-2px);
+}
+
+/* === 4) 所有页面专属 Tabs — 统一紫金磨砂背景 + 选中紫金渐变 + 饱和度降低 === */
+[class*="-tabs"] .ant-tabs-nav,
+.billiards-tabs .ant-tabs-nav,
+.bartender-tabs .ant-tabs-nav,
+.fitness-tabs .ant-tabs-nav,
+.music-tabs .ant-tabs-nav,
+.poker-tabs .ant-tabs-nav {
+  background: rgba(30, 19, 64, 0.35) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(168, 85, 247, 0.16) !important;
+  border-radius: 12px !important;
+  padding: 4px;
+}
+[class*="-tabs"] .ant-tabs-tab,
+.billiards-tabs .ant-tabs-tab,
+.bartender-tabs .ant-tabs-tab {
+  border-radius: 8px !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  transition: all var(--transition-fast) !important;
+}
+[class*="-tabs"] .ant-tabs-tab:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.04);
+}
+[class*="-tabs"] .ant-tabs-tab-active {
+  /* 选中态: 紫金低饱和渐变，不做高饱和青/橙 */
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.32), rgba(212, 175, 55, 0.22)) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.22);
+}
+[class*="-tabs"] .ant-tabs-ink-bar { display: none !important; }
+
+/* === 5) 所有页面卡片/模块容器 — 统一玻璃磨砂暗色 + 紫金边角光晕 + 分层阴影 === */
+[class*="-page"] [class*="-card"]:not(.ant-card):not(.ant-statistic):not(.system-card):not(.module-card):not(.stat-card):not(.home-stat-card):not(.timeline-card):not(.task-reminder-card):not(.story-entry-card):not(.story-option-card):not(.status-anchor-card):not(.auth-card):not([class*="hero"]),
+[class*="-page"] [class*="-panel"],
+[class*="-page"] [class*="-block"],
+[class*="-page"] [class*="-stat"],
+.question-card,
+.result-card,
+.step-card,
+.dimension-card,
+.drink-card,
+.mbti-card,
+.drill-card {
+  background:
+    radial-gradient(280px 80px at 0% 0%, rgba(168, 85, 247, 0.14), transparent 60%),
+    rgba(18, 16, 40, 0.52) !important;
+  backdrop-filter: blur(16px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--shadow-layer-1) !important;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+}
+[class*="-page"] [class*="-card"]:hover,
+[class*="-page"] [class*="-panel"]:hover,
+[class*="-page"] [class*="-block"]:hover,
+.question-card:hover,
+.result-card:hover,
+.step-card:hover,
+.dimension-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(168, 85, 247, 0.28) !important;
+  box-shadow: var(--shadow-layer-2) !important;
+}
+
+/* === 6) 全局页面专属内联纯色背景的覆盖 (饱和度降低) === */
+/* 针对台球:把青色高饱和 hero-title/emoji 替换为紫金调 */
+.billiards-hero-greeting,
+.fitness-hero-greeting,
+.music-hero-greeting,
+.poker-hero-greeting {
+  color: rgba(212, 175, 55, 0.95) !important;
+  text-shadow: 0 0 18px rgba(212, 175, 55, 0.25);
+}
+/* 页面 hero 内的 stat box 小卡片 — 磨砂统一 */
+[class*="-hero-stat"],
+[class*="-hero-stats"] > div,
+.hero-stat-box {
+  background: rgba(30, 19, 64, 0.42) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
+  border-radius: 14px !important;
+  padding: 14px 20px !important;
+}
+[class*="-hero-stat"] .stat-label,
+[class*="-hero-stats"] > div .stat-label {
+  color: rgba(255, 255, 255, 0.62) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.6px;
+}
+[class*="-hero-stat"] .stat-value,
+[class*="-hero-stats"] > div .stat-value {
+  background: linear-gradient(135deg, #a855f7, #fbbf24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}

@@ -1,0 +1,11 @@
+/* ============================================
+   Y.Mine Design System — App.css (入口)
+   原始 793 行已拆分为：
+   → styles/layout.css     布局骨架
+   → styles/home.css       首页专属
+   → styles/components.css 通用组件 + 玻璃拟态 + 弹窗
+   ============================================ */
+
+@import './styles/layout.css';
+@import './styles/home.css';
+@import './styles/components.css';

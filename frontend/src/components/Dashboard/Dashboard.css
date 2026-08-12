@@ -1,0 +1,402 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.dashboard-card {
+  background: rgba(20, 18, 37, 0.5) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(167, 139, 250, 0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-card .ant-card-body {
+  padding: 16px !important;
+}
+
+.dashboard-card .ant-card-head {
+  border-bottom: 1px solid rgba(167, 139, 250, 0.08) !important;
+}
+
+.dashboard-card .ant-card-head-title {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.dashboard-empty {
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-empty span {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.kelly-display {
+  padding: 8px 0;
+}
+
+.kelly-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.kelly-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: #a78bfa;
+}
+
+.kelly-label {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(167, 139, 250, 0.08);
+}
+
+.metric-item {
+  text-align: center;
+}
+
+.metric-label {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.metric-value.win {
+  color: #22c55e;
+}
+
+.metric-value.tension {
+  color: #fbbf24;
+}
+
+.metric-value.good {
+  color: #22c55e;
+}
+
+.metric-value.bad {
+  color: #fca5a5;
+}
+
+/* Bridge Panel */
+.bridge-panel {
+  border-color: rgba(167, 139, 250, 0.2) !important;
+}
+
+.bridge-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.bridge-item {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bridge-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.bridge-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.bridge-value.good {
+  color: #86efac;
+}
+
+.bridge-value.bad {
+  color: #fca5a5;
+}
+
+/* Info List */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.info-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.info-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* 心情盘面板 */
+.mood-panel .mood-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mood-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.3s;
+}
+
+.mood-item:hover {
+  background: rgba(167, 139, 250, 0.08);
+  transform: translateY(-2px);
+}
+
+.mood-emoji {
+  font-size: 20px;
+}
+
+.mood-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.mood-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.mood-high {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.mood-mid {
+  background: rgba(251, 191, 36, 0.06);
+  border: 1px solid rgba(251, 191, 36, 0.15);
+}
+
+.mood-low {
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+}
+
+/* 偏差标签 */
+.bias-tags {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 10px;
+}
+
+.bias-label {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 6px;
+}
+
+.bias-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bias-tag {
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+}
+
+/* 下注模式 */
+.behavior-info {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(167, 139, 250, 0.05);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.behavior-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 凯利修正对比 */
+.kelly-display {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.kelly-section {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.kelly-section.adjusted {
+  background: rgba(139, 92, 246, 0.06);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.kelly-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.kelly-label.small {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mbti-tag {
+  font-size: 10px !important;
+  padding: 0 6px !important;
+  line-height: 18px !important;
+}
+
+.kelly-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kelly-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'SF Mono', monospace;
+}
+
+.kelly-number.adjusted {
+  color: #a78bfa;
+}
+
+.kelly-tag {
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+}
+
+.kelly-diff {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.kelly-diff.up {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.kelly-diff.down {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.kelly-correction-info {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.kelly-correction-info span {
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  font-family: 'SF Mono', monospace;
+}
+
+/* 宽屏：仪表盘 2 列卡片，防溢出 */
+@media (min-width: 1400px) {
+  .game-container {
+    grid-template-columns: 1fr 680px !important;
+  }
+
+  .dashboard-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .dashboard-container > .dashboard-card:first-child,
+  .dashboard-container > .dashboard-card:nth-child(2) {
+    grid-column: span 2;
+  }
+}
+
+/* 中等屏：仪表盘稍宽 */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .game-container {
+    grid-template-columns: 1fr 360px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .bridge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mood-panel .mood-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kelly-number {
+    font-size: 22px !important;
+  }
+}

@@ -1,0 +1,126 @@
+/**
+ * VectorRadar · 深空紫金语系
+ */
+
+:root {
+  --vr-gold: #D4AF37;
+  --vr-gold-soft: rgba(212, 175, 55, 0.4);
+  --vr-purple: #8b5cf6;
+  --vr-purple-soft: rgba(139, 92, 246, 0.18);
+  --vr-bg-glass: rgba(30, 19, 64, 0.55);
+  --vr-border-soft: rgba(139, 92, 246, 0.18);
+  --vr-text: rgba(255, 255, 255, 0.92);
+  --vr-text-dim: rgba(255, 255, 255, 0.6);
+  --vr-text-muted: rgba(255, 255, 255, 0.4);
+}
+
+.vector-radar {
+  position: relative;
+  padding: 20px 20px 16px;
+  background: var(--vr-bg-glass);
+  border: 1px solid var(--vr-border-soft);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.vector-radar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 0% 100%, rgba(139, 92, 246, 0.08) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.vector-radar__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.vector-radar__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--vr-purple), var(--vr-gold));
+  color: #1a0f2e;
+  font-size: 11px;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.vector-radar__eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--vr-text-muted);
+  text-transform: uppercase;
+}
+
+.vector-radar__title {
+  font-size: 14px;
+  color: var(--vr-gold);
+  letter-spacing: 0.1em;
+  margin: 2px 0 0;
+  font-weight: 500;
+}
+
+.vector-radar__chart {
+  position: relative;
+}
+
+.vector-radar__legend-hint {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 4px;
+  position: relative;
+}
+
+.vector-radar__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--vr-text-dim);
+  letter-spacing: 0.05em;
+}
+
+.vector-radar__legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.vector-radar--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--vr-bg-glass);
+  border: 1px solid var(--vr-border-soft);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.vector-radar__empty-text {
+  color: var(--vr-text-muted);
+  font-size: 13px;
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .vector-radar {
+    padding: 16px 12px 12px;
+  }
+
+  .vector-radar__legend-hint {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

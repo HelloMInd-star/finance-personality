@@ -1,0 +1,794 @@
+/* ========================================
+   MBTI 企业家酒局 - 暗色紫金风格
+   与 PersonaBartender 视觉语言保持一致
+   ======================================== */
+
+.mbt-party {
+  /* 嵌套在 .persona-bartender 内,不再重复背景 */
+  padding: 40px 24px;
+}
+
+/* === 步骤头部 === */
+
+.mbt-step-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.mbt-step-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 24px rgba(255, 215, 0, 0.2);
+}
+
+.mbt-step-header p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* === Step 0: 酒局场景 === */
+
+.mbt-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 460px;
+  padding: 48px 32px;
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.mbt-scene-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 0 24px rgba(168, 85, 247, 0.4));
+  animation: mbt-glow 3s ease-in-out infinite;
+}
+
+@keyframes mbt-glow {
+  0%, 100% { filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.3)); }
+  50% { filter: drop-shadow(0 0 32px rgba(255, 215, 0, 0.45)); }
+}
+
+.mbt-scene-text {
+  font-size: 16px;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 40px;
+  font-style: italic;
+  position: relative;
+  padding: 24px 28px;
+  background: rgba(168, 85, 247, 0.04);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 12px;
+}
+
+.mbt-scene-text::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20px;
+  bottom: 20px;
+  width: 3px;
+  background: linear-gradient(180deg, #a855f7, #ffd700);
+  border-radius: 2px;
+}
+
+.mbt-next-btn {
+  background: linear-gradient(135deg, #a855f7, #ffd700) !important;
+  border: none !important;
+  height: 48px;
+  padding: 0 40px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(168, 85, 247, 0.3);
+  transition: all 0.3s;
+}
+
+.mbt-next-btn:hover {
+  box-shadow: 0 6px 32px rgba(168, 85, 247, 0.5);
+  transform: translateY(-2px);
+}
+
+/* === Step 1: 基酒网格 === */
+
+.mbt-spirit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.mbt-spirit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mbt-spirit-card:hover {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
+}
+
+.mbt-spirit-card.selected {
+  background: rgba(168, 85, 247, 0.12);
+  border-width: 2px;
+  box-shadow: 0 0 24px rgba(168, 85, 247, 0.3);
+}
+
+.mbt-spirit-icon {
+  font-size: 36px;
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.25));
+}
+
+.mbt-spirit-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.mbt-spirit-mbti {
+  font-size: 12px;
+  color: #a855f7;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.mbt-spirit-traits {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+}
+
+/* === Step 2/3: 选项卡片（饮用方式 / 雪茄） === */
+
+.mbt-option-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.mbt-option-row.two-col {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 640px;
+}
+
+.mbt-option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 32px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mbt-option-card:hover {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
+}
+
+.mbt-option-card.selected {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: #a855f7;
+  border-width: 2px;
+  box-shadow: 0 0 24px rgba(168, 85, 247, 0.3);
+}
+
+.mbt-option-icon {
+  font-size: 40px;
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.25));
+}
+
+.mbt-option-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.mbt-option-tag {
+  font-size: 12px;
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.mbt-option-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  max-width: 220px;
+}
+
+/* === Step 4: 对话环节 === */
+
+.mbt-dialogue-scene {
+  background: rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.78);
+  font-style: italic;
+  position: relative;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mbt-dialogue-scene::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20px;
+  bottom: 20px;
+  width: 3px;
+  background: linear-gradient(180deg, #a855f7, #ffd700);
+  border-radius: 2px;
+}
+
+.mbt-dialogue-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.mbt-dialogue-option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 15px;
+}
+
+.mbt-dialogue-option:hover {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.3);
+  transform: translateX(4px);
+}
+
+.mbt-dialogue-option.selected {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: #a855f7;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.2);
+}
+
+.mbt-dialogue-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 700;
+  font-size: 14px;
+  color: #a855f7;
+  flex-shrink: 0;
+}
+
+.mbt-dialogue-option.selected .mbt-dialogue-letter {
+  background: #a855f7;
+  color: #fff;
+}
+
+.mbt-dialogue-text {
+  flex: 1;
+  line-height: 1.5;
+}
+
+.mbt-dialogue-style {
+  font-size: 11px !important;
+  padding: 2px 10px !important;
+  border-radius: 10px !important;
+  background: rgba(255, 215, 0, 0.08) !important;
+  border-color: rgba(255, 215, 0, 0.2) !important;
+  color: #ffd700 !important;
+  flex-shrink: 0;
+}
+
+/* === Step 5: 酒局报告 === */
+
+.mbt-report {
+  max-width: 720px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.06), rgba(255, 215, 0, 0.03));
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(168, 85, 247, 0.1);
+}
+
+.mbt-report-header {
+  padding: 32px 28px 24px;
+  text-align: center;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mbt-report-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 24px rgba(255, 215, 0, 0.2);
+}
+
+.mbt-report-spirit {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.mbt-report-body {
+  padding: 28px;
+}
+
+.mbt-report-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+  flex-wrap: wrap;
+}
+
+.mbt-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  min-width: 72px;
+}
+
+.mbt-value {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.mbt-match {
+  margin-left: auto;
+  font-size: 13px;
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.mbt-report-quote {
+  display: flex;
+  gap: 12px;
+  padding: 24px 20px;
+  margin: 20px 0;
+  background: rgba(255, 215, 0, 0.04);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 12px;
+  position: relative;
+}
+
+.mbt-quote-mark {
+  font-size: 48px;
+  color: rgba(255, 215, 0, 0.3);
+  line-height: 0.8;
+  font-family: Georgia, serif;
+  flex-shrink: 0;
+}
+
+.mbt-quote-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.78);
+  font-style: italic;
+  align-self: center;
+}
+
+.mbt-report-dialogue {
+  padding: 18px 20px;
+  background: rgba(168, 85, 247, 0.05);
+  border-left: 3px solid #a855f7;
+  border-radius: 0 12px 12px 0;
+  margin: 20px 0;
+}
+
+.mbt-dialogue-label {
+  font-size: 12px;
+  color: #a855f7;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.mbt-dialogue-response {
+  font-size: 15px;
+  color: #fff;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.mbt-dialogue-source {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: italic;
+}
+
+.mbt-report-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 0 8px;
+}
+
+.mbt-trait-tag {
+  font-size: 12px !important;
+  padding: 3px 12px !important;
+  border-radius: 12px !important;
+  background: rgba(168, 85, 247, 0.1) !important;
+  border-color: rgba(168, 85, 247, 0.25) !important;
+  color: #c4b5fd !important;
+}
+
+/* === 3D 分子结构区块 === */
+
+.mbt-report-molecule {
+  margin: 24px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.mbt-molecule-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.mbt-molecule-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #a855f7;
+  letter-spacing: 0.5px;
+}
+
+.mbt-molecule-formula {
+  font-size: 13px;
+  color: #ffd700;
+  font-family: 'Courier New', monospace;
+  background: rgba(255, 215, 0, 0.08);
+  padding: 2px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.mbt-molecule-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.mbt-molecule-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 340px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}
+
+/* === 调酒配方卡片 === */
+
+.mbt-report-recipe {
+  margin: 20px 0;
+  padding: 22px 24px;
+  background: rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(168, 85, 247, 0.18);
+  border-radius: 14px;
+  position: relative;
+}
+
+.mbt-report-recipe::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20px;
+  bottom: 20px;
+  width: 3px;
+  background: linear-gradient(180deg, #a855f7, #ffd700);
+  border-radius: 2px;
+}
+
+.mbt-recipe-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+
+.mbt-recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 20px;
+  margin-bottom: 16px;
+}
+
+.mbt-recipe-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mbt-recipe-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.mbt-recipe-value {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+}
+
+.mbt-recipe-formula {
+  font-family: 'Courier New', monospace;
+  color: #ffd700;
+}
+
+.mbt-recipe-flavor-note {
+  padding: 14px 16px;
+  background: rgba(255, 215, 0, 0.04);
+  border: 1px dashed rgba(255, 215, 0, 0.2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mbt-recipe-note-label {
+  font-size: 11px;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.mbt-recipe-note-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+/* 脉轮联动洞察卡片 */
+.mbt-report-chakra {
+  margin-top: 16px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, rgba(123, 76, 255, 0.08), rgba(212, 175, 55, 0.04));
+  border: 1px solid rgba(123, 76, 255, 0.25);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mbt-report-chakra::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #7B4CFF, #D4AF37);
+}
+
+.mbt-chakra-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #c4b5fd;
+  letter-spacing: 0.5px;
+}
+
+.mbt-chakra-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.mbt-chakra-label {
+  font-size: 11px;
+  color: rgba(196, 181, 253, 0.7);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  min-width: 64px;
+}
+
+.mbt-chakra-value {
+  color: #D4AF37;
+  font-weight: 600;
+  padding: 2px 10px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 6px;
+}
+
+.mbt-chakra-insight {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  flex: 1;
+  min-width: 200px;
+}
+
+.mbt-report-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 28px;
+  border-top: 1px solid rgba(168, 85, 247, 0.15);
+  background: rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+}
+
+.mbt-action-btn {
+  border-radius: 10px !important;
+  height: 40px;
+  padding: 0 20px;
+}
+
+.mbt-restart {
+  background: linear-gradient(135deg, #a855f7, #7c3aed) !important;
+  border: none !important;
+}
+
+/* === 进度条 === */
+
+.mbt-progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 640px;
+  margin: 40px auto 0;
+  padding: 0 8px;
+}
+
+.mbt-back-btn {
+  flex-shrink: 0;
+  border-radius: 8px !important;
+}
+
+.mbt-progress-bar .ant-progress {
+  flex: 1;
+}
+
+.mbt-progress-bar .ant-progress-text {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 12px !important;
+}
+
+/* === 响应式 === */
+
+@media (max-width: 768px) {
+  .mbt-spirit-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mbt-option-row {
+    grid-template-columns: 1fr;
+  }
+
+  .mbt-option-row.two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .mbt-step-header h2 {
+    font-size: 20px;
+  }
+
+  .mbt-scene-text {
+    font-size: 14px;
+    padding: 20px;
+  }
+
+  .mbt-report-row {
+    flex-direction: row;
+  }
+
+  .mbt-match {
+    margin-left: 0;
+  }
+
+  .mbt-recipe-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mbt-molecule-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mbt-party {
+    padding: 24px 16px;
+  }
+
+  .mbt-spirit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mbt-spirit-card {
+    flex-direction: row;
+    text-align: left;
+    padding: 16px;
+  }
+
+  .mbt-spirit-icon {
+    font-size: 28px;
+  }
+
+  .mbt-report-actions {
+    flex-direction: column;
+  }
+
+  .mbt-action-btn {
+    width: 100%;
+  }
+
+  .mbt-dialogue-option {
+    flex-wrap: wrap;
+  }
+}

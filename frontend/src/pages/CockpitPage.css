@@ -1,0 +1,449 @@
+/* ===== CockpitPage 驾驶舱 ===== */
+
+.cockpit-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 64px);
+  background: var(--bg-deep);
+  overflow: auto;
+}
+
+/* 星云背景 */
+.cockpit-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(168, 85, 247, 0.12), transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(212, 175, 55, 0.08), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cockpit-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(168, 85, 247, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 90%);
+}
+
+/* ===== 顶部导航 ===== */
+
+.cockpit-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: var(--glass-blur);
+}
+
+.cockpit-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.cockpit-logo-text {
+  font-size: var(--fz-xl);
+  font-weight: var(--fw-bold);
+  background: var(--gradient-title-purple-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cockpit-logo-sub {
+  font-size: var(--fz-xxs);
+  letter-spacing: var(--ls-extrawide);
+  color: var(--accent-gold);
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.cockpit-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cockpit-mbti-tag {
+  background: var(--badge-bg-gold) !important;
+  border: 1px solid var(--badge-border) !important;
+  border-radius: var(--badge-radius) !important;
+  color: var(--accent-gold-light) !important;
+  font-weight: var(--fw-semibold);
+  padding: 4px 14px !important;
+}
+
+.cockpit-settings-btn {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cockpit-settings-btn:hover {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: var(--border-strong);
+  color: var(--primary-light);
+}
+
+/* ===== 主内容 ===== */
+
+.cockpit-main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 28px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== 数据沉浸区 ===== */
+
+.cockpit-immersive {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+}
+
+/* 认知画圈缩略图 */
+.cockpit-circle-mini {
+  position: relative;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  backdrop-filter: var(--glass-blur);
+  padding: 16px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.cockpit-circle-mini::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-top-line);
+}
+
+.cockpit-circle-mini:hover {
+  border-color: var(--border-gold-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-gold);
+}
+
+.cockpit-circle-label {
+  font-size: var(--fz-sm);
+  color: var(--accent-gold);
+  letter-spacing: var(--ls-wide);
+  margin-bottom: 8px;
+  font-weight: var(--fw-semibold);
+}
+
+.cockpit-circle-svg {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.cockpit-ring {
+  fill: none;
+  stroke-width: 1;
+}
+
+.cockpit-ring.core    { stroke: rgba(212, 175, 55, 0.4); }
+.cockpit-ring.support { stroke: rgba(168, 85, 247, 0.25); stroke-dasharray: 3 4; }
+.cockpit-ring.edge    { stroke: rgba(56, 189, 248, 0.2); stroke-dasharray: 3 5; }
+
+.cockpit-edge {
+  stroke-width: 1.2;
+  opacity: 0.6;
+  fill: none;
+}
+.cockpit-edge.reinforce  { stroke: #22d3ee; }
+.cockpit-edge.balance    { stroke: #f59e0b; opacity: 0.4; }
+.cockpit-edge.complement { stroke: #34d399; }
+.cockpit-edge.conflict   { stroke: #fb7185; stroke-dasharray: 3 2; }
+
+.cockpit-circle-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: var(--fz-xs);
+  color: var(--text-tertiary);
+}
+
+/* 人格向量面板 */
+.cockpit-vector-panel {
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  backdrop-filter: var(--glass-blur);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cockpit-vector-title {
+  font-size: var(--fz-sm);
+  color: var(--primary-light);
+  letter-spacing: var(--ls-wide);
+  font-weight: var(--fw-semibold);
+}
+
+.cockpit-dim-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 16px;
+}
+
+.cockpit-dim-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cockpit-dim-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fz-xs);
+}
+
+.cockpit-dim-head span:first-child {
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-wide);
+}
+
+.cockpit-dim-val {
+  color: var(--text-primary);
+  font-weight: var(--fw-bold);
+  font-size: var(--fz-sm);
+}
+
+/* 塔罗底色条 */
+.cockpit-tarot-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(212, 175, 55, 0.06));
+  border: 1px solid var(--border-gold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cockpit-tarot-strip:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(212, 175, 55, 0.1));
+}
+
+.cockpit-tarot-emoji { font-size: 20px; }
+
+.cockpit-tarot-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cockpit-tarot-name {
+  font-size: var(--fz-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--accent-gold-light);
+}
+
+.cockpit-tarot-meaning {
+  font-size: var(--fz-xs);
+  color: var(--text-tertiary);
+}
+
+/* ===== 功能卡片网格 ===== */
+
+.cockpit-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.cockpit-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-light);
+  padding: 20px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cockpit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-top-line);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.cockpit-card:hover::before { opacity: 1; }
+
+.cockpit-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-layer-2);
+}
+
+.cockpit-card-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+.cockpit-card:hover .cockpit-card-glow { opacity: 1; }
+
+.cockpit-card.accent-gold .cockpit-card-glow    { background: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.12), transparent 60%); }
+.cockpit-card.accent-purple .cockpit-card-glow  { background: radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.12), transparent 60%); }
+.cockpit-card.accent-pink .cockpit-card-glow    { background: radial-gradient(circle at 20% 20%, rgba(244, 114, 182, 0.12), transparent 60%); }
+.cockpit-card.accent-blue .cockpit-card-glow    { background: radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.12), transparent 60%); }
+.cockpit-card.accent-green .cockpit-card-glow   { background: radial-gradient(circle at 20% 20%, rgba(52, 211, 153, 0.12), transparent 60%); }
+
+.cockpit-card-emoji {
+  font-size: 32px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+}
+
+.cockpit-card:hover .cockpit-card-emoji {
+  transform: scale(1.08);
+}
+
+.cockpit-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cockpit-card-title {
+  font-size: var(--fz-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.cockpit-card-desc {
+  font-size: var(--fz-sm);
+  color: var(--text-secondary);
+}
+
+.cockpit-card-arrow {
+  font-size: 18px;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+}
+
+.cockpit-card:hover .cockpit-card-arrow {
+  color: var(--accent-gold);
+  transform: translateX(4px);
+}
+
+/* ===== 底部导航 ===== */
+
+.cockpit-bottom-nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 20px;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: var(--glass-blur-strong);
+}
+
+.cockpit-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  color: var(--text-tertiary);
+}
+
+.cockpit-nav-item:hover {
+  color: var(--primary-light);
+  background: rgba(168, 85, 247, 0.08);
+}
+
+.cockpit-nav-item.active {
+  color: var(--accent-gold);
+}
+
+.cockpit-nav-icon {
+  font-size: 20px;
+}
+
+.cockpit-nav-label {
+  font-size: var(--fz-xs);
+  letter-spacing: var(--ls-wide);
+}
+
+/* ===== 响应式 ===== */
+
+@media (max-width: 900px) {
+  .cockpit-immersive { grid-template-columns: 1fr; }
+  .cockpit-cards { grid-template-columns: repeat(2, 1fr); }
+  .cockpit-dim-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .cockpit-header { padding: 10px 16px; }
+  .cockpit-main { padding: 14px 16px 90px; }
+  .cockpit-cards { grid-template-columns: 1fr; }
+  .cockpit-dim-grid { grid-template-columns: repeat(2, 1fr); }
+  .cockpit-nav-item { padding: 4px 8px; }
+  .cockpit-nav-label { font-size: 10px; }
+}

@@ -1,0 +1,451 @@
+/* ============= GameTablePage 主容器 ============= */
+.gametable-page {
+  padding: 0;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============= 页面标题栏 ============= */
+.gametable-page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: rgba(30, 19, 64, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.gametable-page-header .ant-typography {
+  flex: 1;
+  margin: 0 !important;
+}
+
+/* ============= 渐变文字 ============= */
+.gradient-text {
+  background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* ============= Tabs 样式 ============= */
+.gametable-tabs {
+  margin-bottom: 20px;
+}
+
+.gametable-tabs .ant-tabs-nav {
+  background: rgba(30, 19, 64, 0.4);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 20px !important;
+}
+
+.gametable-tabs .ant-tabs-tab {
+  border-radius: 8px;
+  margin: 0 4px !important;
+  padding: 8px 20px !important;
+  transition: all 0.3s ease;
+}
+
+.gametable-tabs .ant-tabs-tab-active {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.2));
+}
+
+.gametable-tabs .ant-tabs-ink-bar {
+  display: none;
+}
+
+/* ============= 入口大厅 Tab ============= */
+.gametable-lobby {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 英雄卡片 */
+.gametable-hero-card {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(124, 58, 237, 0.2) 50%, rgba(6, 182, 212, 0.1) 100%) !important;
+  border: 1px solid rgba(236, 72, 153, 0.3) !important;
+  border-radius: 20px !important;
+  overflow: hidden;
+}
+
+.gametable-hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.gametable-hero-text {
+  flex: 1;
+}
+
+.gametable-hero-greeting {
+  color: #f9a8d4;
+  font-size: 14px;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.gametable-hero-title {
+  margin: 0 0 12px 0 !important;
+  color: #fff !important;
+  font-size: 32px !important;
+}
+
+.gametable-hero-desc {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px !important;
+  line-height: 1.7;
+}
+
+.quick-start-btn {
+  background: linear-gradient(135deg, #ec4899, #7c3aed) !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+  transition: all 0.3s ease;
+}
+
+.quick-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(236, 72, 153, 0.5);
+}
+
+/* 英雄区统计 */
+.gametable-hero-stats {
+  display: flex;
+  gap: 30px;
+}
+
+.gametable-hero-stat {
+  text-align: center;
+  padding: 16px 24px;
+  background: rgba(30, 19, 64, 0.5);
+  border-radius: 16px;
+  border: 1px solid rgba(236, 72, 153, 0.2);
+  min-width: 100px;
+  backdrop-filter: blur(10px);
+}
+
+.stat-emoji {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 快速统计行 */
+.gametable-stats-row {
+  margin: 0 !important;
+}
+
+.gametable-stat-card {
+  background: rgba(30, 19, 64, 0.6) !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.15) !important;
+  border-radius: 16px !important;
+  transition: all 0.3s ease;
+}
+
+.gametable-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(236, 72, 153, 0.35) !important;
+  box-shadow: 0 8px 30px rgba(236, 72, 153, 0.15);
+}
+
+/* 列表卡片 */
+.gametable-data-info-card,
+.gametable-stats-card {
+  background: rgba(30, 19, 64, 0.5) !important;
+  border: 1px solid rgba(139, 92, 246, 0.15) !important;
+  border-radius: 16px !important;
+}
+
+/* 数据类型卡片 */
+.data-type-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(236, 72, 153, 0.06);
+  border-radius: 12px;
+  border: 1px solid rgba(236, 72, 153, 0.15);
+  transition: all 0.3s ease;
+}
+
+.data-type-card:hover {
+  background: rgba(236, 72, 153, 0.12);
+  transform: translateY(-2px);
+  border-color: rgba(236, 72, 153, 0.3);
+}
+
+.data-type-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.data-type-content {
+  flex: 1;
+}
+
+.data-type-title {
+  color: #fff;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.data-type-desc {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ============= 训练 Tab ============= */
+.gametable-trainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ============= 数据统计 Tab ============= */
+.gametable-stats-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gametable-profit-card {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(124, 58, 237, 0.15) 100%) !important;
+  border: 1px solid rgba(236, 72, 153, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+.stats-section {
+  padding-right: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.stat-row-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.behavior-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.behavior-tag {
+  font-size: 13px !important;
+  padding: 4px 10px !important;
+}
+
+.mbti-mapping {
+  margin-top: 12px;
+}
+
+.mbti-mapping-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.mbti-tag {
+  font-size: 16px !important;
+  padding: 4px 12px !important;
+  font-weight: 600;
+}
+
+/* ============= 行为采集 Tab ============= */
+.gametable-behavior-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.behavior-overview-card {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(236, 72, 153, 0.1) 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+.behavior-overview-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+}
+
+.behavior-overview-icon {
+  font-size: 36px;
+}
+
+.behavior-detail-card,
+.behavior-dataflow-card,
+.behavior-privacy-card {
+  background: rgba(30, 19, 64, 0.5) !important;
+  border: 1px solid rgba(139, 92, 246, 0.15) !important;
+  border-radius: 16px !important;
+}
+
+.data-detail-card {
+  background: rgba(236, 72, 153, 0.06) !important;
+  border: 1px solid rgba(236, 72, 153, 0.15) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+
+.data-detail-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(236, 72, 153, 0.3) !important;
+}
+
+/* 数据流向步骤 */
+.dataflow-steps {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dataflow-step {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(236, 72, 153, 0.06);
+  border-radius: 12px;
+  border: 1px solid rgba(236, 72, 153, 0.1);
+}
+
+.dataflow-step-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.dataflow-step-content {
+  flex: 1;
+}
+
+.dataflow-arrow {
+  display: flex;
+  align-items: center;
+  color: #ec4899;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.behavior-privacy-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(236, 72, 153, 0.08) 100%) !important;
+  border: 1px solid rgba(34, 197, 94, 0.2) !important;
+}
+
+/* ============= 响应式 ============= */
+@media (max-width: 992px) {
+  .gametable-hero-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .gametable-hero-stats {
+    width: 100%;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 768px) {
+  .gametable-page-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .gametable-hero-title {
+    font-size: 24px !important;
+  }
+
+  .gametable-hero-stats {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .gametable-hero-stat {
+    padding: 12px 16px;
+    min-width: 80px;
+    flex: 1;
+  }
+
+  .stat-emoji {
+    font-size: 22px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  .stats-section {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-right: 0;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  .dataflow-steps {
+    flex-direction: column;
+  }
+
+  .dataflow-arrow {
+    justify-content: center;
+    transform: rotate(90deg);
+  }
+
+  .gametable-tabs .ant-tabs-tab {
+    padding: 6px 12px !important;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gametable-hero-stats {
+    gap: 8px;
+  }
+
+  .gametable-hero-stat {
+    padding: 8px 10px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,481 @@
+/* ============= MusicPage 主容器 ============= */
+.music-page {
+  padding: 0;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============= 页面标题栏 ============= */
+.music-page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: rgba(30, 19, 64, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.music-page-header .ant-typography {
+  flex: 1;
+  margin: 0 !important;
+}
+
+/* ============= 渐变文字 ============= */
+.music-page .music-gradient-text {
+  background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* ============= Tabs 样式 ============= */
+.music-tabs {
+  margin-bottom: 20px;
+}
+
+.music-tabs .ant-tabs-nav {
+  background: rgba(30, 19, 64, 0.4);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 20px !important;
+}
+
+.music-tabs .ant-tabs-tab {
+  border-radius: 8px;
+  margin: 0 4px !important;
+  padding: 8px 20px !important;
+  transition: all 0.3s ease;
+}
+
+.music-tabs .ant-tabs-tab-active {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.3), rgba(236, 72, 153, 0.2));
+}
+
+.music-tabs .ant-tabs-ink-bar {
+  display: none;
+}
+
+/* ============= 入口大厅 Tab ============= */
+.music-lobby {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 英雄卡片 */
+.music-hero-card {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(236, 72, 153, 0.2) 50%, rgba(139, 92, 246, 0.1) 100%) !important;
+  border: 1px solid rgba(167, 139, 250, 0.3) !important;
+  border-radius: 20px !important;
+  overflow: hidden;
+}
+
+.music-hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.music-hero-text {
+  flex: 1;
+}
+
+.music-hero-greeting {
+  color: #c4b5fd;
+  font-size: 14px;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.music-hero-title {
+  margin: 0 0 12px 0 !important;
+  color: #fff !important;
+  font-size: 32px !important;
+}
+
+.music-hero-desc {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px !important;
+  line-height: 1.7;
+}
+
+.music-quick-start-btn {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  transition: all 0.3s ease;
+}
+
+.music-quick-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+}
+
+/* 英雄区统计 */
+.music-hero-stats {
+  display: flex;
+  gap: 30px;
+}
+
+.music-hero-stat {
+  text-align: center;
+  padding: 16px 24px;
+  background: rgba(30, 19, 64, 0.5);
+  border-radius: 16px;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  min-width: 100px;
+  backdrop-filter: blur(10px);
+}
+
+.music-hero-stat .stat-emoji {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.music-hero-stat .stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+
+.music-hero-stat .stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 快速统计行 */
+.music-stats-row {
+  margin: 0 !important;
+}
+
+.music-stat-card {
+  background: rgba(30, 19, 64, 0.6) !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(167, 139, 250, 0.15) !important;
+  border-radius: 16px !important;
+  transition: all 0.3s ease;
+}
+
+.music-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(167, 139, 250, 0.35) !important;
+  box-shadow: 0 8px 30px rgba(167, 139, 250, 0.15);
+}
+
+/* 列表卡片 */
+.music-data-info-card,
+.music-stats-card {
+  background: rgba(30, 19, 64, 0.5) !important;
+  border: 1px solid rgba(167, 139, 250, 0.15) !important;
+  border-radius: 16px !important;
+}
+
+/* 数据类型卡片 */
+.music-data-type-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(167, 139, 250, 0.06);
+  border-radius: 12px;
+  border: 1px solid rgba(167, 139, 250, 0.15);
+  transition: all 0.3s ease;
+}
+
+.music-data-type-card:hover {
+  background: rgba(167, 139, 250, 0.12);
+  transform: translateY(-2px);
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+.music-data-type-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.music-data-type-content {
+  flex: 1;
+}
+
+.music-data-type-title {
+  color: #fff;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.music-data-type-desc {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* ============= 训练 Tab ============= */
+.music-trainer-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* ============= 数据统计 Tab ============= */
+.music-stats-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.music-profit-card {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0%, rgba(236, 72, 153, 0.15) 100%) !important;
+  border: 1px solid rgba(167, 139, 250, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+.music-stats-section {
+  padding-right: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.music-stats-page .stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.music-stats-page .stat-row-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.music-stats-page .behavior-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.music-stats-page .behavior-tag {
+  font-size: 13px !important;
+  padding: 4px 10px !important;
+}
+
+.music-stats-page .mbti-mapping {
+  margin-top: 12px;
+}
+
+.music-stats-page .mbti-mapping-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.music-stats-page .mbti-tag {
+  font-size: 16px !important;
+  padding: 4px 12px !important;
+  font-weight: 600;
+}
+
+/* ============= 行为采集 Tab ============= */
+.music-behavior-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.music-behavior-page .behavior-overview-card {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(236, 72, 153, 0.1) 100%) !important;
+  border: 1px solid rgba(167, 139, 250, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+.music-behavior-page .behavior-overview-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+}
+
+.music-behavior-page .behavior-overview-icon {
+  font-size: 36px;
+}
+
+.music-behavior-page .behavior-detail-card,
+.music-behavior-page .behavior-dataflow-card,
+.music-behavior-page .behavior-privacy-card {
+  background: rgba(30, 19, 64, 0.5) !important;
+  border: 1px solid rgba(167, 139, 250, 0.15) !important;
+  border-radius: 16px !important;
+}
+
+.music-behavior-page .data-detail-card {
+  background: rgba(167, 139, 250, 0.06) !important;
+  border: 1px solid rgba(167, 139, 250, 0.15) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+
+.music-behavior-page .data-detail-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(167, 139, 250, 0.3) !important;
+}
+
+/* 数据流向步骤 */
+.music-behavior-page .dataflow-steps {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.music-behavior-page .dataflow-step {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(167, 139, 250, 0.06);
+  border-radius: 12px;
+  border: 1px solid rgba(167, 139, 250, 0.1);
+}
+
+.music-behavior-page .dataflow-step-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.music-behavior-page .dataflow-step-content {
+  flex: 1;
+}
+
+.music-behavior-page .dataflow-arrow {
+  display: flex;
+  align-items: center;
+  color: #a78bfa;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.music-behavior-page .behavior-privacy-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%) !important;
+  border: 1px solid rgba(34, 197, 94, 0.2) !important;
+}
+
+/* ============= 响应式 ============= */
+@media (max-width: 992px) {
+  .music-hero-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .music-hero-stats {
+    width: 100%;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 768px) {
+  .music-page-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .music-hero-title {
+    font-size: 24px !important;
+  }
+
+  .music-hero-stats {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .music-hero-stat {
+    padding: 12px 16px;
+    min-width: 80px;
+    flex: 1;
+  }
+
+  .music-hero-stat .stat-emoji {
+    font-size: 22px;
+  }
+
+  .music-hero-stat .stat-value {
+    font-size: 18px;
+  }
+
+  .music-stats-section {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-right: 0;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  .music-behavior-page .dataflow-steps {
+    flex-direction: column;
+  }
+
+  .music-behavior-page .dataflow-arrow {
+    justify-content: center;
+    transform: rotate(90deg);
+  }
+
+  .music-tabs .ant-tabs-tab {
+    padding: 6px 12px !important;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .music-hero-stats {
+    gap: 8px;
+  }
+
+  .music-hero-stat {
+    padding: 8px 10px;
+  }
+
+  .music-hero-stat .stat-label {
+    font-size: 10px;
+  }
+}
+
+/* ===== 网易云接入组件 ===== */
+.netease-connect {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.netease-login-card {
+  padding: 24px;
+}
+
+.netease-connect .glass-card {
+  background: rgba(30, 19, 64, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+}
+
+/* ===== StatCard suffix 样式 ===== */
+.ds-stat-suffix {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 2px;
+}

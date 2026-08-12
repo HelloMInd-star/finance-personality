@@ -1,0 +1,385 @@
+/* ========================================
+ * 塔罗指引模块 · 深空黑金风格
+ * ======================================== */
+
+.tarot-module {
+  position: relative;
+  min-height: calc(100vh - 80px);
+  background: #0A0A0F;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 24px 80px;
+}
+
+/* === 粒子背景 Canvas === */
+.tarot-particle-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* === 顶部标题 === */
+.tarot-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.tarot-header-icon {
+  font-size: 28px;
+  color: #D4AF37;
+  letter-spacing: 8px;
+  margin-bottom: 8px;
+}
+
+.tarot-header-title {
+  font-size: 26px;
+  font-weight: 300;
+  color: #F5F5F0;
+  letter-spacing: 4px;
+  margin: 0;
+  background: linear-gradient(135deg, #D4AF37 0%, #F5F5F0 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tarot-header-sub {
+  font-size: 13px;
+  color: #9CA3AF;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+/* === 牌面容器 === */
+.tarot-card-stage {
+  position: relative;
+  z-index: 2;
+  perspective: 1200px;
+  margin: 20px 0;
+}
+
+.tarot-card-inner {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
+  cursor: pointer;
+}
+
+.tarot-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.tarot-card-inner.hoverable:hover {
+  transform: scale(1.04);
+}
+
+.tarot-card-inner.flipped.hoverable:hover {
+  transform: rotateY(180deg) scale(1.04);
+}
+
+/* === 牌背 === */
+.tarot-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #14141E 0%, #1a1a28 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 30px rgba(212, 175, 55, 0.15),
+    inset 0 0 20px rgba(212, 175, 55, 0.05);
+  overflow: hidden;
+}
+
+.tarot-card-back::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 8px;
+}
+
+.tarot-card-back-symbol {
+  font-size: 48px;
+  color: #D4AF37;
+  opacity: 0.7;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  animation: tarot-back-pulse 3s ease-in-out infinite;
+}
+
+@keyframes tarot-back-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.08); }
+}
+
+/* === 牌面正面 === */
+.tarot-card-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  border-radius: 12px;
+  background: linear-gradient(160deg, #14141E 0%, #1e1e2e 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  overflow: hidden;
+  box-shadow:
+    0 0 40px rgba(212, 175, 55, 0.2),
+    inset 0 0 30px rgba(212, 175, 55, 0.03);
+}
+
+.tarot-card-front::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* === 光晕扩散动画 === */
+.tarot-glow-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 300px;
+  transform: translate(-50%, -50%);
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+}
+
+.tarot-glow-ring.active {
+  animation: tarot-glow-burst 1.6s ease-out forwards;
+}
+
+@keyframes tarot-glow-burst {
+  0% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px 4px rgba(212, 175, 55, 0.4);
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 80px 20px rgba(212, 175, 55, 0.1);
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+}
+
+/* === 抽牌按钮 === */
+.tarot-draw-btn {
+  position: relative;
+  z-index: 2;
+  margin-top: 28px;
+  height: 46px;
+  padding: 0 36px;
+  border-radius: 24px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
+  color: #D4AF37;
+  font-size: 15px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.tarot-draw-btn:hover {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.25);
+  color: #F5F5F0;
+}
+
+.tarot-draw-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tarot-draw-hint {
+  position: relative;
+  z-index: 2;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #6B7280;
+  letter-spacing: 1px;
+}
+
+/* === 结果区域 === */
+.tarot-result {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: tarot-fade-in 0.6s ease-out 0.3s both;
+}
+
+@keyframes tarot-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tarot-result-name {
+  font-size: 24px;
+  font-weight: 400;
+  color: #D4AF37;
+  letter-spacing: 6px;
+  margin: 24px 0 8px;
+}
+
+.tarot-result-name-en {
+  font-size: 12px;
+  color: #6B7280;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.tarot-result-keywords {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tarot-keyword-tag {
+  padding: 4px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: rgba(212, 175, 55, 0.06);
+  color: #D4AF37;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.tarot-result-meaning {
+  max-width: 460px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 2;
+  color: #F5F5F0;
+  margin-bottom: 24px;
+  padding: 0 16px;
+}
+
+.tarot-result-mbti {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(123, 76, 255, 0.3);
+  background: rgba(123, 76, 255, 0.08);
+  margin-bottom: 32px;
+}
+
+.tarot-mbti-icon {
+  font-size: 16px;
+}
+
+.tarot-mbti-label {
+  font-size: 12px;
+  color: #9CA3AF;
+  letter-spacing: 1px;
+}
+
+.tarot-mbti-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #A78BFA;
+  letter-spacing: 2px;
+}
+
+.tarot-mbti-desc {
+  font-size: 12px;
+  color: #6B7280;
+}
+
+/* === 操作按钮 === */
+.tarot-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tarot-action-btn {
+  height: 42px;
+  padding: 0 28px;
+  border-radius: 22px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tarot-action-primary {
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+  color: #D4AF37;
+}
+
+.tarot-action-primary:hover {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1));
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  color: #F5F5F0;
+}
+
+.tarot-action-secondary {
+  border: 1px solid rgba(156, 163, 175, 0.25);
+  background: rgba(156, 163, 175, 0.04);
+  color: #9CA3AF;
+}
+
+.tarot-action-secondary:hover {
+  border-color: rgba(156, 163, 175, 0.4);
+  color: #F5F5F0;
+}
+
+/* === 响应式 === */
+@media (max-width: 600px) {
+  .tarot-module {
+    padding: 24px 16px 60px;
+  }
+
+  .tarot-card-inner {
+    width: 150px;
+    height: 225px;
+  }
+
+  .tarot-header-title {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .tarot-result-name {
+    font-size: 20px;
+    letter-spacing: 4px;
+  }
+
+  .tarot-result-meaning {
+    font-size: 13px;
+  }
+}
