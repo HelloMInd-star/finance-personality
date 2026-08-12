@@ -34,7 +34,7 @@ jobs:
           cd frontend
           npm install
           # 设置 GitHub Pages 的 base 路径
-          VITE_BASE_PATH=/poker-egg-fullstack/ npm run build
+          VITE_BASE_PATH=/finance-personality/ npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  // base路径可通过环境变量配置，默认根路径（Docker部署），GitHub Pages设置为 /poker-egg-fullstack/
+  // base路径可通过环境变量配置，默认根路径（Docker部署），GitHub Pages设置为 /finance-personality/
   base: process.env.VITE_BASE_PATH || '/',
   plugins: [react()],
   server: {
