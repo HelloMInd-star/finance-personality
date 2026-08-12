@@ -78,7 +78,7 @@ const StoriesPage = () => {
         <Card>
           <Space align="center" style={{ width: '100%', justifyContent: 'space-between' }}>
             <Space>
-              <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/')}>
+              <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/dashboard')}>
                 返回首页
               </Button>
               <div>

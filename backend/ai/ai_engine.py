@@ -3,7 +3,6 @@ AI陪练引擎
 支持3个难度级别：easy, medium, hard
 """
 import random
-import numpy as np
 from typing import Dict, List, Optional
 import sys
 import os

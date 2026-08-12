@@ -1,0 +1,232 @@
+/**
+ * 风险压力测试实验室 · 紫金磨砂玻璃风格
+ */
+
+.risk-page {
+  padding: 4px 4px 24px;
+}
+
+.risk-tabs-card {
+  overflow: hidden;
+}
+
+.risk-tabs-card .ant-tabs-content {
+  padding: 20px;
+}
+
+.risk-tab-body {
+  width: 100%;
+}
+
+/* ============ 参数面板 ============ */
+.risk-param-card {
+  min-height: 100%;
+}
+
+.risk-param-card .ant-card-head {
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+  padding: 12px 16px;
+}
+
+.risk-param-card .ant-card-head-title {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.risk-param-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.risk-param-row:last-child {
+  margin-bottom: 0;
+}
+
+.risk-param-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+  min-width: 110px;
+}
+
+.risk-param-row .ant-input-number {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(168, 85, 247, 0.2);
+  color: #fff;
+}
+
+.risk-param-row .ant-input-number:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.risk-param-row .ant-input-number-input {
+  color: #fff;
+}
+
+/* ============ 公式提示 ============ */
+.risk-formula-hint {
+  background: rgba(168, 85, 247, 0.06);
+  border-left: 2px solid rgba(168, 85, 247, 0.4);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.8;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+}
+
+.risk-formula-hint div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============ 情景分组 ============ */
+.scenario-group {
+  padding: 8px 0;
+}
+
+.factor-group {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.factor-group:last-child {
+  border-bottom: none;
+}
+
+.factor-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 8px;
+  padding-left: 8px;
+  border-left: 2px solid #a855f7;
+}
+
+/* ============ 反向压力判定 ============ */
+.reverse-verdict {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.reverse-verdict.triggered {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #ef4444;
+}
+
+.reverse-verdict.safe {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #10b981;
+}
+
+/* ============ 流动性状态 ============ */
+.liq-status {
+  padding: 20px 16px;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.liq-status.pass {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.liq-status.fail {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.liq-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.liq-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fbbf24;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  margin-bottom: 6px;
+}
+
+.liq-status-text {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.liq-status.pass .liq-status-text {
+  color: #10b981;
+}
+
+.liq-status.fail .liq-status-text {
+  color: #ef4444;
+}
+
+.liq-req {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============ 统计卡片 ============ */
+.risk-page .ds-stat-card {
+  padding: 14px 12px;
+}
+
+.risk-page .ds-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* ============ 表格暗色适配 ============ */
+.risk-page .ant-table {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.risk-page .ant-table-thead > tr > th {
+  background: rgba(168, 85, 247, 0.08);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
+
+.risk-page .ant-table-tbody > tr > td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.risk-page .ant-table-tbody > tr:hover > td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ============ 响应式 ============ */
+@media (max-width: 900px) {
+  .risk-param-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .risk-param-label {
+    min-width: auto;
+  }
+
+  .risk-param-row .ant-input-number {
+    width: 100% !important;
+  }
+}

@@ -1,0 +1,230 @@
+/**
+ * 向量分析实验室 · VectorPage 紫金磨砂玻璃风格
+ */
+.vector-page {
+  padding: 4px 4px 24px;
+}
+
+/* 顶部摘要 */
+.vector-summary {
+  margin-bottom: 12px;
+}
+
+/* Tabs 容器 */
+.vector-tabs-card {
+  overflow: hidden;
+}
+
+.vector-tabs-card .ant-tabs-content {
+  padding: 20px;
+}
+
+.vector-tab-body {
+  width: 100%;
+}
+
+/* 参数卡片 */
+.vector-param-card {
+  min-height: 100%;
+}
+
+.vector-param-card .ant-card-head {
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+  padding: 12px 16px;
+}
+
+/* 匹配度摘要 */
+.vector-match-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.match-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(168, 85, 247, 0.04);
+  border-radius: 6px;
+  border-left: 2px solid rgba(168, 85, 247, 0.35);
+}
+
+.match-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.3px;
+}
+
+.match-value {
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+/* 维度图例 */
+.vector-dim-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.legend-title {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.legend-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.legend-tags .ant-tag {
+  margin: 0;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* 向量档案详情 */
+.vector-dim-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dim-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dim-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  padding-left: 8px;
+  min-width: 80px;
+}
+
+.dim-value {
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  color: #fbbf24;
+  min-width: 42px;
+  text-align: right;
+}
+
+/* 维度说明 */
+.vector-dim-explain {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.explain-row {
+  padding: 8px 10px;
+  background: rgba(168, 85, 247, 0.04);
+  border-radius: 6px;
+  border-left: 2px solid rgba(168, 85, 247, 0.3);
+}
+
+.explain-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.explain-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.explain-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.explain-desc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+  padding-left: 16px;
+  line-height: 1.5;
+}
+
+/* 原型聚类卡片 */
+.archetype-mini-card {
+  background: rgba(168, 85, 247, 0.06);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.archetype-mini-card:hover {
+  border-color: rgba(251, 191, 36, 0.4);
+  transform: translateY(-2px);
+}
+
+.archetype-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fbbf24;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #a855f7, #fbbf24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.archetype-assets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.archetype-assets .ant-tag {
+  margin: 0;
+  font-size: 11px;
+}
+
+.archetype-count {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 表格行 hover */
+.ant-table-tbody > tr:hover > td {
+  background: rgba(168, 85, 247, 0.06) !important;
+}
+
+/* 进度条 */
+.ant-progress-bg {
+  background-image: linear-gradient(90deg, #a855f7, #ec4899, #fbbf24);
+}
+
+/* 响应式 */
+@media (max-width: 900px) {
+  .vector-summary .ant-col {
+    margin-bottom: 8px;
+  }
+  .vector-tabs-card .ant-tabs-content {
+    padding: 12px;
+  }
+}

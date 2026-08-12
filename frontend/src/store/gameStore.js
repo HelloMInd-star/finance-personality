@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { logger } from '../utils/logger';
+import { apiClient } from '../utils/apiClient';
 
 export const useGameStore = create((set, get) => ({
   // 状态
@@ -29,8 +30,9 @@ export const useGameStore = create((set, get) => ({
     // 确定WebSocket URL：优先使用环境变量，否则使用当前host（支持代理）
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsHost = import.meta.env.VITE_WS_URL || `${wsProtocol}//${window.location.host}`;
-    const wsUrl = `${wsHost}/ws/${gameId}`;
-    
+    // 携带 player_id 查询参数,后端按 viewer_id 过滤底牌防作弊
+    const wsUrl = `${wsHost}/ws/${gameId}?player_id=${playerId}`;
+
     console.log('连接WebSocket:', wsUrl);
 
     // 创建原生WebSocket连接
@@ -198,21 +200,11 @@ export const useGameStore = create((set, get) => ({
     const done = logger.flow('创建牌局', `开始 - 玩家:${playerName}`, `难度:${aiDifficulty}`);
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch('/api/game/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          player_name: playerName,
-          ai_difficulty: aiDifficulty
-        })
+      const data = await apiClient.post('/game/create', {
+        player_name: playerName,
+        ai_difficulty: aiDifficulty
       });
-
-      if (!response.ok) {
-        throw new Error('创建游戏失败');
-      }
-
-      const data = await response.json();
-      const { game_id, player_id } = data.data;
+      const { game_id, player_id } = data;
       
       // 连接到游戏
       get().connectToGame(game_id, player_id);
@@ -234,20 +226,10 @@ export const useGameStore = create((set, get) => ({
   joinGame: async (gameId, playerName) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`/api/game/${gameId}/join`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          player_name: playerName
-        })
+      const data = await apiClient.post(`/game/${gameId}/join`, {
+        player_name: playerName
       });
-
-      if (!response.ok) {
-        throw new Error('加入游戏失败');
-      }
-
-      const data = await response.json();
-      const { player_id, game_state } = data.data;
+      const { player_id, game_state } = data;
       
       // 连接到游戏
       get().connectToGame(gameId, player_id);
@@ -270,17 +252,9 @@ export const useGameStore = create((set, get) => ({
     logger.game('开始游戏', `gameId:${gameId}`);
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`/api/game/${gameId}/start`, {
-        method: 'POST'
-      });
-
-      if (!response.ok) {
-        throw new Error('开始游戏失败');
-      }
-
-      const data = await response.json();
-      logger.game('游戏已开始', `阶段:${data.data?.stage || 'preflop'}`, `玩家数:${data.data?.players?.length || 0}`);
-      set({ gameState: data.data, isLoading: false });
+      const data = await apiClient.post(`/game/${gameId}/start`);
+      logger.game('游戏已开始', `阶段:${data?.stage || 'preflop'}`, `玩家数:${data?.players?.length || 0}`);
+      set({ gameState: data, isLoading: false });
       return data;
     } catch (error) {
       logger.error('开始游戏失败', error.message);
@@ -299,13 +273,9 @@ export const useGameStore = create((set, get) => ({
     logger.game('开始新局', `gameId:${currentGameId}`);
     set({ handResult: null, actionHistory: [], isLoading: true });
     try {
-      const response = await fetch(`/api/game/${currentGameId}/start`, {
-        method: 'POST'
-      });
-      if (!response.ok) throw new Error('开始新局失败');
-      const data = await response.json();
+      const data = await apiClient.post(`/game/${currentGameId}/start`);
       logger.game('新局已开始');
-      set({ gameState: data.data, isLoading: false });
+      set({ gameState: data, isLoading: false });
       return data;
     } catch (error) {
       logger.error('开始新局失败', error.message);
@@ -326,12 +296,9 @@ export const useGameStore = create((set, get) => ({
   // 获取统计数据
   fetchStats: async (playerId) => {
     try {
-      const response = await fetch(`/api/stats/${playerId}`);
-      if (response.ok) {
-        const data = await response.json();
-        set({ stats: data.data });
-        return data.data;
-      }
+      const data = await apiClient.get(`/stats/${playerId}`);
+      set({ stats: data });
+      return data;
     } catch (error) {
       console.error('获取统计数据失败:', error);
     }

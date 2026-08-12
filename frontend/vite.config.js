@@ -21,6 +21,23 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'dist'
-  }
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // React 核心
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          // Ant Design 组件库
+          'vendor-antd': ['antd', '@ant-design/icons'],
+          // ECharts 图表库
+          'vendor-echarts': ['echarts', 'echarts-for-react'],
+          // 3D 渲染
+          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
+          // 其他工具库
+          'vendor-utils': ['dayjs', 'framer-motion', 'recharts', 'zustand'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 800,
+  },
 });

@@ -1,0 +1,437 @@
+/* ========================================
+   企业家人格分子调酒 - 暗色紫金风格
+   ======================================== */
+
+.persona-bartender {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0a15 0%, #12121f 50%, #0a0a15 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.06), inset 0 0 80px rgba(0, 0, 0, 0.5);
+}
+
+/* === 双板块切换 Tab === */
+
+.pb-tabs {
+  display: flex;
+  gap: 12px;
+  padding: 20px 24px 0;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.12);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.pb-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: -1px;
+}
+
+.pb-tab:hover {
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(168, 85, 247, 0.05);
+}
+
+.pb-tab.active {
+  color: #ffd700;
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.3);
+  border-bottom-color: #12121f;
+  box-shadow: 0 -2px 16px rgba(168, 85, 247, 0.15);
+}
+
+.pb-tab-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.pb-tab-label {
+  letter-spacing: 0.5px;
+}
+
+/* === 内容容器 === */
+
+.pb-content {
+  /* 子内容容器,继承 .persona-bartender 背景 */
+}
+
+/* === 引导页 === */
+
+.pb-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.pb-intro-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+}
+
+.pb-intro-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+.pb-intro-desc {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 8px;
+}
+
+.pb-intro-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 40px;
+}
+
+/* 星系入口 */
+.pb-intro-galaxy {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 32px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.pb-intro-galaxy-hint {
+  margin-top: 8px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.25em;
+  font-style: italic;
+  text-align: center;
+}
+
+.pb-start-btn {
+  background: linear-gradient(135deg, #a855f7, #ffd700) !important;
+  border: none !important;
+  height: 48px;
+  padding: 0 40px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(168, 85, 247, 0.3);
+  transition: all 0.3s;
+}
+
+.pb-start-btn:hover {
+  box-shadow: 0 6px 32px rgba(168, 85, 247, 0.5);
+  transform: translateY(-2px);
+}
+
+/* === 答题页 === */
+
+.pb-test {
+  padding: 40px 24px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.pb-progress {
+  margin-bottom: 40px;
+}
+
+.pb-question-card {
+  background: rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.pb-question-num {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #a855f7;
+  background: rgba(168, 85, 247, 0.1);
+  padding: 4px 16px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+.pb-question-text {
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 36px;
+  line-height: 1.5;
+}
+
+.pb-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pb-option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+}
+
+.pb-option:hover {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.3);
+  transform: translateX(4px);
+}
+
+.pb-option.selected {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: #a855f7;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.2);
+}
+
+.pb-option-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 700;
+  font-size: 14px;
+  color: #a855f7;
+  flex-shrink: 0;
+}
+
+.pb-option.selected .pb-option-label {
+  background: #a855f7;
+  color: #fff;
+}
+
+.pb-option-text {
+  flex: 1;
+}
+
+.pb-test-footer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 24px;
+}
+
+/* === 结果页 === */
+
+.pb-result {
+  padding: 32px 24px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.pb-result-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.pb-result-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 16px;
+}
+
+.pb-result-persona {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pb-person-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.pb-mbti-tag {
+  font-size: 14px !important;
+  padding: 4px 12px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.pb-match-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 24px;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 20px;
+}
+
+.pb-match-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.pb-match-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffd700;
+}
+
+/* === 3D 分子区域 === */
+
+.pb-molecule-section {
+  margin-bottom: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.pb-molecule-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 380px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}
+
+/* === 调酒配方卡片 === */
+
+.pb-recipe-card {
+  background: rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.pb-recipe-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #a855f7;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+
+.pb-recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.pb-recipe-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pb-recipe-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.pb-recipe-value {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* === 故事卡片 === */
+
+.pb-story-card {
+  background: rgba(255, 215, 0, 0.04);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.pb-story-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20px;
+  bottom: 20px;
+  width: 3px;
+  background: linear-gradient(180deg, #a855f7, #ffd700);
+  border-radius: 2px;
+}
+
+.pb-story-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.75);
+  font-style: italic;
+}
+
+/* === 操作按钮 === */
+
+.pb-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pb-action-btn {
+  border-radius: 10px !important;
+  height: 40px;
+  padding: 0 20px;
+}
+
+.pb-restart-btn {
+  background: linear-gradient(135deg, #a855f7, #7c3aed) !important;
+  border: none !important;
+}
+
+/* === 响应式 === */
+
+@media (max-width: 600px) {
+  .pb-intro-title {
+    font-size: 22px;
+  }
+
+  .pb-person-name {
+    font-size: 24px;
+  }
+
+  .pb-recipe-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pb-actions {
+    flex-direction: column;
+  }
+
+  .pb-action-btn {
+    width: 100%;
+  }
+}

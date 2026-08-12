@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useGameStore } from '../../store/gameStore';
+import { apiClient } from '../../utils/apiClient';
 import './GameLobby.css';
 
 const { Option } = Select;
@@ -24,11 +25,8 @@ const GameLobby = () => {
   // 获取游戏列表
   const fetchGames = async () => {
     try {
-      const response = await fetch('/api/games');
-      if (response.ok) {
-        const data = await response.json();
-        setGameList(data.data || []);
-      }
+      const data = await apiClient.get('/games');
+      setGameList(data || []);
     } catch (error) {
       console.error('获取游戏列表失败:', error);
     }
@@ -48,7 +46,7 @@ const GameLobby = () => {
       setCreateModalVisible(false);
       form.resetFields();
       message.success('游戏创建成功！');
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       message.error('创建游戏失败：' + error.message);
     }
@@ -61,7 +59,7 @@ const GameLobby = () => {
       setJoinModalVisible(false);
       form.resetFields();
       message.success('加入游戏成功！');
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       message.error('加入游戏失败：' + error.message);
     }

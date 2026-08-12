@@ -33,6 +33,18 @@ export const useAppStore = create((set, get) => ({
     get().refresh();
   },
 
+  // 反馈回路：追加喝后评分到 feedbackHistory
+  addFeedback(feedback) {
+    storage.addFeedback(feedback);
+    get().refresh();
+  },
+
+  // 反馈回路：基础向量持久化
+  setBaseVector(vec) {
+    storage.setBaseVector(vec);
+    get().refresh();
+  },
+
   setPsychologyProfile(partial) {
     const data = get().data;
     const updated = { ...data.psychologyProfile, ...partial };

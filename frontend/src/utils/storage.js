@@ -22,6 +22,11 @@ const defaultData = {
   billiardsSessions: [],
   fitnessSessions: [],
   coachConversations: [],
+  // 反馈回路：喝后评分历史（FeedbackSignal[]）
+  feedbackHistory: [],
+  // 反馈回路：基础人格向量（11 维，值域 [0,1]）
+  // 首次调酒派生后写入；后续由 calibrateVector 校准
+  baseVector: null,
   psychologyProfile: {
     radarData: {},
     biasTags: [],
@@ -108,6 +113,28 @@ export const storage = {
 
   addCoachConversation(conv) {
     return this.update('coachConversations', (prev) => [...prev, { ...conv, id: Date.now(), timestamp: Date.now() }]);
+  },
+
+  // 反馈回路：追加一条喝后评分（FeedbackSignal）
+  addFeedback(feedback) {
+    return this.update('feedbackHistory', (prev) => [
+      ...prev,
+      { ...feedback, id: Date.now(), timestamp: Date.now() },
+    ]);
+  },
+
+  // 反馈回路：基础向量持久化（首次调酒派生后写入）
+  getBaseVector() {
+    const all = this.getAll();
+    return Array.isArray(all.baseVector) ? all.baseVector : null;
+  },
+
+  setBaseVector(vec) {
+    logger.storage('SET [baseVector]', Array.isArray(vec) ? `Array(${vec.length})` : typeof vec);
+    const all = this.getAll();
+    all.baseVector = Array.isArray(vec) ? vec.slice(0, 11) : null;
+    this.saveAll(all);
+    return all.baseVector;
   },
 
   // 清理

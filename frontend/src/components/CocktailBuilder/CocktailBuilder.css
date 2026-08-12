@@ -1,0 +1,728 @@
+/**
+ * CocktailBuilder · 深空紫金语系
+ *
+ * 设计要点：
+ *  - 磨砂玻璃 + 紫金渐变
+ *  - hover 微妙加深（不强烈变色）
+ *  - 步骤条用紫金渐变（已完成段亮）
+ *  - 选项卡片激活后金色边框 + 微光
+ *  - 无 Ant Design 依赖
+ *  - 全部色值走 CSS 变量 + 内联色（调酒师色）
+ */
+
+:root {
+  --cb-bg-glass: rgba(30, 19, 64, 0.55);
+  --cb-bg-glass-strong: rgba(30, 19, 64, 0.75);
+  --cb-border-soft: rgba(139, 92, 246, 0.18);
+  --cb-border-mid: rgba(139, 92, 246, 0.35);
+  --cb-gold: #D4AF37;
+  --cb-gold-soft: rgba(212, 175, 55, 0.4);
+  --cb-purple: #8b5cf6;
+  --cb-text: rgba(255, 255, 255, 0.92);
+  --cb-text-dim: rgba(255, 255, 255, 0.6);
+  --cb-text-muted: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================================
+ * 通用容器
+ * ============================================================ */
+
+.cb-builder,
+.cb-select {
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  color: var(--cb-text);
+}
+
+/* ============================================================
+ * 调酒师选择页
+ * ============================================================ */
+
+.cb-select__hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cb-select__icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 4px 20px rgba(212, 175, 55, 0.3));
+  animation: cb-float 4s ease-in-out infinite;
+}
+
+@keyframes cb-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.cb-select__title {
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 4px;
+  font-size: 28px;
+  margin: 0;
+}
+
+.cb-select__divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cb-gold), transparent);
+  margin: 16px auto;
+}
+
+.cb-select__desc {
+  color: var(--cb-text-dim);
+  font-size: 14px;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* 调酒师卡片网格 */
+.cb-select__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.cb-bartender {
+  position: relative;
+  background: var(--cb-bg-glass);
+  border: 1px solid var(--cb-border-soft);
+  border-radius: 16px;
+  padding: 28px 24px 22px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  text-align: left;
+  color: inherit;
+  font-family: inherit;
+}
+
+.cb-bartender::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, var(--b-color), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.cb-bartender:hover {
+  transform: translateY(-6px);
+  border-color: var(--b-color);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.18);
+}
+
+.cb-bartender:hover::before {
+  opacity: 0.15;
+}
+
+.cb-bartender__number {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 48px;
+  font-weight: 700;
+  opacity: 0.12;
+  line-height: 1;
+  font-family: Georgia, serif;
+  color: var(--b-color);
+}
+
+.cb-bartender__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font-size: 28px;
+  margin-bottom: 14px;
+  border: 2px solid;
+}
+
+.cb-bartender__name {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+
+.cb-bartender__title-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.cb-bartender__mbti {
+  display: block;
+  font-size: 11px;
+  color: var(--cb-text-muted);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.cb-bartender__style {
+  color: var(--cb-text-dim);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0 0 14px;
+  min-height: 44px;
+}
+
+.cb-bartender__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.cb-bartender__tag {
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+  color: var(--cb-text-muted);
+}
+
+.cb-bartender__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--cb-border-soft);
+}
+
+.cb-bartender__hint {
+  font-size: 12px;
+  color: var(--b-color);
+}
+
+.cb-bartender__cta {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--b-color);
+  transition: transform 0.3s ease;
+}
+
+.cb-bartender:hover .cb-bartender__cta {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+ * Builder 主体
+ * ============================================================ */
+
+.cb-builder__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--cb-bg-glass);
+  border: 1px solid var(--cb-border-soft);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.cb-builder__bartender {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cb-builder__bartender-icon {
+  font-size: 28px;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.cb-builder__bartender-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cb-builder__bartender-title {
+  font-size: 12px;
+  color: var(--cb-text-muted);
+}
+
+.cb-builder__reset {
+  background: transparent;
+  border: 1px solid var(--cb-border-soft);
+  color: var(--cb-text-dim);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cb-builder__reset:hover {
+  border-color: var(--cb-gold-soft);
+  color: var(--cb-gold);
+  background: rgba(212, 175, 55, 0.06);
+}
+
+/* ============================================================
+ * 步骤条
+ * ============================================================ */
+
+.cb-steps {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+
+/* 步骤条底色线 */
+.cb-steps::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: rgba(139, 92, 246, 0.15);
+  z-index: 0;
+}
+
+/* 已完成进度条（渐变） */
+.cb-steps::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 8%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cb-purple), var(--cb-gold));
+  width: var(--cb-progress, 0%);
+  transition: width 0.5s ease;
+  z-index: 1;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+.cb-step {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.cb-step__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: var(--cb-bg-glass-strong);
+  border: 1px solid var(--cb-border-soft);
+  margin-bottom: 6px;
+  transition: all 0.3s ease;
+}
+
+.cb-step__title {
+  font-size: 11px;
+  color: var(--cb-text-muted);
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.cb-step.is-active .cb-step__icon,
+.cb-step.is-done .cb-step__icon {
+  background: linear-gradient(135deg, var(--cb-purple), var(--cb-gold));
+  border-color: var(--cb-gold);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+.cb-step.is-active .cb-step__title {
+  color: var(--cb-gold);
+  font-weight: 600;
+}
+
+/* ============================================================
+ * 步骤内容
+ * ============================================================ */
+
+.cb-content {
+  background: var(--cb-bg-glass);
+  border: 1px solid var(--cb-border-soft);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  min-height: 280px;
+}
+
+.cb-step-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.cb-step-header__icon {
+  font-size: 44px;
+  display: block;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 12px rgba(212, 175, 55, 0.2));
+}
+
+.cb-step-header__title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 6px;
+  letter-spacing: 1px;
+}
+
+.cb-step-header__desc {
+  color: var(--cb-text-dim);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* ============================================================
+ * 选项列表
+ * ============================================================ */
+
+.cb-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cb-option {
+  width: 100%;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--cb-border-soft);
+  border-radius: 10px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: inherit;
+  font-family: inherit;
+}
+
+.cb-option:hover {
+  background: rgba(139, 92, 246, 0.06);
+  border-color: var(--cb-border-mid);
+}
+
+.cb-option.is-on {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: var(--cb-gold);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.18);
+}
+
+.cb-option__label {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cb-option__desc {
+  display: block;
+  font-size: 12px;
+  color: var(--cb-text-muted);
+  margin-top: 4px;
+}
+
+.cb-option.is-on .cb-option__label {
+  color: var(--cb-gold);
+}
+
+/* ============================================================
+ * 基酒网格
+ * ============================================================ */
+
+.cb-grid--spirit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.cb-spirit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--cb-border-soft);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: inherit;
+  font-family: inherit;
+}
+
+.cb-spirit:hover {
+  transform: translateY(-2px);
+  border-color: var(--cb-border-mid);
+}
+
+.cb-spirit.is-on {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: var(--cb-gold);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.2);
+}
+
+.cb-spirit__icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.cb-spirit__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cb-spirit__flavor {
+  font-size: 11px;
+  color: var(--cb-text-muted);
+  margin-top: 4px;
+}
+
+.cb-spirit.is-on .cb-spirit__label {
+  color: var(--cb-gold);
+}
+
+/* ============================================================
+ * 文本输入
+ * ============================================================ */
+
+.cb-textarea-wrap {
+  position: relative;
+}
+
+.cb-textarea__label {
+  font-size: 13px;
+  color: var(--cb-text-dim);
+  margin-bottom: 8px;
+}
+
+.cb-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--cb-border-soft);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  line-height: 1.6;
+  resize: vertical;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.cb-textarea:focus {
+  outline: none;
+  border-color: var(--cb-gold-soft);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.cb-textarea::placeholder {
+  color: var(--cb-text-muted);
+}
+
+.cb-textarea__count {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 11px;
+  color: var(--cb-text-muted);
+  font-family: monospace;
+}
+
+/* ============================================================
+ * 星座选择
+ * ============================================================ */
+
+.cb-zodiac {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cb-zodiac__group {
+  text-align: left;
+}
+
+.cb-zodiac__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.cb-zodiac__divider {
+  height: 1px;
+  background: var(--cb-border-soft);
+}
+
+.cb-zodiac__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 6px;
+}
+
+.cb-zodiac__chip {
+  padding: 8px 6px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--cb-border-soft);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--cb-text-dim);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.cb-zodiac__chip:hover {
+  border-color: var(--cb-border-mid);
+  color: #fff;
+}
+
+.cb-zodiac__chip.is-on {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--cb-gold);
+  color: var(--cb-gold);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+}
+
+/* ============================================================
+ * 最终步：故事种子 + 特调笔记
+ * ============================================================ */
+
+.cb-final {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cb-final__seeds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+.cb-seed {
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--cb-border-soft);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--cb-text-dim);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.cb-seed:hover {
+  border-color: var(--cb-border-mid);
+}
+
+.cb-seed.is-on {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--cb-gold);
+  color: var(--cb-gold);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.18);
+}
+
+/* ============================================================
+ * 底部按钮
+ * ============================================================ */
+
+.cb-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cb-btn {
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  border: 1px solid transparent;
+}
+
+.cb-btn--ghost {
+  background: transparent;
+  border-color: var(--cb-border-soft);
+  color: var(--cb-text-dim);
+}
+
+.cb-btn--ghost:hover {
+  border-color: var(--cb-border-mid);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cb-btn--primary {
+  background: linear-gradient(135deg, var(--cb-purple), var(--cb-gold));
+  color: #1a0f2e;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+}
+
+.cb-btn--primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+}
+
+.cb-btn--primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ============================================================
+ * 响应式
+ * ============================================================ */
+
+@media (max-width: 640px) {
+  .cb-select__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cb-step__title {
+    display: none;
+  }
+
+  .cb-step__icon {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .cb-content {
+    padding: 20px 16px;
+  }
+
+  .cb-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}

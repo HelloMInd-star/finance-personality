@@ -1,0 +1,153 @@
+/* ============================================
+   Y.Mine Design System — Layout
+   应用骨架、侧边栏、顶栏、内容区
+   ============================================ */
+
+.app-layout {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0f0c24 0%, #1a1333 50%, #0d0a1e 100%);
+}
+
+/* ---- 顶栏 ---- */
+.app-header {
+  background: rgba(10, 8, 24, 0.75) !important;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg);
+  height: 68px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.header-menu {
+  background: transparent !important;
+  border-bottom: none !important;
+  flex: 1;
+  justify-content: center;
+}
+
+.header-menu .ant-menu-item {
+  color: var(--text-secondary) !important;
+}
+
+.header-menu .ant-menu-item:hover,
+.header-menu .ant-menu-item-selected {
+  color: var(--primary) !important;
+}
+
+.header-menu .ant-menu-item-selected::after {
+  border-bottom-color: var(--primary) !important;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---- 内容区 ---- */
+.app-content {
+  padding: var(--space-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: calc(100vh - 128px);
+}
+
+.home-page {
+  padding: 20px 0;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* 仪表盘网格布局 */
+.game-container .dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.game-container .dashboard-container > .dashboard-card:first-child,
+.game-container .dashboard-container > .dashboard-card:nth-child(2) {
+  grid-column: span 2;
+}
+
+/* ---- 底栏 ---- */
+.app-footer {
+  background: transparent !important;
+  text-align: center;
+  padding: var(--space-lg) !important;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ---- 响应式 ---- */
+@media (max-width: 1024px) {
+  .game-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .header-menu {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .header-menu .ant-menu-item {
+    padding: 0 12px !important;
+  }
+
+  .header-right {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .game-container {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-md) !important;
+  }
+}
+
+.welcome-actions {
+  flex-wrap: wrap;
+  justify-content: center;
+}

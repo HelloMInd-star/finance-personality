@@ -1,0 +1,310 @@
+/* ============================================
+   认知引擎 · MindSpeak 页面样式
+   ============================================ */
+
+.mindspeak-page {
+  padding: 16px;
+}
+
+/* ---- 顶部导航 ---- */
+.mindspeak-header-card {
+  margin-bottom: 16px;
+  background: rgba(30, 19, 64, 0.6);
+}
+
+.mindspeak-header-content {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.mindspeak-title {
+  margin: 0;
+}
+
+/* ---- 全局稳态卡片 ---- */
+.mindspeak-steady-card {
+  margin-bottom: 16px;
+}
+
+.mindspeak-steady-label {
+  margin-left: 8px;
+}
+
+.mindspeak-stat-desc {
+  font-size: 12px;
+}
+
+.mindspeak-stat-progress {
+  margin-top: 8px;
+}
+
+.mindspeak-translate-section {
+  width: 100%;
+}
+
+.mindspeak-translate-alert {
+  margin-top: 16px;
+}
+
+/* ---- 模块卡片 ---- */
+.mindspeak-modules-card {
+  margin-bottom: 0;
+}
+
+.mindspeak-module-card {
+  height: 100%;
+}
+
+.mindspeak-module-card.active {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.mindspeak-module-card.inactive {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.mindspeak-module-content {
+  width: 100%;
+}
+
+.mindspeak-module-header {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.mindspeak-module-icon {
+  font-size: 18px;
+}
+
+.mindspeak-module-desc {
+  font-size: 12px;
+}
+
+.mindspeak-module-meta {
+  font-size: 12px;
+}
+
+.mindspeak-module-tag {
+  margin: 0;
+  font-size: 11px;
+}
+
+.mindspeak-module-conf-text {
+  font-size: 11px;
+  text-align: right;
+}
+
+/* ---- 右侧面板 ---- */
+.mindspeak-link-card {
+  margin-bottom: 16px;
+}
+
+.mindspeak-link-section {
+  width: 100%;
+}
+
+.mindspeak-link-label {
+  font-size: 12px;
+}
+
+.mindspeak-divider-tight {
+  margin: 4px 0;
+}
+
+.mindspeak-dataflow-alert {
+  font-size: 12px;
+}
+
+/* ---- 全景矩阵 ---- */
+.mindspeak-matrix-card {
+  margin-bottom: 16px;
+}
+
+.mindspeak-matrix-wrap {
+  overflow-x: auto;
+}
+
+.mindspeak-matrix-table {
+  width: 100%;
+  font-size: 10px;
+  border-collapse: collapse;
+}
+
+.mindspeak-matrix-table th {
+  padding: 2px;
+  text-align: center;
+  transform: rotate(-45deg);
+  transform-origin: bottom left;
+  height: 50px;
+}
+
+.mindspeak-matrix-table th.mindspeak-matrix-corner {
+  text-align: left;
+  transform: none;
+  height: auto;
+}
+
+.mindspeak-matrix-table th span {
+  white-space: nowrap;
+}
+
+.mindspeak-matrix-table td {
+  padding: 2px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.mindspeak-matrix-row-label {
+  padding: 2px;
+  white-space: nowrap;
+  font-size: 11px;
+  text-align: left;
+}
+
+/* ============================================
+   KMP→IPD 记忆学习层
+   ============================================ */
+.mindspeak-kmp-step-card {
+  height: 100%;
+  background: linear-gradient(135deg, rgba(30, 19, 64, 0.5), rgba(16, 185, 129, 0.04));
+  backdrop-filter: blur(6px);
+}
+
+.mindspeak-kmp-tier-card {
+  height: 100%;
+  background: linear-gradient(135deg, rgba(30, 19, 64, 0.5), rgba(139, 92, 246, 0.05));
+  backdrop-filter: blur(6px);
+}
+
+/* ---- 审计日志 ---- */
+.mindspeak-audit-card {
+  margin-bottom: 0;
+}
+
+.mindspeak-audit-count {
+  margin-left: 8px;
+}
+
+.mindspeak-audit-item {
+  width: 100%;
+}
+
+.mindspeak-audit-header {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.mindspeak-audit-action {
+  margin: 0;
+}
+
+.mindspeak-audit-time {
+  font-size: 11px;
+}
+
+.mindspeak-audit-details {
+  font-size: 12px;
+}
+
+/* ============================================
+   响应式布局优化
+   ============================================ */
+
+@media (max-width: 992px) {
+  .mindspeak-page {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mindspeak-page {
+    padding: 8px;
+  }
+
+  .mindspeak-header-content {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mindspeak-title {
+    font-size: 16px !important;
+  }
+
+  .mindspeak-module-card {
+    margin-bottom: 0;
+  }
+}
+
+/* ---- 翻译结果详情 ---- */
+.mindspeak-result-metrics {
+  margin-top: 16px;
+}
+
+.mindspeak-result-table-wrap {
+  margin-top: 16px;
+}
+
+.mindspeak-result-table-title {
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ---- 模块详情弹窗 ---- */
+.mindspeak-modal-content {
+  width: 100%;
+}
+
+.mindspeak-modal-section {
+  margin-top: 4px;
+}
+
+.mindspeak-modal-principle {
+  margin-top: 8px;
+  line-height: 1.8;
+}
+
+.mindspeak-modal-usecase {
+  margin-top: 8px;
+  line-height: 1.8;
+}
+
+.mindspeak-modal-progress {
+  margin-top: 8px;
+}
+
+/* ============================================
+   响应式布局优化
+   ============================================ */
+
+@media (max-width: 992px) {
+  .mindspeak-page {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mindspeak-page {
+    padding: 8px;
+  }
+
+  .mindspeak-header-content {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mindspeak-title {
+    font-size: 16px !important;
+  }
+
+  .mindspeak-module-card {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .mindspeak-page {
+    padding: 6px;
+  }
+}

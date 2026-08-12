@@ -1,0 +1,218 @@
+/**
+ * CocktailCard · 深空紫金语系
+ *
+ * 与 BartenderPageV2 / CocktailBuilder / VectorRadar 风格统一
+ * 磨砂玻璃容器 + 紫金渐变头部 + 微妙发光
+ */
+
+:root {
+  --cc-gold: #D4AF37;
+  --cc-gold-soft: rgba(212, 175, 55, 0.4);
+  --cc-purple: #8b5cf6;
+  --cc-purple-soft: rgba(139, 92, 246, 0.18);
+  --cc-bg-glass: rgba(30, 19, 64, 0.55);
+  --cc-bg-deep: rgba(20, 13, 42, 0.75);
+  --cc-border-soft: rgba(139, 92, 246, 0.18);
+  --cc-text: rgba(255, 255, 255, 0.92);
+  --cc-text-dim: rgba(255, 255, 255, 0.6);
+  --cc-text-muted: rgba(255, 255, 255, 0.4);
+}
+
+.cc-card {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--cc-bg-glass);
+  border: 1px solid var(--cc-border-soft);
+  border-radius: 18px;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 30px rgba(212, 175, 55, 0.06);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.cc-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 175, 55, 0.12);
+  transform: translateY(-2px);
+}
+
+/* 顶部光晕（径向渐变） */
+.cc-card__glow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+ * 头部
+ * ============================================================ */
+
+.cc-card__header {
+  position: relative;
+  padding: 32px 24px 20px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.10) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+  z-index: 1;
+}
+
+.cc-card__eyebrow {
+  font-size: 11px;
+  color: var(--cc-gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.cc-card__name {
+  margin: 0;
+  color: #fff;
+  font-weight: 500;
+  font-size: 30px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 16px rgba(212, 175, 55, 0.18);
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+}
+
+.cc-card__divider {
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cc-gold), transparent);
+  margin: 14px auto 0;
+}
+
+/* ============================================================
+ * 详情区
+ * ============================================================ */
+
+.cc-card__body {
+  position: relative;
+  padding: 22px 24px 18px;
+  z-index: 1;
+}
+
+.cc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.cc-row__label {
+  font-size: 11px;
+  color: var(--cc-text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.cc-row__value {
+  font-size: 14px;
+  text-align: right;
+  line-height: 1.5;
+  max-width: 260px;
+  color: var(--cc-text);
+}
+
+/* 不同维度的强调色 */
+.cc-row--gold .cc-row__value { color: var(--cc-gold); }
+.cc-row--blue .cc-row__value { color: #87CEEB; }
+.cc-row--coral .cc-row__value { color: #FFA07A; }
+
+.cc-card__sep {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cc-border-soft), transparent);
+  margin: 12px 0;
+}
+
+/* ============================================================
+ * 成分标签
+ * ============================================================ */
+
+.cc-card__ingredients {
+  margin-top: 4px;
+}
+
+.cc-card__ingredients-label {
+  font-size: 11px;
+  color: var(--cc-text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.cc-card__ingredients-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cc-chip {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: var(--cc-gold);
+  border-radius: 12px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+}
+
+.cc-chip:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--cc-gold-soft);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================================
+ * 底部
+ * ============================================================ */
+
+.cc-card__footer {
+  padding: 14px 24px;
+  background: rgba(0, 0, 0, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+  color: var(--cc-text-muted);
+  text-align: center;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+ * 响应式
+ * ============================================================ */
+
+@media (max-width: 640px) {
+  .cc-card {
+    border-radius: 14px;
+  }
+
+  .cc-card__header {
+    padding: 24px 18px 16px;
+  }
+
+  .cc-card__name {
+    font-size: 24px;
+    letter-spacing: 1px;
+  }
+
+  .cc-card__body {
+    padding: 18px 18px 14px;
+  }
+
+  .cc-row__value {
+    max-width: 180px;
+    font-size: 13px;
+  }
+}

@@ -1,131 +1,62 @@
-import React from 'react';
-import { Card, Tag, Space, Typography, Divider } from 'antd';
-
-const { Title, Text } = Typography;
-
 /**
- * 分子调酒配方卡
+ * CocktailCard · 分子调酒配方卡
+ *
  * 展示酒名、风味、质地、温度、呈现、成分、来源
+ * 视觉：深空紫金（磨砂玻璃 + 紫金渐变 + 微妙发光）
+ * 无 Ant Design 依赖 · 纯 JSX + CSS
  */
+import React from 'react';
+import './CocktailCard.css';
+
 const CocktailCard = ({ data, bartender }) => {
   if (!data) return null;
 
   return (
-    <div style={{
-      maxWidth: 420,
-      margin: '0 auto',
-      background: 'linear-gradient(145deg, #1a1a2e 0%, #16213e 100%)',
-      borderRadius: 20,
-      border: '1px solid rgba(212, 175, 55, 0.3)',
-      overflow: 'hidden',
-      boxShadow: '0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(212, 175, 55, 0.1)'
-    }}>
+    <div className="cc-card">
+      {/* 顶部光晕 */}
+      <div className="cc-card__glow" />
+
       {/* 头部：酒名 */}
-      <div style={{
-        padding: '32px 24px 24px',
-        textAlign: 'center',
-        background: 'linear-gradient(180deg, rgba(212, 175, 55, 0.15) 0%, transparent 100%)',
-        borderBottom: '1px solid rgba(212, 175, 55, 0.2)'
-      }}>
-        <div style={{
-          fontSize: 11,
-          color: '#D4AF37',
-          letterSpacing: 4,
-          textTransform: 'uppercase',
-          marginBottom: 8
-        }}>
+      <header className="cc-card__header">
+        <div className="cc-card__eyebrow">
           {bartender ? `${bartender.icon} ${bartender.name} 特调` : '今夜特调'}
         </div>
-        <Title level={2} style={{
-          margin: 0,
-          color: '#fff',
-          fontWeight: 500,
-          fontSize: 32,
-          letterSpacing: 2
-        }}>
-          {data.name}
-        </Title>
-      </div>
+        <h2 className="cc-card__name">{data.name}</h2>
+        <div className="cc-card__divider" />
+      </header>
 
       {/* 详情 */}
-      <div style={{ padding: 24 }}>
-        <Space direction="vertical" size={16} style={{ width: '100%' }}>
-          <InfoRow label="风味" value={data.flavor} color="#D4AF37" />
-          <InfoRow label="质地" value={data.texture} color="#fff" />
-          <InfoRow label="温度" value={data.temperature} color="#87CEEB" />
-          <InfoRow label="呈现" value={data.presentation} color="#FFA07A" />
+      <div className="cc-card__body">
+        <InfoRow label="风味" value={data.flavor} accent="gold" />
+        <InfoRow label="质地" value={data.texture} accent="default" />
+        <InfoRow label="温度" value={data.temperature} accent="blue" />
+        <InfoRow label="呈现" value={data.presentation} accent="coral" />
 
-          <Divider style={{ margin: '8px 0', borderColor: 'rgba(255,255,255,0.1)' }} />
+        <div className="cc-card__sep" />
 
-          {/* 成分 */}
-          <div>
-            <div style={{
-              fontSize: 11,
-              color: '#888',
-              letterSpacing: 2,
-              textTransform: 'uppercase',
-              marginBottom: 8
-            }}>
-              成分
-            </div>
-            <Space wrap size={[6, 6]}>
-              {data.ingredients.map((ing, i) => (
-                <Tag
-                  key={i}
-                  style={{
-                    background: 'rgba(212, 175, 55, 0.1)',
-                    border: '1px solid rgba(212, 175, 55, 0.3)',
-                    color: '#D4AF37',
-                    borderRadius: 12,
-                    padding: '2px 12px',
-                    fontSize: 12
-                  }}
-                >
-                  {ing}
-                </Tag>
-              ))}
-            </Space>
+        {/* 成分 */}
+        <div className="cc-card__ingredients">
+          <div className="cc-card__ingredients-label">成分</div>
+          <div className="cc-card__ingredients-list">
+            {data.ingredients?.map((ing, i) => (
+              <span key={i} className="cc-chip">{ing}</span>
+            ))}
           </div>
-        </Space>
+        </div>
       </div>
 
       {/* 底部：配方来源 */}
-      <div style={{
-        padding: '16px 24px',
-        background: 'rgba(0,0,0,0.2)',
-        borderTop: '1px solid rgba(255,255,255,0.05)',
-        fontSize: 11,
-        color: '#666',
-        textAlign: 'center',
-        letterSpacing: 1
-      }}>
-        配方来源：{data.recipeSource}
-      </div>
+      <footer className="cc-card__footer">
+        配方来源 · {data.recipeSource}
+      </footer>
     </div>
   );
 };
 
-const InfoRow = ({ label, value, color }) => (
-  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16 }}>
-    <div style={{
-      fontSize: 11,
-      color: '#666',
-      letterSpacing: 2,
-      textTransform: 'uppercase',
-      whiteSpace: 'nowrap',
-      paddingTop: 2
-    }}>
-      {label}
-    </div>
-    <div style={{
-      fontSize: 14,
-      color: color || '#fff',
-      textAlign: 'right',
-      lineHeight: 1.5,
-      maxWidth: 240
-    }}>
-      {value}
-    </div>
+const InfoRow = ({ label, value, accent = 'default' }) => (
+  <div className={`cc-row cc-row--${accent}`}>
+    <span className="cc-row__label">{label}</span>
+    <span className="cc-row__value">{value}</span>
   </div>
 );
 

@@ -24,19 +24,49 @@ const LOG_COLORS = {
   info: '#94a3b8',
 };
 
+// ============= 日志订阅/发布机制 =============
+const subscribers = new Set();
+
+/**
+ * 订阅日志，返回取消订阅函数
+ * const unsubscribe = logger.subscribe((log) => console.log(log));
+ * unsubscribe(); // 取消订阅
+ */
+function subscribe(callback) {
+  if (typeof callback !== 'function') {
+    console.warn('[logger.subscribe] callback 必须是函数');
+    return () => {};
+  }
+  subscribers.add(callback);
+  return () => subscribers.delete(callback);
+}
+
+/**
+ * 发布日志到所有订阅者
+ */
+function publish(logEntry) {
+  for (const cb of subscribers) {
+    try {
+      cb(logEntry);
+    } catch (e) {
+      console.error('[logger.publish] 订阅者处理异常:', e);
+    }
+  }
+}
+
 const getTimestamp = () => {
   const now = new Date();
   return now.toISOString().replace('T', ' ').slice(0, 19) + '.' + String(now.getMilliseconds()).padStart(3, '0');
 };
 
-const formatArgs = (args) => {
+const formatArgsLight = (args) => {
   return args.map(arg => {
+    if (arg === null) return 'null';
+    if (arg === undefined) return 'undefined';
     if (typeof arg === 'object') {
-      try {
-        return JSON.stringify(arg);
-      } catch (e) {
-        return String(arg);
-      }
+      if (Array.isArray(arg)) return `[Array(${arg.length})]`;
+      const className = arg.constructor?.name || 'Object';
+      return `[${className}]`;
     }
     return String(arg);
   }).join(' ');
@@ -47,14 +77,28 @@ const createLogger = (type, level = 'log') => {
   return (...args) => {
     const timestamp = getTimestamp();
     const tag = `[${type.toUpperCase()}]`;
-    const message = formatArgs(args);
+    const message = formatArgsLight(args);
+
     console[level](
       `%c${LOG_PREFIX}%c ${tag} %c${timestamp}%c ${message}`,
       `background: ${color}; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold;`,
       `color: ${color}; font-weight: bold;`,
       'color: #64748b; font-size: 11px;',
-      'color: inherit;'
+      'color: inherit;',
+      ...args
     );
+
+    if (subscribers.size > 0) {
+      publish({
+        type,
+        level,
+        tag,
+        timestamp,
+        message,
+        color,
+        rawArgs: args
+      });
+    }
   };
 };
 
@@ -109,6 +153,13 @@ export const logger = {
       }
     };
   },
+
+  /**
+   * 订阅日志，返回取消订阅函数
+   * const unsubscribe = logger.subscribe((log) => console.log(log));
+   * unsubscribe(); // 取消订阅
+   */
+  subscribe,
 };
 
 export default logger;

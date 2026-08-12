@@ -1,0 +1,542 @@
+/* ============================================================
+   StockPage.css · 股价模拟器 · 紫金磨砂主题
+   全局统一通过 components.css 的 .glass-card / .glass-gold
+   与 [class*="-page"] 选择器保持一致性，这里仅做专属微调
+   ============================================================ */
+
+.stock-page {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============ 页面头部 ============ */
+.stock-page .page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+}
+
+.stock-page .page-title {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+}
+
+.stock-page .page-subtitle {
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.5px;
+}
+
+/* ============ 磨砂玻璃卡（与全局 components.css 一致） ============ */
+.stock-page .glass-card {
+  background:
+    linear-gradient(135deg, rgba(124, 58, 237, 0.10) 0%, rgba(236, 72, 153, 0.06) 45%, rgba(251, 191, 36, 0.05) 100%),
+    rgba(18, 16, 40, 0.55) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(168, 85, 247, 0.22) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 4px 24px rgba(168, 85, 247, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stock-page .glass-card:hover {
+  border-color: rgba(236, 72, 153, 0.35) !important;
+  box-shadow:
+    0 8px 40px rgba(168, 85, 247, 0.14),
+    0 0 24px rgba(236, 72, 153, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+/* 金卡：Hero / 重点区域 */
+.stock-page .glass-gold {
+  background:
+    linear-gradient(135deg, rgba(124, 58, 237, 0.22) 0%, rgba(236, 72, 153, 0.15) 45%, rgba(251, 191, 36, 0.12) 100%),
+    rgba(18, 16, 40, 0.62) !important;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(251, 191, 36, 0.28) !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 6px 32px rgba(251, 191, 36, 0.10),
+    0 0 48px rgba(168, 85, 247, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ============ Hero 头卡 ============ */
+.stock-hero-card {
+  overflow: hidden;
+  position: relative;
+}
+
+.stock-hero-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  animation: stock-glow-pulse 4s ease-in-out infinite;
+}
+
+.stock-hero-card::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: 5%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  animation: stock-glow-pulse 5s ease-in-out infinite 1s;
+}
+
+@keyframes stock-glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+.stock-hero-card .ant-statistic-title {
+  white-space: nowrap;
+}
+
+/* ============ 十一步进度卡 ============ */
+.stock-step-card {
+  overflow: hidden;
+}
+
+/* ============ 控制面板 ============ */
+.stock-control-card .ant-radio-button-wrapper {
+  transition: all 0.25s ease;
+  font-size: 12px;
+  height: 30px;
+  line-height: 28px;
+}
+
+.stock-control-card .ant-select-selector,
+.stock-control-card .ant-radio-group {
+  background: rgba(18, 16, 40, 0.5) !important;
+}
+
+.stock-control-card .ant-slider-rail {
+  background: rgba(168, 85, 247, 0.15);
+}
+
+.stock-control-card .ant-slider-track {
+  background: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);
+}
+
+.stock-control-card .ant-slider-handle {
+  border-color: #a855f7;
+  background: #fff;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+}
+
+.stock-control-card .ant-slider-mark-text {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 10px;
+}
+
+/* ============ 主按钮：紫金渐变（与全局 components.css 一致） ============ */
+.stock-page .btn-purple-gold {
+  height: 40px;
+  border: none !important;
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 35%, #ec4899 70%, #fbbf24 100%) !important;
+  background-size: 200% 200%;
+  color: #fff !important;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.3px;
+  border-radius: 10px !important;
+  box-shadow:
+    0 4px 16px rgba(168, 85, 247, 0.35),
+    0 0 0 1px rgba(251, 191, 36, 0.15) inset;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: btn-gradient-shift 6s ease infinite;
+}
+
+.stock-page .btn-purple-gold:hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow:
+    0 8px 28px rgba(236, 72, 153, 0.45),
+    0 0 32px rgba(251, 191, 36, 0.2),
+    0 0 0 1px rgba(251, 191, 36, 0.25) inset;
+  background-position: 100% 100%;
+}
+
+.stock-page .btn-purple-gold:active {
+  transform: translateY(0) scale(0.99);
+}
+
+@keyframes btn-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* 紧急停机按钮独立发光 */
+.stock-page .ant-btn-dangerous {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9)) !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.4);
+}
+
+/* ============ 仓位卡 ============ */
+.stock-position-card {
+  overflow: hidden;
+}
+
+/* ============ Tabs 样式微调（与全局保持一致，仅细化） ============ */
+.stock-page .ant-tabs-tab {
+  padding: 12px 16px !important;
+  font-size: 13px;
+  transition: all 0.25s ease;
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.stock-page .ant-tabs-tab:hover {
+  color: rgba(255, 255, 255, 0.85) !important;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px 8px 0 0;
+}
+
+.stock-page .ant-tabs-tab-active {
+  color: #fff !important;
+  font-weight: var(--fw-semibold);
+}
+
+.stock-page .ant-tabs-ink-bar {
+  background: linear-gradient(90deg, #a855f7, #ec4899, #fbbf24) !important;
+  height: 3px !important;
+  border-radius: 3px 3px 0 0;
+}
+
+.stock-page .ant-tabs-nav {
+  margin-bottom: 0 !important;
+}
+
+/* ============ Table 微调 ============ */
+.stock-page .ant-table {
+  background: transparent !important;
+}
+
+.stock-page .ant-table-thead > tr > th {
+  background: rgba(168, 85, 247, 0.08) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2) !important;
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+}
+
+.stock-page .ant-table-tbody > tr > td {
+  border-bottom: 1px solid rgba(168, 85, 247, 0.08) !important;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.stock-page .ant-table-tbody > tr:hover > td {
+  background: rgba(168, 85, 247, 0.06) !important;
+}
+
+.stock-page .ant-table-row-selected > td {
+  background: rgba(168, 85, 247, 0.12) !important;
+}
+
+.stock-page .ant-pagination-item {
+  background: rgba(18, 16, 40, 0.6) !important;
+  border-color: rgba(168, 85, 247, 0.25) !important;
+}
+
+.stock-page .ant-pagination-item a {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.stock-page .ant-pagination-item-active {
+  background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+  border-color: transparent !important;
+}
+
+.stock-page .ant-pagination-item-active a {
+  color: #fff !important;
+}
+
+/* ============ Card 内 Descriptions ============ */
+.stock-page .ant-descriptions-item-label {
+  white-space: nowrap;
+}
+
+/* ============ Alert ============ */
+.stock-page .ant-alert {
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.05));
+}
+
+.stock-page .ant-alert-message,
+.stock-page .ant-alert-description {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ============ Divider ============ */
+.stock-page .ant-divider {
+  border-color: rgba(168, 85, 247, 0.15);
+}
+
+/* ============ Tag 增强 ============ */
+.stock-page .ant-tag {
+  border-radius: 6px;
+  border: none;
+  font-weight: var(--fw-medium);
+  padding: 2px 10px;
+}
+
+.stock-page .ant-tag-purple {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(168, 85, 247, 0.2));
+  color: #e9d5ff;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.stock-page .ant-tag-gold,
+.stock-page .ant-tag-orange {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.2));
+  color: #fef3c7;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.stock-page .ant-tag-green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.2));
+  color: #bbf7d0;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.stock-page .ant-tag-red {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.35), rgba(220, 38, 38, 0.2));
+  color: #fecaca;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+/* ============ Progress 细化 ============ */
+.stock-page .ant-progress-text {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-weight: var(--fw-semibold);
+}
+
+.stock-page .ant-progress-bg {
+  border-radius: 8px;
+}
+
+/* ============ Switch ============ */
+.stock-page .ant-switch-checked {
+  background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+}
+
+/* ============ Popconfirm ============ */
+.stock-page .ant-popover {
+  backdrop-filter: blur(16px);
+}
+
+/* ============ 响应式 ============ */
+@media (max-width: 1200px) {
+  .stock-page .page-title {
+    font-size: var(--fs-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .stock-page .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .stock-page .glass-gold,
+  .stock-page .glass-card {
+    border-radius: 12px !important;
+  }
+}
+
+/* 滚动条（ECharts 容器内） */
+.stock-page ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.stock-page ::-webkit-scrollbar-track {
+  background: rgba(168, 85, 247, 0.05);
+  border-radius: 3px;
+}
+
+.stock-page ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.35));
+  border-radius: 3px;
+}
+
+.stock-page ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.6), rgba(236, 72, 153, 0.55));
+}
+
+/* ============================================================
+   v2.1 布局呼吸感优化（解决整体拥挤问题）
+   ============================================================ */
+
+/* 页面外层留白 */
+.stock-page {
+  padding: 4px 4px 24px;
+}
+
+/* 所有 Card body 统一增加内边距，避免内容贴边 */
+.stock-page .glass-card .ant-card-body,
+.stock-page .glass-gold .ant-card-body {
+  padding: 18px 20px !important;
+}
+
+.stock-page .ant-card-size-small .ant-card-body {
+  padding: 14px 16px !important;
+}
+
+/* Hero 头卡：自定义三栏统计 */
+.stock-hero-stats {
+  margin: 0 !important;
+}
+
+.stock-hero-stats .stat-cell {
+  text-align: center;
+  padding: 4px 6px;
+  position: relative;
+}
+
+.stock-hero-stats .stat-cell + .stat-cell::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(168, 85, 247, 0.35),
+    rgba(251, 191, 36, 0.25),
+    transparent);
+}
+
+.stock-hero-stats .stat-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.stock-hero-stats .stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stock-hero-stats .stat-prefix {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.75;
+  margin-right: 1px;
+}
+
+.stock-hero-stats .stat-suffix {
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: 1px;
+  opacity: 0.85;
+}
+
+/* 控制面板：参数块呼吸感 */
+.stock-control-space > div {
+  padding-bottom: 2px;
+}
+
+.stock-control-space .ant-divider {
+  margin: 6px 0 !important;
+}
+
+/* 紧急停机按钮固定宽度，避免被 flex 拉伸过窄 */
+.stock-page .stock-stop-btn {
+  width: 40px;
+  padding: 0 !important;
+}
+
+/* Tabs 容器：去除默认外边距，padding 由内部 .stock-tab-pane 控制 */
+.stock-tabs-card .ant-tabs-top {
+  margin: 0;
+}
+
+.stock-tab-pane {
+  padding: 20px 24px 24px;
+}
+
+/* Tabs 内容容器去除上下多余间距 */
+.stock-page .ant-tabs-content {
+  padding: 0 !important;
+}
+
+.stock-page .ant-tabs-tabpane {
+  padding: 0 !important;
+}
+
+/* 子面板内 Card 间距修正 */
+.stock-tab-pane .ant-card + .ant-card,
+.stock-tab-pane .ant-row + .ant-row {
+  margin-top: 4px;
+}
+
+/* Descriptions 行高调整 */
+.stock-page .ant-descriptions-item-content,
+.stock-page .ant-descriptions-item-label {
+  padding: 8px 12px !important;
+}
+
+/* Table 行高更宽松 */
+.stock-page .ant-table-tbody > tr > td,
+.stock-page .ant-table-thead > tr > th {
+  padding: 10px 12px !important;
+}
+
+/* 模拟图容器：去除内嵌卡片多余 padding */
+.stock-tab-pane > div[style*="height"] {
+  margin: -4px -8px 0;
+}
+
+/* 历史面板 Table 列间距 */
+.stock-page .ant-table-cell {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+/* 移动端：减少 padding，保留信息密度 */
+@media (max-width: 768px) {
+  .stock-page {
+    padding: 4px 0 16px;
+  }
+
+  .stock-page .glass-card .ant-card-body,
+  .stock-page .glass-gold .ant-card-body {
+    padding: 14px 14px !important;
+  }
+
+  .stock-tab-pane {
+    padding: 14px 14px 18px;
+  }
+
+  .stock-hero-stats .stat-value {
+    font-size: 18px;
+  }
+}

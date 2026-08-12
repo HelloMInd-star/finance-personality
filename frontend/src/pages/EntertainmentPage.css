@@ -1,0 +1,498 @@
+/* ============================================
+   娱乐方式页面样式
+   ============================================ */
+
+.entertainment-page {
+  padding: 16px;
+}
+
+/* ---- 顶部导航栏 ---- */
+.entertainment-header-card {
+  margin-bottom: 16px;
+  background: rgba(30, 19, 64, 0.6);
+}
+
+.entertainment-header-content {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.entertainment-title {
+  margin: 0;
+}
+
+/* ---- Hero 欢迎区 ---- */
+.entertainment-hero-card {
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(236, 72, 153, 0.1));
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.entertainment-hero-title {
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.entertainment-hero-desc {
+  font-size: 14px;
+}
+
+/* ---- 娱乐方式卡片网格 ---- */
+.entertainment-mode-card {
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  height: 100%;
+}
+
+.entertainment-mode-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.25);
+}
+
+.entertainment-mode-content {
+  width: 100%;
+}
+
+.entertainment-mode-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.entertainment-mode-name {
+  color: #fff;
+  font-size: 18px;
+}
+
+.entertainment-mode-shorttag {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.entertainment-mode-desc {
+  font-size: 12px;
+}
+
+.entertainment-mode-tags {
+  flex-wrap: wrap;
+}
+
+.entertainment-mode-sensory-tag {
+  font-size: 11px;
+}
+
+/* ---- 底部提示 ---- */
+.entertainment-footer-tip {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.entertainment-footer-tip .ant-typography {
+  font-size: 12px;
+}
+
+/* ============================================
+   活跃模式视图
+   ============================================ */
+
+.active-entertainment {
+  padding: 16px;
+  min-height: 100vh;
+}
+
+.active-entertainment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.active-mode-tag {
+  font-size: 14px;
+  padding: 4px 12px;
+}
+
+/* ============================================
+   1. 音乐漫游
+   ============================================ */
+
+.music-wanderer {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.music-wanderer-emoji {
+  font-size: 120px;
+  margin-bottom: 24px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.music-wanderer-title {
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.music-wanderer-style {
+  font-size: 14px;
+}
+
+.music-wanderer-buttons {
+  margin-top: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.music-wanderer-buttons .ant-btn {
+  min-width: 120px;
+}
+
+.music-wanderer-tags {
+  margin-top: 24px;
+}
+
+/* ============================================
+   2. 故事漂流
+   ============================================ */
+
+.story-drift {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.story-drift-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.story-drift-emoji {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.story-fragment-card {
+  background: rgba(30, 19, 64, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 20px;
+  padding: 40px 32px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-fragment-text {
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: center;
+  margin: 0;
+}
+
+.story-drift-actions {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.story-drift-actions .ant-space {
+  flex-wrap: wrap;
+}
+
+.story-drift-tags {
+  text-align: center;
+  margin-top: 24px;
+}
+
+/* ============================================
+   3. 像素涂鸦
+   ============================================ */
+
+.pixel-doodle {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pixel-doodle-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.pixel-doodle-header .ant-slider {
+  max-width: 400px;
+  margin: 8px auto;
+}
+
+.pixel-doodle-palette {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.pixel-doodle-color-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.pixel-doodle-color-swatch.active {
+  border: 2px solid #fff;
+  box-shadow: 0 0 12px currentColor;
+}
+
+.pixel-doodle-size-row {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.pixel-doodle-size-row .ant-slider {
+  max-width: 200px;
+  margin: 4px auto;
+}
+
+.pixel-doodle-size-label {
+  margin-right: 8px;
+}
+
+.pixel-doodle-canvas-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.pixel-doodle-canvas {
+  border: 2px solid rgba(139, 92, 246, 0.4);
+  border-radius: 12px;
+  cursor: crosshair;
+  touch-action: none;
+  background: #1a1030;
+}
+
+.pixel-doodle-actions {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.pixel-doodle-tags {
+  margin-top: 12px;
+}
+
+/* ============================================
+   4. 星图漫游
+   ============================================ */
+
+.starmap-wanderer {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.starmap-controls {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.starmap-viewport {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  background: radial-gradient(ellipse at center, #0a0515 0%, #050208 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.starmap-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.starmap-star {
+  position: absolute;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: twinkle ease-in-out infinite;
+}
+
+.starmap-star.constellation {
+  background: #fbbf24;
+  box-shadow: 0 0 4px rgba(251, 191, 36, 0.8);
+}
+
+.starmap-star.normal {
+  background: #fff;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+.starmap-constellation-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 19, 64, 0.9);
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(251, 191, 36, 0.5);
+}
+
+.starmap-constellation-label .ant-typography {
+  color: #fbbf24;
+  font-size: 16px;
+}
+
+.starmap-footer {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.starmap-footer .ant-typography {
+  font-size: 12px;
+}
+
+.starmap-tags {
+  margin-top: 12px;
+}
+
+/* ============================================
+   5. 自由书写
+   ============================================ */
+
+.free-writing {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.free-writing-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.free-writing-emoji {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.free-writing-textarea {
+  background: rgba(30, 19, 64, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 16px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.8;
+  padding: 20px;
+}
+
+.free-writing-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.free-writing-tags {
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* ============================================
+   6. 空白静置
+   ============================================ */
+
+.blank-silence {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.blank-silence-emoji {
+  font-size: 64px;
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.blank-silence-timer {
+  font-size: 72px;
+  font-weight: 300;
+  color: #fff;
+  letter-spacing: 4px;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 24px;
+}
+
+.blank-silence-progress {
+  width: 300px;
+  margin-bottom: 32px;
+}
+
+.blank-silence-desc {
+  font-size: 14px;
+  text-align: center;
+  max-width: 400px;
+  line-height: 1.8;
+}
+
+.blank-silence-actions {
+  margin-top: 32px;
+}
+
+.blank-silence-tags {
+  margin-top: 24px;
+}
+
+/* ============================================
+   动画
+   ============================================ */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -34,6 +34,11 @@ class MusicEngine {
     this.totalNotes = 0;
     this.onProgress = null;
     this.onComplete = null;
+    this.globalVolume = 0.7;
+  }
+
+  setVolume(v) {
+    this.globalVolume = Math.max(0, Math.min(1, v));
   }
 
   _ensureContext() {
@@ -125,7 +130,7 @@ class MusicEngine {
     osc.frequency.value = frequency;
 
     // ADSR 包络
-    const baseGain = timbre.gain * volume;
+    const baseGain = timbre.gain * volume * this.globalVolume;
     gain.gain.setValueAtTime(0, startTime);
     gain.gain.linearRampToValueAtTime(baseGain, startTime + 0.02); // Attack
     gain.gain.linearRampToValueAtTime(baseGain * 0.7, startTime + 0.1); // Decay

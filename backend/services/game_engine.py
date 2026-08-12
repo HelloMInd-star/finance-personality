@@ -349,15 +349,23 @@ class GameEngine:
             result["amount"] = call_amount
         
         elif action_type == "raise":
-            raise_amount = min(amount, player.chips)
-            if raise_amount < self.big_blind:
-                raise_amount = self.big_blind
-            player.chips -= raise_amount
-            player.bet += raise_amount
-            self.pot += raise_amount
-            self.last_raise = raise_amount
-            result["message"] = f"{player.name} 加注 {raise_amount}"
-            result["amount"] = raise_amount
+            # 筹码不足以最小加注时,自动转为 all-in,避免筹码变负
+            if player.chips < self.big_blind:
+                all_amount = player.chips
+                player.chips = 0
+                player.bet += all_amount
+                self.pot += all_amount
+                player.all_in = True
+                result["message"] = f"{player.name} ALL IN {all_amount}"
+                result["amount"] = all_amount
+            else:
+                raise_amount = max(self.big_blind, min(amount, player.chips))
+                player.chips -= raise_amount
+                player.bet += raise_amount
+                self.pot += raise_amount
+                self.last_raise = raise_amount
+                result["message"] = f"{player.name} 加注 {raise_amount}"
+                result["amount"] = raise_amount
         
         elif action_type == "allin":
             all_amount = player.chips
@@ -370,17 +378,37 @@ class GameEngine:
         
         player.has_acted = True
         self._add_history(result["message"], "action")
-        
+
+        # 推进到下一个可行动玩家
+        self._advance_to_next_player()
+
         # 检查是否所有玩家都行动完毕
         self._check_round_complete()
-        
+
         return result
-    
+
     def _get_call_amount(self, player: Player) -> int:
         """计算跟注金额"""
-        max_bet = max([p.bet for p in self.players if not p.folded])
+        active_bets = [p.bet for p in self.players if not p.folded]
+        if not active_bets:
+            return 0
+        max_bet = max(active_bets)
         return max_bet - player.bet
-    
+
+    def _advance_to_next_player(self):
+        """推进到下一个未弃牌、未 all-in 且未行动的玩家"""
+        if self.hand_over:
+            return
+        n = len(self.players)
+        if n == 0:
+            return
+        for i in range(1, n + 1):
+            idx = (self.current_player_index + i) % n
+            p = self.players[idx]
+            if not p.folded and not p.all_in and not p.has_acted:
+                self.current_player_index = idx
+                return
+
     def _check_round_complete(self):
         """检查当前轮是否结束"""
         active_players = [p for p in self.players if not p.folded and not p.all_in]
@@ -420,7 +448,13 @@ class GameEngine:
         for player in self.players:
             if not player.folded and not player.all_in:
                 player.has_acted = False
-        
+
+        # 新轮次从第一个可行动玩家开始
+        for idx, p in enumerate(self.players):
+            if not p.folded and not p.all_in:
+                self.current_player_index = idx
+                break
+
         # 检查是否只剩一个玩家
         active_players = [p for p in self.players if not p.folded and not p.all_in]
         if len(active_players) == 1:
@@ -482,11 +516,25 @@ class GameEngine:
                 return player
         return None
     
-    def get_state(self) -> Dict:
-        """获取游戏状态"""
+    def get_state(self, viewer_id: str = None) -> Dict:
+        """获取游戏状态
+
+        Args:
+            viewer_id: 观察者玩家ID。传入时仅返回该玩家的底牌,
+                       其他玩家底牌置空(摊牌时赢家底牌除外),防止作弊
+        """
+        players_state = []
+        for p in self.players:
+            ps = p.to_dict()
+            if viewer_id and p.id != viewer_id:
+                # 非观察者玩家:隐藏底牌,除非已摊牌且该玩家是赢家
+                if not (self.hand_over and self.winner and self.winner.id == p.id):
+                    ps["hole_cards"] = []
+            players_state.append(ps)
+
         return {
             "id": self.id,
-            "players": [p.to_dict() for p in self.players],
+            "players": players_state,
             "board": [c.to_dict() for c in self.board],
             "pot": self.pot,
             "stage": self.stage.value,

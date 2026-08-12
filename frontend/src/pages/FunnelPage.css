@@ -1,0 +1,187 @@
+/**
+ * 信息漏斗商业精算 · 紫金磨砂玻璃风格
+ */
+
+.funnel-page {
+  padding: 4px 4px 24px;
+}
+
+/* ============ 漏斗状态条 ============ */
+.funnel-status-bar {
+  transition: all 0.3s ease;
+}
+
+.funnel-status-bar.active {
+  border-color: rgba(168, 85, 247, 0.3);
+  background: rgba(168, 85, 247, 0.06);
+}
+
+/* ============ 参数面板 ============ */
+.funnel-param-section {
+  margin-bottom: 16px;
+}
+
+.funnel-param-section:last-child {
+  margin-bottom: 0;
+}
+
+.funnel-param-section .param-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+.funnel-param-section .param-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.funnel-param-section .param-label-row span {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.funnel-param-section .param-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fbbf24;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+}
+
+.funnel-param-section .ant-slider {
+  margin: 4px 0;
+}
+
+.funnel-param-section .ant-slider-rail {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.funnel-param-section .ant-slider-track {
+  background: linear-gradient(90deg, #a855f7, #fbbf24);
+}
+
+.funnel-param-section .ant-slider-handle {
+  border-color: #a855f7;
+}
+
+.funnel-param-section .ant-input-number {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(168, 85, 247, 0.2);
+  color: #fff;
+}
+
+.funnel-param-section .ant-input-number:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.funnel-param-section .ant-input-number-input {
+  color: #fff;
+}
+
+/* ============ 日志面板 ============ */
+.funnel-log-panel {
+  max-height: 300px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+}
+
+.funnel-log-panel::-webkit-scrollbar {
+  width: 3px;
+}
+
+.funnel-log-panel::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.3);
+  border-radius: 3px;
+}
+
+.funnel-log-panel .log-empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+  padding: 20px 0;
+}
+
+.funnel-log-panel .log-entry {
+  display: flex;
+  gap: 10px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.funnel-log-panel .log-entry:last-child {
+  border-bottom: none;
+}
+
+.funnel-log-panel .log-time {
+  color: rgba(255, 255, 255, 0.3);
+  min-width: 55px;
+  flex-shrink: 0;
+}
+
+.funnel-log-panel .log-msg {
+  color: rgba(255, 255, 255, 0.75);
+  word-break: break-all;
+}
+
+.funnel-log-panel .log-success .log-msg {
+  color: #22c55e;
+}
+
+.funnel-log-panel .log-warn .log-msg {
+  color: #facc15;
+}
+
+.funnel-log-panel .log-error .log-msg {
+  color: #f87171;
+}
+
+/* ============ 统计卡片 ============ */
+.funnel-page .ds-stat-card {
+  padding: 14px 12px;
+}
+
+.funnel-page .ds-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* ============ 表格暗色适配 ============ */
+.funnel-page .ant-table {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.funnel-page .ant-table-thead > tr > th {
+  background: rgba(168, 85, 247, 0.08);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
+
+.funnel-page .ant-table-tbody > tr > td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.funnel-page .ant-table-tbody > tr:hover > td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ============ 卡片标题 ============ */
+.funnel-page .ant-card-head {
+  border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+}
+
+.funnel-page .ant-card-head-title {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+}

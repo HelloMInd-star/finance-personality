@@ -44,3 +44,7 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+# VS Code untitled drafts
+Untitled-*.ini
+Untitled-*.md

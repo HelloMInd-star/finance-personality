@@ -1,0 +1,408 @@
+/* ============================================
+   心理盘面 · Psychology 页面样式
+   ============================================ */
+
+.psychology-page {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.psychology-content {
+  width: 100%;
+}
+
+/* ---- 标题区 ---- */
+.psychology-header-card {
+  margin-bottom: 0;
+}
+
+.psychology-header-space {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.psychology-title-space {
+  align-items: center;
+}
+
+.psychology-title-icon {
+  font-size: 48px;
+}
+
+.psychology-title-heading {
+  margin: 0;
+}
+
+.psychology-title-desc {
+  margin: 8px 0 0;
+}
+
+.psychology-source-tag {
+  color: #faad14;
+}
+
+/* ---- 左侧参数控制 ---- */
+.psychology-param-col {
+  width: 100%;
+}
+
+.psychology-param-card {
+  margin-bottom: 0;
+}
+
+.psychology-param-history {
+  margin-top: 8px;
+}
+
+.psychology-param-history-text {
+  font-size: 12px;
+}
+
+.psychology-industry-select {
+  width: 100%;
+}
+
+.psychology-industry-tag {
+  margin-top: 8px;
+}
+
+.psychology-mood-stats {
+  margin-bottom: 0;
+}
+
+.psychology-play-card {
+  margin-bottom: 0;
+}
+
+.psychology-play-info {
+  margin-bottom: 0;
+}
+
+.psychology-play-info-item {
+  margin-bottom: 0;
+}
+
+.psychology-play-info-label {
+  font-size: 12px;
+}
+
+.psychology-play-info-value {
+  font-weight: 600;
+}
+
+.psychology-play-progress {
+  margin-bottom: 0;
+}
+
+.psychology-play-btns {
+  width: 100%;
+  justify-content: center;
+}
+
+.psychology-play-main-btn {
+  width: 64px;
+  height: 64px;
+  font-size: 32px;
+}
+
+.psychology-play-hint {
+  text-align: center;
+  display: block;
+}
+
+.psychology-map-card {
+  margin-bottom: 0;
+}
+
+.psychology-map-text {
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.psychology-map-title {
+  color: #D4AF37;
+}
+
+/* ---- 右侧 K 线图 + 统计 ---- */
+.psychology-chart-col {
+  width: 100%;
+}
+
+.psychology-stats-card {
+  margin-bottom: 0;
+}
+
+.psychology-stats-value-up {
+  color: #52c41a;
+  font-size: 20px;
+}
+
+.psychology-stats-value-down {
+  color: #eb2f96;
+  font-size: 20px;
+}
+
+.psychology-stats-value-warn {
+  color: #faad14;
+  font-size: 20px;
+}
+
+.psychology-stats-value {
+  font-size: 20px;
+}
+
+.psychology-kline-card {
+  margin-bottom: 0;
+}
+
+.psychology-kline-tag {
+  margin-bottom: 0;
+}
+
+.psychology-kline-icon {
+  color: #faad14;
+}
+
+.psychology-kline-extra {
+  font-size: 12px;
+}
+
+.psychology-kline-chart {
+  height: 320px;
+}
+
+.psychology-volume-card {
+  margin-bottom: 0;
+}
+
+.psychology-volume-chart {
+  height: 80px;
+}
+
+/* ---- 投资人匹配 ---- */
+.psychology-investor-card {
+  margin-bottom: 0;
+}
+
+.psychology-investor-similarity {
+  color: #D4AF37;
+}
+
+.psychology-investor-title-icon {
+  font-size: 22px;
+}
+
+.psychology-investor-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(212,175,55,0.02));
+  border-radius: 12px;
+  border: 1px solid rgba(212,175,55,0.2);
+}
+
+.psychology-investor-avatar {
+  font-size: 56px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.psychology-investor-name {
+  margin: 0;
+  color: #D4AF37;
+}
+
+.psychology-investor-mbti {
+  font-size: 13px;
+}
+
+.psychology-investor-style {
+  margin-top: 8px;
+}
+
+.psychology-investor-style-text {
+  font-size: 12px;
+}
+
+.psychology-investor-quote {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  border-left: 3px solid #D4AF37;
+}
+
+.psychology-investor-quote-label {
+  font-size: 12px;
+}
+
+.psychology-investor-quote-text {
+  margin: 4px 0 0;
+  color: #fff;
+  font-style: italic;
+}
+
+.psychology-investor-desc {
+  margin-top: 12px;
+}
+
+.psychology-investor-desc-text {
+  font-size: 12px;
+}
+
+.psychology-investor-common {
+  margin-bottom: 16px;
+}
+
+.psychology-investor-common-title {
+  color: #52c41a;
+}
+
+.psychology-investor-common-list {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.psychology-investor-common-item {
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+}
+
+.psychology-investor-empty-hint {
+  font-size: 13px;
+}
+
+.psychology-investor-diff {
+  margin-bottom: 16px;
+}
+
+.psychology-investor-diff-title {
+  color: #faad14;
+}
+
+.psychology-investor-diff-list {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.psychology-investor-diff-item {
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+}
+
+.psychology-compare-divider {
+  margin: 8px 0;
+}
+
+.psychology-compare-label {
+  font-size: 12px;
+}
+
+.psychology-compare-list {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.psychology-compare-item {
+  margin-bottom: 0;
+}
+
+.psychology-compare-dim {
+  font-size: 12px;
+}
+
+.psychology-compare-legend {
+  margin-top: 4px;
+}
+
+.psychology-compare-legend-user {
+  font-size: 11px;
+}
+
+.psychology-compare-legend-investor {
+  font-size: 11px;
+  color: #D4AF37;
+}
+
+.psychology-more-divider {
+  margin: 16px 0 8px;
+}
+
+.psychology-more-label {
+  font-size: 12px;
+}
+
+.psychology-more-list {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.psychology-more-tag {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+/* ============================================
+   响应式布局优化
+   ============================================ */
+
+@media (max-width: 992px) {
+  .psychology-page {
+    padding: 16px;
+  }
+
+  .psychology-investor-profile {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .psychology-page {
+    padding: 12px;
+  }
+
+  .psychology-title-icon {
+    font-size: 36px;
+  }
+
+  .psychology-investor-avatar {
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .psychology-kline-chart {
+    height: 240px;
+  }
+}
+
+@media (max-width: 576px) {
+  .psychology-page {
+    padding: 8px;
+  }
+
+  .psychology-header-space {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .psychology-play-main-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 24px;
+  }
+
+  .psychology-kline-chart {
+    height: 200px;
+  }
+}

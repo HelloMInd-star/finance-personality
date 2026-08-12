@@ -7,7 +7,6 @@ python-multipart==0.0.6
 # 数据库
 asyncpg==0.29.0
 sqlalchemy==2.0.23
-alembic==1.12.1
 redis==5.0.1
 
 # 认证
@@ -21,14 +20,10 @@ pydantic-settings==2.1.0
 email-validator==2.1.0
 
 # AI/ML
-scikit-learn==1.3.2
-numpy==1.26.2
-pandas==2.1.3
-joblib==1.3.2
+# (scikit-learn/numpy/pandas 已移除：后端代码未使用)
 
 # 异步任务
-celery==5.3.4
-aiofiles==23.2.1
+# (celery/aiofiles 已移除：后端代码未使用)
 
 # 测试
 pytest==7.4.3

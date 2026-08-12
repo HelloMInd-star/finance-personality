@@ -1,40 +1,17 @@
+/* ============================================
+   Y.Mine Design System — Index (入口)
+   仅保留基础重置 + 背景氛围 + 滚动条
+   Token → styles/variables.css
+   动画 → styles/animations.css
+   ============================================ */
+
+@import './styles/variables.css';
+@import './styles/animations.css';
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-:root {
-  /* 主题色 */
-  --primary: #a78bfa;
-  --primary-light: #c4b5fd;
-  --primary-dark: #7c3aed;
-  --secondary: #f59e0b;
-  --danger: #ef4444;
-  --success: #22c55e;
-  --warning: #fbbf24;
-
-  /* 背景色 */
-  --bg-deep: #070614;
-  --bg-dark: #0b0a1a;
-  --bg-mid: #141225;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.06);
-
-  /* 边框 */
-  --border-subtle: rgba(167, 139, 250, 0.08);
-  --border-light: rgba(167, 139, 250, 0.15);
-  --border-strong: rgba(167, 139, 250, 0.3);
-
-  /* 文字 */
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-tertiary: rgba(255, 255, 255, 0.4);
-
-  /* 阴影 */
-  --shadow-glow: 0 0 40px rgba(167, 139, 250, 0.15);
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --shadow-button: 0 4px 16px rgba(167, 139, 250, 0.3);
 }
 
 html, body {
@@ -51,31 +28,25 @@ body {
   position: relative;
 }
 
-/* 背景氛围：径向渐变光晕 */
+/* 背景氛围：深空黑 + 紫金径向光晕(融合塔罗深空黑 + 酒局紫金) */
 body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 800px 600px at 15% 10%, rgba(124, 58, 237, 0.18), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 85% 20%, rgba(236, 72, 153, 0.1), transparent 60%),
-    radial-gradient(ellipse 900px 700px at 50% 90%, rgba(16, 185, 129, 0.08), transparent 60%),
-    linear-gradient(180deg, #070614 0%, #0b0a1a 50%, #070614 100%);
+    radial-gradient(ellipse 800px 600px at 15% 10%, rgba(168, 85, 247, 0.18), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 85% 20%, rgba(212, 175, 55, 0.1), transparent 60%),
+    radial-gradient(ellipse 900px 700px at 50% 90%, rgba(168, 85, 247, 0.08), transparent 60%),
+    linear-gradient(180deg, #0A0A0F 0%, #0f0f1a 50%, #0A0A0F 100%);
 }
 
 /* 噪点纹理 */
 body::after {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
   z-index: 1;
   opacity: 0.04;
@@ -88,7 +59,7 @@ body::after {
   z-index: 2;
 }
 
-/* 滚动条美化 */
+/* 滚动条美化 — 紫金渐变 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -100,79 +71,17 @@ body::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(167, 139, 250, 0.3), rgba(124, 58, 237, 0.3));
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.4), rgba(212, 175, 55, 0.4));
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(167, 139, 250, 0.5), rgba(124, 58, 237, 0.5));
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.6), rgba(212, 175, 55, 0.6));
 }
 
-/* 动画 */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(167, 139, 250, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(167, 139, 250, 0.5); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.9; }
-}
-
-.fade-in { animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-.fade-in-up { animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
-.float { animation: float 4s ease-in-out infinite; }
-.glow { animation: glow 2.5s ease-in-out infinite; }
-.pulse { animation: pulse 2s ease-in-out infinite; }
-
-/* 玻璃拟态通用类 */
-.glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-}
-
-.glass-strong {
-  background: rgba(20, 18, 37, 0.85);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border: 1px solid rgba(167, 139, 250, 0.12);
-  border-radius: 16px;
-}
-
-/* 文字渐变 */
-.text-gradient {
-  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #fbbf24 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* 选中文本颜色 */
+/* 选中文本颜色 — 紫金 */
 ::selection {
-  background: rgba(167, 139, 250, 0.4);
+  background: rgba(168, 85, 247, 0.4);
   color: #fff;
 }

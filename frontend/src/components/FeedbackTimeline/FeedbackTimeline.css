@@ -1,0 +1,302 @@
+/**
+ * FeedbackTimeline · 深空紫金语系
+ *
+ * 时间线形式：圆点 + 连线 + 卡片
+ * 默认折叠，点击展开
+ */
+
+:root {
+  --ft-gold: #D4AF37;
+  --ft-gold-soft: rgba(212, 175, 55, 0.4);
+  --ft-purple: #8b5cf6;
+  --ft-purple-soft: rgba(139, 92, 246, 0.18);
+  --ft-bg-glass: rgba(30, 19, 64, 0.55);
+  --ft-border-soft: rgba(139, 92, 246, 0.18);
+  --ft-border-mid: rgba(139, 92, 246, 0.35);
+  --ft-text: rgba(255, 255, 255, 0.92);
+  --ft-text-dim: rgba(255, 255, 255, 0.6);
+  --ft-text-muted: rgba(255, 255, 255, 0.4);
+}
+
+.ft-timeline {
+  background: var(--ft-bg-glass);
+  border: 1px solid var(--ft-border-soft);
+  border-radius: 16px;
+  padding: 20px 20px 16px;
+  backdrop-filter: blur(10px);
+}
+
+/* ============================================================
+ * 头部
+ * ============================================================ */
+
+.ft-timeline__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ft-timeline__title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ft-timeline__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ft-purple), var(--ft-gold));
+  color: #1a0f2e;
+  font-size: 11px;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.ft-timeline__eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--ft-text-muted);
+  text-transform: uppercase;
+}
+
+.ft-timeline__title {
+  font-size: 14px;
+  color: var(--ft-gold);
+  letter-spacing: 0.1em;
+  margin: 2px 0 0;
+  font-weight: 500;
+}
+
+.ft-timeline__stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ft-timeline__count,
+.ft-timeline__avg {
+  font-size: 11px;
+  color: var(--ft-text-dim);
+  letter-spacing: 0.05em;
+}
+
+.ft-timeline__avg {
+  color: var(--ft-gold);
+  font-weight: 600;
+}
+
+.ft-timeline__toggle {
+  background: transparent;
+  border: 1px solid var(--ft-border-soft);
+  color: var(--ft-text-dim);
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+.ft-timeline__toggle:hover {
+  border-color: var(--ft-gold-soft);
+  color: var(--ft-gold);
+  background: rgba(212, 175, 55, 0.06);
+}
+
+/* 折叠态提示 */
+.ft-timeline__hint {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--ft-text-muted);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ============================================================
+ * 时间线列表
+ * ============================================================ */
+
+.ft-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  position: relative;
+}
+
+/* 垂直连线 */
+.ft-list::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--ft-gold-soft), var(--ft-purple-soft));
+  opacity: 0.4;
+}
+
+.ft-item {
+  position: relative;
+  padding-left: 24px;
+  padding-bottom: 14px;
+}
+
+.ft-item:last-child {
+  padding-bottom: 0;
+}
+
+.ft-item__dot {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ft-purple), var(--ft-gold));
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+  z-index: 1;
+}
+
+.ft-item__content {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--ft-border-soft);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all 0.25s ease;
+}
+
+.ft-item__content:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--ft-border-mid);
+}
+
+.ft-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.ft-item__time {
+  font-size: 11px;
+  color: var(--ft-text-muted);
+  font-style: italic;
+}
+
+.ft-item__scene {
+  font-size: 10px;
+  padding: 2px 8px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid var(--ft-purple-soft);
+  color: var(--ft-purple);
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+
+.ft-item__main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ft-item__rating-num {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ft-gold);
+  font-family: monospace;
+}
+
+.ft-item__expand {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: var(--ft-text-muted);
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-family: inherit;
+  transition: color 0.25s ease;
+}
+
+.ft-item__expand:hover {
+  color: var(--ft-gold);
+}
+
+/* ============================================================
+ * 细分维度
+ * ============================================================ */
+
+.ft-item__dims {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--ft-border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ft-item__dim {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ft-item__dim-label {
+  font-size: 11px;
+  color: var(--ft-text-dim);
+  width: 32px;
+}
+
+.ft-item__recipe {
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--ft-text-muted);
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================
+ * 星星
+ * ============================================================ */
+
+.ft-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.ft-star {
+  width: 14px;
+  height: 14px;
+  fill: rgba(255, 255, 255, 0.15);
+  transition: fill 0.2s ease;
+}
+
+.ft-star.is-on {
+  fill: var(--ft-gold);
+  filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.5));
+}
+
+/* ============================================================
+ * 响应式
+ * ============================================================ */
+
+@media (max-width: 640px) {
+  .ft-timeline {
+    padding: 16px 14px 12px;
+  }
+
+  .ft-timeline__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .ft-item {
+    padding-left: 20px;
+  }
+}

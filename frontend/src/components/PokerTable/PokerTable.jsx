@@ -170,9 +170,9 @@ const PokerTable = ({ gameState, playerId }) => {
             </Tag>
           )}
         </div>
-        {isActive && player.hole_cards?.length === 2 && (
+        {isActive && (
           <div className="player-cards">
-            {isMe ? (
+            {player.hole_cards?.length === 2 ? (
               player.hole_cards.map((card, i) => (
                 <div key={i} className={`card-small ${card.color}`}>
                   <span>{card.rank}{card.suit}</span>

@@ -258,8 +258,11 @@ function generateRecipeSource(input) {
 export class MolecularEngine {
   /**
    * 根据输入数据生成分子鸡尾酒配方
+   * @param {Object} input - 调酒上下文（emotion/baseSpirit/storySeed 等）
+   * @param {number[]} [dynamicVector] - 可选 · 11 维动态向量（反馈回路回流）
+   *        当传入时，会根据向量调整成分推荐，实现"下一杯更懂你"
    */
-  generate(input) {
+  generate(input, dynamicVector) {
     logger.flow('分子调酒引擎', '开始生成配方', JSON.stringify(input));
 
     const flavor = mapFlavor(input.emotion, input.baseSpirit);
@@ -280,9 +283,79 @@ export class MolecularEngine {
       recipeSource
     };
 
-    logger.session('配方生成完成', { 酒名: name, 风味: flavor });
+    // 反馈回路回流：动态向量影响推荐
+    if (Array.isArray(dynamicVector) && dynamicVector.length === 11) {
+      const influence = applyVectorInfluence(output, dynamicVector);
+      output.ingredients = influence.ingredients;
+      output.vectorInfluence = influence.notes;
+      output.vectorApplied = true;
+      logger.session('[MolecularEngine] ✓ 动态向量已应用', influence.notes);
+    }
+
+    logger.session('配方生成完成', { 酒名: name, 风味: flavor, 向量应用: !!dynamicVector });
     return output;
   }
+}
+
+/**
+ * 根据 11 维动态向量调整配方输出
+ *
+ * 维度映射：
+ *   0 riskTolerance     > 0.6 → 加烈酒成分
+ *   1 decisionSpeed     > 0.6 → 加清爽成分
+ *   2 emotionalStability < 0.4 → 加温暖成分
+ *   3 discipline         > 0.6 → 加经典成分
+ *   4 creativity         > 0.6 → 加创意成分
+ *   5 socialTendency     > 0.6 → 加气泡类
+ *
+ * @param {Object} output - 当前配方输出
+ * @param {number[]} vec - 11 维动态向量
+ * @returns {{ ingredients: string[], notes: string[] }}
+ */
+function applyVectorInfluence(output, vec) {
+  const ingredients = [...(output.ingredients || [])];
+  const notes = [];
+
+  // 维度 0：高风险偏好 → 加烈酒成分
+  if (vec[0] > 0.6 && !ingredients.includes('安格斯特拉苦精')) {
+    ingredients.push('安格斯特拉苦精');
+    notes.push('高风险偏好 · 加苦精提烈');
+  }
+
+  // 维度 1：高决策速度 → 加清爽成分
+  if (vec[1] > 0.6 && !ingredients.includes('汤力水')) {
+    ingredients.push('汤力水');
+    notes.push('决策快速 · 加汤力水添清爽');
+  }
+
+  // 维度 2：低情绪稳定 → 加温暖成分
+  if (vec[2] < 0.4 && !ingredients.includes('蜂蜜糖浆')) {
+    ingredients.push('蜂蜜糖浆');
+    notes.push('情绪待抚 · 加蜂蜜糖浆温暖');
+  }
+
+  // 维度 3：高纪律性 → 加经典成分
+  if (vec[3] > 0.6 && !ingredients.includes('橙皮苦精')) {
+    ingredients.push('橙皮苦精');
+    notes.push('纪律严谨 · 加橙皮苦精走经典');
+  }
+
+  // 维度 4：高创造力 → 加创意成分
+  if (vec[4] > 0.6 && !ingredients.includes('迷迭香')) {
+    ingredients.push('迷迭香');
+    notes.push('创造力高 · 加迷迭香添创意');
+  }
+
+  // 维度 5：高社交倾向 → 加气泡类
+  if (vec[5] > 0.6 && !ingredients.includes('香槟')) {
+    ingredients.push('香槟');
+    notes.push('社交倾向 · 加香槟添气泡');
+  }
+
+  // 控制成分总数不超过 8
+  const trimmed = ingredients.slice(0, 8);
+
+  return { ingredients: trimmed, notes };
 }
 
 export const molecularEngine = new MolecularEngine();

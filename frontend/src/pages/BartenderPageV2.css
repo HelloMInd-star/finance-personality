@@ -1,0 +1,464 @@
+/**
+ * BartenderPageV2 · 深空紫金语系
+ *
+ * 三层信息架构：
+ *   Ⅰ 时段校准横幅
+ *   Ⅱ 五步成夜说明卡
+ *   Ⅲ CocktailBuilder（自有 CSS）
+ *   Ⅳ 结果展示 + 反馈回路
+ *
+ * 设计要点：
+ *  - 磨砂玻璃 + 紫金渐变
+ *  - hover 微妙加深（不强烈变色）
+ *  - 时段横幅用时段色作为弱光晕
+ *  - 说明卡用金边 + 双向渐变光晕
+ *  - 校准反馈点用呼吸光晕
+ */
+
+:root {
+  --bp2-gold: #D4AF37;
+  --bp2-gold-soft: rgba(212, 175, 55, 0.4);
+  --bp2-purple: #8b5cf6;
+  --bp2-purple-soft: rgba(139, 92, 246, 0.18);
+  --bp2-bg-glass: rgba(30, 19, 64, 0.55);
+  --bp2-bg-glass-strong: rgba(30, 19, 64, 0.75);
+  --bp2-border-soft: rgba(139, 92, 246, 0.18);
+  --bp2-border-mid: rgba(139, 92, 246, 0.35);
+  --bp2-text: rgba(255, 255, 255, 0.92);
+  --bp2-text-dim: rgba(255, 255, 255, 0.6);
+  --bp2-text-muted: rgba(255, 255, 255, 0.4);
+}
+
+.bp2-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  color: var(--bp2-text);
+  min-height: 80vh;
+}
+
+/* ============================================================
+ * 页面标题
+ * ============================================================ */
+
+.bp2-header {
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.bp2-title {
+  font-size: 28px;
+  font-weight: 300;
+  color: #fff;
+  margin: 0;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.bp2-subtitle {
+  font-size: 13px;
+  color: var(--bp2-text-muted);
+  margin: 6px 0 0;
+  font-style: italic;
+}
+
+.bp2-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--bp2-gold), transparent);
+  margin-top: 14px;
+}
+
+/* ============================================================
+ * Ⅰ · 时段校准横幅
+ * ============================================================ */
+
+.bp2-time-banner {
+  position: relative;
+  padding: 16px 20px;
+  border: 1px solid var(--bp2-border-soft);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.bp2-time-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 0% 50%, var(--slot-color), transparent 50%);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.bp2-time-banner__orb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.bp2-time-banner__orb-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: bp2-breathe 3s ease-in-out infinite;
+}
+
+@keyframes bp2-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+.bp2-time-banner__label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--bp2-text-muted);
+  text-transform: uppercase;
+}
+
+.bp2-time-banner__slot {
+  font-size: 14px;
+  color: var(--bp2-gold);
+  letter-spacing: 0.05em;
+}
+
+.bp2-time-banner__note {
+  font-size: 12px;
+  color: var(--bp2-text-dim);
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.bp2-time-banner__shifts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 10px;
+  font-family: monospace;
+  position: relative;
+}
+
+.bp2-shift {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.bp2-shift--up {
+  color: var(--bp2-gold);
+}
+
+.bp2-shift--down {
+  color: var(--bp2-purple);
+}
+
+/* ============================================================
+ * Ⅱ · 五步成夜说明卡
+ * ============================================================ */
+
+.bp2-guide {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto 32px;
+  padding: 28px 24px;
+  background: var(--bp2-bg-glass);
+  border: 1px solid var(--bp2-gold-soft);
+  border-radius: 16px;
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+
+.bp2-guide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(240, 198, 116, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 0% 100%, rgba(124, 95, 191, 0.18) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.bp2-guide__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  position: relative;
+}
+
+.bp2-guide__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--bp2-purple), var(--bp2-gold));
+  color: #1a0f2e;
+  font-size: 14px;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.3);
+}
+
+.bp2-guide__eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--bp2-text-muted);
+  text-transform: uppercase;
+}
+
+.bp2-guide__title {
+  font-size: 18px;
+  color: var(--bp2-gold);
+  letter-spacing: 0.1em;
+  margin: 2px 0 0;
+  font-weight: 500;
+}
+
+.bp2-guide__steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.bp2-guide__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 4px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.bp2-guide__step:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.bp2-guide__step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--bp2-gold-soft);
+  color: var(--bp2-gold);
+  font-size: 12px;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.15);
+}
+
+.bp2-guide__step-title {
+  font-size: 12px;
+  color: var(--bp2-text);
+  letter-spacing: 0.05em;
+}
+
+.bp2-guide__step-desc {
+  font-size: 10px;
+  color: var(--bp2-text-muted);
+  margin-top: 2px;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.bp2-guide__step-arrow {
+  position: absolute;
+  top: 18px;
+  right: -6px;
+  color: var(--bp2-purple);
+  opacity: 0.4;
+  font-size: 10px;
+}
+
+.bp2-guide__loop {
+  font-size: 11px;
+  color: var(--bp2-text-dim);
+  font-style: italic;
+  text-align: center;
+  margin: 18px 0 14px;
+  position: relative;
+}
+
+.bp2-guide__close {
+  display: block;
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  color: var(--bp2-text-muted);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-family: inherit;
+  padding: 6px 12px;
+}
+
+.bp2-guide__close:hover {
+  color: var(--bp2-gold);
+}
+
+/* ============================================================
+ * Ⅳ · 结果展示
+ * ============================================================ */
+
+.bp2-result {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bp2-result__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bp2-bg-glass);
+  border: 1px solid var(--bp2-border-soft);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.bp2-result__bartender {
+  font-size: 13px;
+  color: var(--bp2-gold);
+  letter-spacing: 0.05em;
+}
+
+/* 校准反馈提示 */
+.bp2-calibrated {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(139, 92, 246, 0.06));
+  border: 1px solid var(--bp2-gold-soft);
+  border-radius: 10px;
+}
+
+.bp2-calibrated__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bp2-gold);
+  box-shadow: 0 0 12px var(--bp2-gold);
+  animation: bp2-breathe 3s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.bp2-calibrated__text {
+  font-size: 12px;
+  color: var(--bp2-text-dim);
+  letter-spacing: 0.05em;
+}
+
+/* 结果页操作 */
+.bp2-result__actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ============================================================
+ * 通用按钮
+ * ============================================================ */
+
+.bp2-btn {
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  border: 1px solid transparent;
+}
+
+.bp2-btn--ghost {
+  background: transparent;
+  border-color: var(--bp2-border-soft);
+  color: var(--bp2-text-dim);
+}
+
+.bp2-btn--ghost:hover {
+  border-color: var(--bp2-border-mid);
+  color: #fff;
+}
+
+.bp2-btn--primary {
+  background: linear-gradient(135deg, var(--bp2-purple), var(--bp2-gold));
+  color: #1a0f2e;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+}
+
+.bp2-btn--primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+}
+
+.bp2-btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.bp2-btn--saved {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--bp2-gold);
+  color: var(--bp2-gold);
+  cursor: default;
+}
+
+/* ============================================================
+ * 响应式
+ * ============================================================ */
+
+@media (max-width: 640px) {
+  .bp2-page {
+    padding: 16px 12px 32px;
+  }
+
+  .bp2-title {
+    font-size: 22px;
+    letter-spacing: 2px;
+  }
+
+  .bp2-guide {
+    padding: 20px 16px;
+  }
+
+  .bp2-guide__steps {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .bp2-guide__step {
+    flex-direction: row;
+    text-align: left;
+    gap: 10px;
+    padding: 6px 8px;
+  }
+
+  .bp2-guide__step-arrow {
+    display: none;
+  }
+
+  .bp2-time-banner__shifts {
+    font-size: 9px;
+  }
+}
