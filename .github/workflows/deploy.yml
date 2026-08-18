@@ -2,12 +2,13 @@
 # 部署前端到 GitHub Pages（构建 frontend/dist 并发布到 gh-pages）
 # 注意：GitHub Pages 仅托管静态文件，API 和 WebSocket 需要单独部署后端服务
 #       部署后需要在前端配置中设置正确的 VITE_API_URL 和 VITE_WS_URL 指向你的后端地址
+# 调试机制：构建失败时自动把日志尾部发布到 gh-pages 分支的 build-log.txt，便于匿名读取诊断
 
 name: Deploy Frontend to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [ fresh-init, main ]
   workflow_dispatch:
 
 permissions:
@@ -25,18 +26,36 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: frontend/package.json
+          node-version: '20'
 
       - name: Install and Build Frontend
         run: |
           cd frontend
-          npm install
+          npm install --legacy-peer-deps --no-audit --no-fund 2>&1 | tee /tmp/install.log
           # 设置 GitHub Pages 的 base 路径
-          VITE_BASE_PATH=/poker-egg-fullstack/ npm run build
+          VITE_BASE_PATH=/finance-personality/ npm run build 2>&1 | tee /tmp/build.log
+
+      - name: Collect failure log
+        if: failure()
+        run: |
+          mkdir -p /tmp/buildlog
+          echo "=== INSTALL LOG (tail) ===" > /tmp/buildlog/build-log.txt
+          tail -60 /tmp/install.log >> /tmp/buildlog/build-log.txt 2>/dev/null
+          echo "" >> /tmp/buildlog/build-log.txt
+          echo "=== BUILD LOG (tail) ===" >> /tmp/buildlog/build-log.txt
+          tail -100 /tmp/build.log >> /tmp/buildlog/build-log.txt 2>/dev/null
+
+      - name: Publish failure log to gh-pages
+        if: failure()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /tmp/buildlog
+          publish_branch: gh-pages
+          force_orphan: true
 
       - name: Deploy to GitHub Pages
+        if: success()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
