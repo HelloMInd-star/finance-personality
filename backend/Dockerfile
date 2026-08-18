@@ -73,4 +73,4 @@ USER appuser
 EXPOSE 5000
 
 # 启动生产服务器
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000", "--workers", "4"]
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1"]

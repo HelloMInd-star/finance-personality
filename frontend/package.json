@@ -1,7 +1,7 @@
 {
-  "name": "poker-egg-frontend",
+  "name": "finance-personality-frontend",
   "version": "1.0.0",
-  "description": "德州扑克AI陪练平台 - React前端",
+  "description": "人格金融孪生平台 - React前端",
   "type": "module",
   "scripts": {
     "dev": "vite",
