@@ -5,7 +5,7 @@
  */
 import { logger } from './logger';
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api';
 const DEFAULT_TIMEOUT = 15000; // 15s 超时
 const MAX_RETRIES = 2; // 网络错误最多重试 2 次
 const RETRY_DELAY = 800; // 重试间隔 ms
