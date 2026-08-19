@@ -21,7 +21,34 @@ import {
 } from './pokerArenaApi';
 import './PokerArena.css';
 
-const SUIT_ICON = { '♠': '♠', '♥': '♥', '♦': '♦', '♣': '♣' };
+// 花色用内联 SVG 渲染：跨设备零字体依赖，颜色随 CSS currentColor
+const SUIT_PATHS = {
+  '♠': (
+    <path d="M12 2C8.5 6.5 4 9.2 4 13.3a4.6 4.6 0 0 0 6.6 4.1c-.3 1.7-1.1 3-2.3 3.9-.2.2 0 .7.3.7h6.8c.3 0 .5-.5.3-.7-1.2-.9-2-2.2-2.3-3.9A4.6 4.6 0 0 0 20 13.3C20 9.2 15.5 6.5 12 2z" />
+  ),
+  '♥': (
+    <path d="M12 21.2C6.8 16.6 3 13 3 9.3 3 6.4 5.2 4 8 4c1.6 0 3.1.8 4 2 .9-1.2 2.4-2 4-2 2.8 0 5 2.4 5 5.3 0 3.7-3.8 7.3-9 11.9z" />
+  ),
+  '♦': <path d="M12 2l6.5 9.5L12 22 5.5 11.5z" />,
+  '♣': (
+    <>
+      <circle cx="12" cy="7" r="4.2" />
+      <circle cx="7.6" cy="13.4" r="4.2" />
+      <circle cx="16.4" cy="13.4" r="4.2" />
+      <path d="M10.7 15.2h2.6l.9 5.3a.5.5 0 0 1-.5.6h-3.4a.5.5 0 0 1-.5-.6z" />
+    </>
+  ),
+};
+
+function SuitIcon({ suit, size = 16 }) {
+  const inner = SUIT_PATHS[suit];
+  if (!inner) return null;
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+      {inner}
+    </svg>
+  );
+}
 const STAGE_LABEL = { preflop: '翻前', flop: '翻牌', turn: '转牌', river: '河牌', showdown: '摊牌' };
 const HAND_CN = {
   'High Card': '高牌', 'One Pair': '一对', 'Two Pair': '两对',
@@ -31,12 +58,18 @@ const HAND_CN = {
 const POLL_MS = 1800;
 
 function CardFace({ card, hidden }) {
-  if (hidden) return <div className="pa-card back"><span className="pa-card-back-mark">♦</span></div>;
+  if (hidden) {
+    return (
+      <div className="pa-card back">
+        <span className="pa-card-back-mark"><SuitIcon suit="♦" size={22} /></span>
+      </div>
+    );
+  }
   const red = card.color === 'red' || card.suit === '♥' || card.suit === '♦';
   return (
     <div className={`pa-card ${red ? 'red' : 'black'}`}>
       <span className="pa-card-rank">{card.rank}</span>
-      <span className="pa-card-suit">{SUIT_ICON[card.suit] || card.suit}</span>
+      <span className="pa-card-suit"><SuitIcon suit={card.suit} size={16} /></span>
     </div>
   );
 }
