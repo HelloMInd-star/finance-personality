@@ -1,11 +1,12 @@
 /**
- * 塔罗指引模块
- * 抽牌 → 3D 翻牌动画 → 结果展示(牌面 + 寓意 + MBTI)
- * 含深空粒子背景(Canvas)
+ * 塔罗指引模块 · 仪式版
+ * 扇形牌阵选牌 → 3D 翻牌 → 分段叙事结果(牌面/牌意/人格/AI/今夜歌单)
+ * 深空粒子背景(Canvas) + 氛围光点 + 金辉标题
  */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { drawRandomCard } from './tarotData.js';
+import { getMoodForCard, playlistEmbedUrl, playlistPageUrl } from './tarotPlaylist.js';
 import TarotCard from './TarotCard.jsx';
 import ZodiacCard from '../ZodiacModule/ZodiacCard.jsx';
 import { storage } from '../../utils/storage';
@@ -20,6 +21,16 @@ const MBTI_DESC = {
   ISTJ: '秩序守护者', ISFJ: '温柔守护者', ESTJ: '执行管理者', ESFJ: '温暖组织者',
   ISTP: '精准工匠', ISFP: '美学行者', ESTP: '行动冒险家', ESFP: '活力表演者',
 };
+
+// 扇形牌阵布局:7 张牌背,以底部为轴扇形展开(hover 效果走 CSS 变量叠加)
+const FAN_LAYOUT = Array.from({ length: 7 }).map((_, i) => {
+  const offset = i - 3; // -3..3
+  return {
+    '--fan-rotate': `${offset * 9}deg`,
+    '--fan-y': `${Math.abs(offset) * 12}px`,
+    zIndex: 7 - Math.abs(offset),
+  };
+});
 
 export default function TarotDraw() {
   const navigate = useNavigate();
@@ -87,7 +98,7 @@ export default function TarotDraw() {
     };
   }, []);
 
-  // === 抽牌 ===
+  // === 抽牌(扇阵中选一张触发) ===
   const handleDraw = useCallback(() => {
     if (stage === 'drawing') return;
     const drawn = drawRandomCard();
@@ -131,8 +142,7 @@ export default function TarotDraw() {
     }
   };
 
-  // === 重新抽牌 ===
-  // 揭晓后:已登录则调用 AI 个性化解牌(未登录保持本地牌意,不触发花钱请求)
+  // === 揭晓后:已登录则调用 AI 个性化解牌(未登录保持本地牌意,不触发花钱请求) ===
   useEffect(() => {
     if (stage !== 'revealed' || !card || !hasToken) return;
     let cancelled = false;
@@ -178,10 +188,18 @@ export default function TarotDraw() {
   };
 
   const mbtiDesc = card ? (MBTI_DESC[card.mbti] || '人格探索者') : '';
+  const mood = card ? getMoodForCard(card.id) : null;
 
   return (
     <div className="tarot-module">
       <canvas ref={canvasRef} className="tarot-particle-bg" />
+
+      {/* 氛围光点(漂浮紫金光斑) */}
+      <div className="tarot-aura">
+        <span className="tarot-aura-dot tarot-aura-dot-1" />
+        <span className="tarot-aura-dot tarot-aura-dot-2" />
+        <span className="tarot-aura-dot tarot-aura-dot-3" />
+      </div>
 
       {/* 标题 */}
       <div className="tarot-header">
@@ -192,39 +210,46 @@ export default function TarotDraw() {
         <div className="tarot-header-sub">
           {stage === 'revealed'
             ? '让牌面成为你今夜的人格底色'
-            : '点击牌面，开启你的人格探索之旅'}
+            : '牌阵已布好，凭直觉选一张'}
         </div>
       </div>
 
-      {/* 牌面舞台 */}
-      <div className="tarot-card-stage">
-        <div className={`tarot-glow-ring ${glowActive ? 'active' : ''}`} />
-        <div
-          className={`tarot-card-inner ${flipped ? 'flipped' : ''} ${
-            stage === 'idle' ? 'hoverable' : ''
-          }`}
-          onClick={stage === 'idle' ? handleDraw : undefined}
-        >
-          {/* 牌背 */}
-          <div className="tarot-card-back">
-            <span className="tarot-card-back-symbol">✦</span>
-          </div>
-
-          {/* 牌面正面 */}
-          <div className="tarot-card-front">
-            {card && <TarotCard card={card} />}
-          </div>
-        </div>
-      </div>
-
-      {/* 抽牌按钮(idle 阶段) */}
+      {/* 扇形牌阵(idle 阶段) */}
       {stage === 'idle' && (
         <>
-          <button className="tarot-draw-btn" onClick={handleDraw}>
-            抽 一 张 牌
-          </button>
+          <div className="tarot-fan">
+            {FAN_LAYOUT.map((style, i) => (
+              <div
+                key={i}
+                className="tarot-fan-card"
+                style={style}
+                onClick={handleDraw}
+              >
+                <span className="tarot-fan-card-symbol">✦</span>
+              </div>
+            ))}
+          </div>
+          <div className="tarot-fan-hint">凭直觉，选一张</div>
           <div className="tarot-draw-hint">22 张大牌 · 对应 16 种人格</div>
         </>
+      )}
+
+      {/* 中央牌面舞台(抽牌后) */}
+      {stage !== 'idle' && (
+        <div className="tarot-card-stage">
+          <div className={`tarot-glow-ring ${glowActive ? 'active' : ''}`} />
+          <div className={`tarot-card-inner ${flipped ? 'flipped' : ''}`}>
+            {/* 牌背 */}
+            <div className="tarot-card-back">
+              <span className="tarot-card-back-symbol">✦</span>
+            </div>
+
+            {/* 牌面正面 */}
+            <div className="tarot-card-front">
+              {card && <TarotCard card={card} />}
+            </div>
+          </div>
+        </div>
       )}
 
       {/* 抽牌中提示 */}
@@ -232,65 +257,97 @@ export default function TarotDraw() {
         <div className="tarot-draw-hint">牌面正在翻转…</div>
       )}
 
-      {/* 结果区域 */}
-      {stage === 'revealed' && card && (
+      {/* 结果区域 · 分段叙事 */}
+      {stage === 'revealed' && card && mood && (
         <div className="tarot-result">
-          <div className="tarot-result-name">{card.name}</div>
-          <div className="tarot-result-name-en">{card.nameEn}</div>
-
-          <div className="tarot-result-keywords">
-            {card.keywords.map((kw) => (
-              <span className="tarot-keyword-tag" key={kw}>{kw}</span>
-            ))}
-          </div>
-
-          <div className="tarot-result-meaning">{card.meaning}</div>
-
-          <div className="tarot-result-mbti">
-            <span className="tarot-mbti-icon">🔮</span>
-            <span className="tarot-mbti-label">对应人格</span>
-            <span className="tarot-mbti-value">{card.mbti}</span>
-            <span className="tarot-mbti-desc">· {mbtiDesc}</span>
-          </div>
-
-          {/* AI 个性化解牌(登录态真调 DeepSeek;未登录引导解锁) */}
-          {hasToken ? (
-            <div className="tarot-ai-reading">
-              <div className="tarot-ai-label">✦ AI 驻馆解牌师 · 为你凝视此牌</div>
-              {aiLoading ? (
-                <div className="tarot-ai-loading">解牌师正在凝视牌面…</div>
-              ) : aiReading ? (
-                <div className="tarot-ai-text">{aiReading}</div>
-              ) : null}
-              {aiAdvice && (
-                <div className="tarot-ai-advice">
-                  <div className="tarot-ai-label">✦ 今日行动指引</div>
-                  <div className="tarot-ai-text">{aiAdvice}</div>
-                </div>
-              )}
+          {/* 第一章 · 牌面 */}
+          <div className="tarot-section" style={{ animationDelay: '0.05s' }}>
+            <div className="tarot-result-name">{card.name}</div>
+            <div className="tarot-result-name-en">{card.nameEn}</div>
+            <div className="tarot-result-keywords">
+              {card.keywords.map((kw) => (
+                <span className="tarot-keyword-tag" key={kw}>{kw}</span>
+              ))}
             </div>
-          ) : (
-            <button
-              className="tarot-ai-locked"
-              onClick={() => navigate('/login', { state: { from: '/tarot' } })}
-            >
-              ✦ 登录解锁 AI 个性化解牌 →
-            </button>
-          )}
+          </div>
 
-          <div className="tarot-actions">
-            <button
-              className="tarot-action-btn tarot-action-primary"
-              onClick={handleEnterBartender}
-            >
-              进入分子调酒 →
-            </button>
-            <button
-              className="tarot-action-btn tarot-action-secondary"
-              onClick={handleRedraw}
-            >
-              重新抽牌
-            </button>
+          {/* 第二章 · 牌意 */}
+          <div className="tarot-section" style={{ animationDelay: '0.2s' }}>
+            <div className="tarot-section-title">✦ 牌 意</div>
+            <div className="tarot-result-meaning">{card.meaning}</div>
+            <div className="tarot-result-mbti">
+              <span className="tarot-mbti-icon">🔮</span>
+              <span className="tarot-mbti-label">对应人格</span>
+              <span className="tarot-mbti-value">{card.mbti}</span>
+              <span className="tarot-mbti-desc">· {mbtiDesc}</span>
+            </div>
+          </div>
+
+          {/* 第三章 · AI 解牌师(登录态真调 DeepSeek;未登录引导解锁) */}
+          <div className="tarot-section tarot-section-wide" style={{ animationDelay: '0.35s' }}>
+            {hasToken ? (
+              <div className="tarot-ai-reading">
+                <div className="tarot-ai-label">✦ AI 驻馆解牌师 · 为你凝视此牌</div>
+                {aiLoading ? (
+                  <div className="tarot-ai-loading">解牌师正在凝视牌面…</div>
+                ) : aiReading ? (
+                  <div className="tarot-ai-text">{aiReading}</div>
+                ) : null}
+                {aiAdvice && (
+                  <div className="tarot-ai-advice">
+                    <div className="tarot-ai-label">✦ 今日行动指引</div>
+                    <div className="tarot-ai-text">{aiAdvice}</div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                className="tarot-ai-locked"
+                onClick={() => navigate('/login', { state: { from: '/tarot' } })}
+              >
+                ✦ 登录解锁 AI 个性化解牌 →
+              </button>
+            )}
+          </div>
+
+          {/* 第四章 · 今夜歌单(按牌映射氛围 × 网易云) */}
+          <div className="tarot-section tarot-section-wide" style={{ animationDelay: '0.5s' }}>
+            <div className="tarot-playlist">
+              <div className="tarot-playlist-label">✦ 今夜歌单 · {mood.name}</div>
+              <div className="tarot-playlist-desc">{mood.desc}</div>
+              <iframe
+                className="tarot-playlist-frame"
+                title={`今夜歌单-${mood.name}`}
+                src={playlistEmbedUrl(mood.playlistId)}
+                loading="lazy"
+              />
+              <a
+                className="tarot-playlist-link"
+                href={playlistPageUrl(mood.playlistId)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                在网易云打开 · {mood.playlistName} →
+              </a>
+            </div>
+          </div>
+
+          {/* 动作 */}
+          <div className="tarot-section" style={{ animationDelay: '0.65s' }}>
+            <div className="tarot-actions">
+              <button
+                className="tarot-action-btn tarot-action-primary"
+                onClick={handleEnterBartender}
+              >
+                进入分子调酒 →
+              </button>
+              <button
+                className="tarot-action-btn tarot-action-secondary"
+                onClick={handleRedraw}
+              >
+                重新抽牌
+              </button>
+            </div>
           </div>
         </div>
       )}
