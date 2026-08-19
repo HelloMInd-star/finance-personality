@@ -25,6 +25,8 @@ from models.schemas import (
     BartenderSessionCreate, BartenderSessionUpdate
 )
 from auth.auth import AuthHandler
+from pydantic import BaseModel
+import httpx
 from services.development_service import generate_development_plan
 from services.eastmoneyData import (
     get_realtime_quote, get_daily_kline, get_valuation_factors, normalize_symbol,
@@ -1179,3 +1181,114 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
+
+# ============================================
+# LLM 通用生成路由(DeepSeek 点亮工程 · P0)
+# 架构决策:一条通用代理路由 + 服务端 prompt 模板注册表
+# 安全:key 服务端持有(env),不下发前端;仅注册表内模板可调,防任意 prompt 滥用
+# 门控:登录态才可调用(成本可控);前端未登录走本地模板兜底,不强制全站登录
+# ============================================
+
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+
+# prompt 模板注册表:服务端资产,每模板声明参数白名单 + max_tokens 成本护栏
+LLM_TEMPLATES = {
+    "tarot_reading": {
+        "system": (
+            "你是「午夜酒馆 MIDNIGHT TAVERN」的驻馆塔罗解牌师。"
+            "语气:深夜酒馆般的低语,神秘而温暖,不故弄玄虚。"
+            "专长:把塔罗牌意与求问者的 MBTI 人格特质交织解读。"
+            "规则:1) 严格围绕给定牌面信息展开,不编造牌外含义;"
+            "2) 解读分两段:第一段把牌意与人格特质交织,第二段给一句具体行动指引;"
+            "3) 总字数120-180字;4) 不用emoji,不用markdown,不自称AI。"
+        ),
+        "user": (
+            "求问者抽到的牌:「{card_name} {card_name_en}」\n"
+            "牌面关键词:{keywords}\n"
+            "传统牌意:{meaning}\n"
+            "求问者人格:{mbti}({mbti_desc})\n"
+            "请为这位求问者解牌。"
+        ),
+        "params": ["card_name", "card_name_en", "keywords", "meaning", "mbti", "mbti_desc"],
+        "max_tokens": 420,
+    },
+}
+
+
+class LLMGenerateRequest(BaseModel):
+    template: str
+    params: Dict[str, Any] = {}
+
+
+@app.post("/api/llm/generate")
+async def llm_generate(req: LLMGenerateRequest, token: str = Depends(oauth2_scheme)):
+    """通用 LLM 生成代理(登录门控 + 模板注册表)"""
+    payload = auth_handler.decode_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="登录已过期,请重新登录")
+
+    if not DEEPSEEK_API_KEY:
+        raise HTTPException(status_code=503, detail="LLM 服务未配置")
+
+    tpl = LLM_TEMPLATES.get(req.template)
+    if not tpl:
+        raise HTTPException(status_code=400, detail=f"未知模板: {req.template}")
+
+    # 参数白名单 + 长度护栏(每个参数最多 200 字符)
+    safe_params = {k: str(req.params.get(k, ""))[:200] for k in tpl["params"]}
+    try:
+        user_prompt = tpl["user"].format(**safe_params)
+    except (KeyError, IndexError):
+        raise HTTPException(status_code=400, detail="模板参数不完整")
+
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            resp = await client.post(
+                f"{DEEPSEEK_BASE_URL}/chat/completions",
+                headers={"Authorization": f"Bearer {DEEPSEEK_API_KEY}"},
+                json={
+                    "model": "deepseek-chat",
+                    "messages": [
+                        {"role": "system", "content": tpl["system"]},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                    "max_tokens": tpl["max_tokens"],
+                    "temperature": 0.8,
+                },
+            )
+        if resp.status_code != 200:
+            raise HTTPException(status_code=502, detail=f"LLM 上游错误: {resp.status_code}")
+        data = resp.json()
+        text = data["choices"][0]["message"]["content"].strip()
+        usage = data.get("usage", {})
+        return {
+            "success": True,
+            "data": {
+                "template": req.template,
+                "text": text,
+                "usage": usage,
+            },
+        }
+    except httpx.TimeoutException:
+        raise HTTPException(status_code=504, detail="LLM 响应超时,请重试")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"LLM 调用失败: {str(e)[:100]}")
+
+
+@app.get("/api/llm/templates")
+async def llm_templates():
+    """列出可用 LLM 模板(公开,便于前端探测能力)"""
+    return {
+        "success": True,
+        "data": {
+            "templates": [
+                {"name": k, "params": v["params"], "max_tokens": v["max_tokens"]}
+                for k, v in LLM_TEMPLATES.items()
+            ],
+            "configured": bool(DEEPSEEK_API_KEY),
+        },
+    }
+
