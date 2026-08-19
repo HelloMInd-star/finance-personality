@@ -153,6 +153,9 @@ export const apiClient = {
   generateDevelopmentPlan: (input) => request('/development/plan/generate', { method: 'POST', body: input || {} }),
   getDevelopmentPlanHistory: (limit = 10) => request('/development/plan/history', { method: 'GET', params: { limit } }),
 
+  // LLM 通用生成(登录门控;关闭自动重试避免重复计费,超时放宽 35s)
+  llmGenerate: (template, params = {}) => request('/llm/generate', { method: 'POST', body: { template, params }, timeout: 35000, retry: false }),
+
   // 行情 / 估值因子 / K 线（东方财富+腾讯 多源兜底）
   marketGetQuote: (symbol) => request('/market/quote', { method: 'GET', params: { symbol } }),
   marketGetKline: (symbol, days = 120) => request('/market/kline', { method: 'GET', params: { symbol, days } }),

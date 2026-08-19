@@ -1,0 +1,178 @@
+/* ========================================
+ * LoginPage · 深空紫金语系
+ * ======================================== */
+
+.login-page {
+  min-height: 100vh;
+  background: #0A0A0F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+}
+
+/* 星云光晕(与 HeroPage 同语言) */
+.login-nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.login-nebula-purple {
+  width: 480px;
+  height: 480px;
+  background: rgba(139, 92, 246, 0.14);
+  top: -140px;
+  left: -120px;
+}
+
+.login-nebula-gold {
+  width: 380px;
+  height: 380px;
+  background: rgba(212, 175, 55, 0.08);
+  bottom: -120px;
+  right: -100px;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 36px 28px;
+  background: rgba(30, 19, 64, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.18);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.1);
+}
+
+.login-logo {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 8px;
+  animation: ymine-splash-pulse 2.4s ease-in-out infinite;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin: 0 0 6px;
+  background: linear-gradient(135deg, #D4AF37 0%, #F5F5F0 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+  margin-bottom: 26px;
+}
+
+/* 登录/注册切换 */
+.login-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+  padding: 4px;
+  background: rgba(10, 10, 21, 0.5);
+  border: 1px solid rgba(139, 92, 246, 0.12);
+  border-radius: 10px;
+}
+
+.login-tab {
+  flex: 1;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.login-tab:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.login-tab.active {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(139, 92, 246, 0.15));
+  color: #fff;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.2);
+}
+
+/* 表单暗色化 */
+.login-card .ant-input-affix-wrapper,
+.login-card .ant-input {
+  background: rgba(10, 10, 21, 0.6) !important;
+  border-color: rgba(139, 92, 246, 0.2) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.login-card .ant-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.login-card .ant-input-prefix {
+  color: rgba(168, 85, 247, 0.6);
+}
+
+.login-card .ant-input-affix-wrapper:hover,
+.login-card .ant-input-affix-wrapper-focused {
+  border-color: rgba(168, 85, 247, 0.5) !important;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.15) !important;
+}
+
+.login-card .ant-input-password .anticon {
+  color: rgba(168, 85, 247, 0.5);
+}
+
+/* 主按钮:紫金渐变(全站 CTA 语言) */
+.login-submit-btn {
+  height: 44px;
+  border: none !important;
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #a855f7, #D4AF37) !important;
+  font-weight: 600;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 24px rgba(168, 85, 247, 0.3);
+  transition: all 0.3s ease;
+}
+
+.login-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.45);
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.login-footer-link {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: color 0.25s ease;
+}
+
+.login-footer-link:hover {
+  color: #a855f7;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 22px 22px;
+  }
+}

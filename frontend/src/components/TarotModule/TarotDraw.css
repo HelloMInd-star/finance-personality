@@ -383,3 +383,53 @@
     font-size: 13px;
   }
 }
+
+/* === AI 解牌区(DeepSeek 点亮工程) === */
+.tarot-ai-reading {
+  margin: 18px auto 0;
+  max-width: 560px;
+  padding: 16px 20px;
+  background: rgba(212, 175, 55, 0.04);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 12px;
+}
+
+.tarot-ai-label {
+  font-size: 12px;
+  color: #D4AF37;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.tarot-ai-loading {
+  font-size: 13px;
+  color: rgba(168, 85, 247, 0.7);
+  letter-spacing: 1px;
+  animation: ymine-splash-pulse 1.6s ease-in-out infinite;
+}
+
+.tarot-ai-text {
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.88);
+  white-space: pre-wrap;
+}
+
+.tarot-ai-locked {
+  margin: 18px auto 0;
+  max-width: 560px;
+  padding: 12px 20px;
+  font-size: 13px;
+  color: rgba(212, 175, 55, 0.75);
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: 1px dashed rgba(212, 175, 55, 0.25);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.tarot-ai-locked:hover {
+  color: #D4AF37;
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.12);
+}

@@ -43,6 +43,7 @@ const VectorPage = React.lazy(() => import('./pages/VectorPage'));
 const ArchivePage = React.lazy(() => import('./pages/ArchivePage'));
 const InvestBankDashboardPage = React.lazy(() => import('./pages/InvestBankDashboardPage'));
 const TrustDashboardPage = React.lazy(() => import('./pages/TrustDashboardPage'));
+const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 
 // 懒加载 fallback(品牌化)
 const PageLoader = () => (
@@ -71,6 +72,9 @@ function AppRoutes() {
 
         {/* 策展式首页（面试官导览，全屏，独立于 AppLayout） */}
         <Route path="/showcase" element={<ShowcasePage />} />
+
+        {/* 登录/注册（全屏，解锁 AI 能力） */}
+        <Route path="/login" element={<LoginPage />} />
 
         {/* 主入口：首次入场页,回访直进工作台 */}
         <Route path="/" element={<LandingGate />} />
@@ -113,6 +117,7 @@ function AppRoutes() {
                 <Route path="/tools" element={<ToolsPage />} />
                 <Route path="/cultivation-plan" element={<CultivationPlanPage />} />
                 <Route path="/archive" element={<ArchivePage />} />
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
               </Routes>
             </Suspense>
           </AppLayout>
@@ -158,7 +163,7 @@ function App() {
         },
       }}
     >
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <AppRoutes />
       </BrowserRouter>
     </ConfigProvider>

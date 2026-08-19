@@ -9,6 +9,7 @@ import { drawRandomCard } from './tarotData.js';
 import TarotCard from './TarotCard.jsx';
 import ZodiacCard from '../ZodiacModule/ZodiacCard.jsx';
 import { storage } from '../../utils/storage';
+import apiClient from '../../utils/apiClient';
 import { logger } from '../../utils/logger';
 import './TarotDraw.css';
 
@@ -26,6 +27,9 @@ export default function TarotDraw() {
   const [card, setCard] = useState(null);
   const [flipped, setFlipped] = useState(false);
   const [glowActive, setGlowActive] = useState(false);
+  const [aiReading, setAiReading] = useState(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const hasToken = !!localStorage.getItem('auth_token');
   const canvasRef = useRef(null);
   const animRef = useRef(null);
 
@@ -127,6 +131,29 @@ export default function TarotDraw() {
   };
 
   // === 重新抽牌 ===
+  // 揭晓后:已登录则调用 AI 个性化解牌(未登录保持本地牌意,不触发花钱请求)
+  useEffect(() => {
+    if (stage !== 'revealed' || !card || !hasToken) return;
+    let cancelled = false;
+    setAiLoading(true);
+    setAiReading(null);
+    apiClient.llmGenerate('tarot_reading', {
+      card_name: card.name,
+      card_name_en: card.nameEn,
+      keywords: (card.keywords || []).join('、'),
+      meaning: card.meaning,
+      mbti: card.mbti,
+      mbti_desc: MBTI_DESC[card.mbti] || '',
+    }).then((res) => {
+      if (!cancelled && res?.text) setAiReading(res.text);
+    }).catch(() => {
+      // 静默降级:本地牌意兜底
+    }).finally(() => {
+      if (!cancelled) setAiLoading(false);
+    });
+    return () => { cancelled = true; };
+  }, [stage, card, hasToken]);
+
   const handleRedraw = () => {
     setStage('idle');
     setFlipped(false);
