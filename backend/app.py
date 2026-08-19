@@ -51,11 +51,11 @@ async def lifespan(app: FastAPI):
     yield
     # 关闭时
     await Database.disconnect()
-    logger.info("🛑 Poker Egg 服务器已关闭")
+    logger.info("🛑 Finance Personality 服务器已关闭")
 
 app = FastAPI(
-    title="Poker Egg API",
-    description="德州扑克AI陪练平台 - 全栈应用",
+    title="Y.Mine Finance Personality API",
+    description="人格金融孪生平台 - 决策人格 × 金融智能",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -316,11 +316,11 @@ game_manager = GameManager()
 async def root():
     """根路径"""
     return {
-        "name": "Poker Egg API",
+        "name": "Y.Mine Finance Personality API",
         "version": "1.0.0",
         "status": "running",
         "documentation": "/docs",
-        "websocket": "ws://localhost:5000/ws/{game_id}"
+        "websocket": "wss://finance-personality-api-production.up.railway.app/ws/{game_id}"
     }
 
 @app.get("/api/health")
