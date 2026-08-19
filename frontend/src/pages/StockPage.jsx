@@ -53,6 +53,7 @@ const StockPage = () => {
   const [regime, setRegime] = useState('NEUTRAL');
   const [selectedTicker, setSelectedTicker] = useState('AAPL');
   const [customTicker, setCustomTicker] = useState('');
+  const [assetQuery, setAssetQuery] = useState('');  // 标的搜索/自由输入
   const [useRealtimeData, setUseRealtimeData] = useState(false);
   const [realtimeLoading, setRealtimeLoading] = useState(false);
   const [realtimeSnapshot, setRealtimeSnapshot] = useState(null);  // { symbol, quote, asset, factors, kline }
@@ -65,13 +66,15 @@ const StockPage = () => {
       { key: 'adr', label: '中概', assets: [] },
       { key: 'cn', label: 'A股', assets: [] },
     ];
+    const q = assetQuery.trim().toLowerCase();
     PRESET_ASSETS.forEach((a) => {
+      if (q && !a.ticker.toLowerCase().includes(q) && !(a.name || '').toLowerCase().includes(q)) return;
       if (/^\d/.test(a.ticker)) groups[2].assets.push(a);
       else if (CN_ADR.includes(a.ticker)) groups[1].assets.push(a);
       else groups[0].assets.push(a);
     });
-    return groups;
-  }, []);
+    return groups.filter((g) => g.assets.length > 0);
+  }, [assetQuery]);
 
   // 导出运行历史 CSV（BOM 防 Excel 中文乱码）
   const exportHistory = () => {
@@ -158,6 +161,29 @@ const StockPage = () => {
     } finally {
       hide();
       setRealtimeLoading(false);
+    }
+  };
+
+  // 标的搜索框回车：命中预设→直接选中；预设外→自动开实时开关并拉行情
+  const handleAssetSearch = () => {
+    const q = assetQuery.trim();
+    if (!q) return;
+    const upper = q.toUpperCase();
+    const hit = PRESET_ASSETS.find(
+      (a) => a.ticker.toUpperCase() === upper || a.name === q
+    );
+    if (hit) {
+      setSelectedTicker(hit.ticker);
+      setUseRealtimeData(false);
+      setRealtimeSnapshot(null);
+      setCustomTicker('');
+      setAssetQuery('');
+      message.success(`已选中 ${hit.ticker} · ${hit.name}`);
+    } else {
+      setCustomTicker(upper);
+      setUseRealtimeData(true);
+      setAssetQuery('');
+      fetchRealtimeData(upper);
     }
   };
 
@@ -683,9 +709,18 @@ const StockPage = () => {
 
         <div>
           <Space style={{ justifyContent: 'space-between', width: '100%' }}>
-            <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>选择标的（{PRESET_ASSETS.length} 只预设 · 点击选中）</Text>
+            <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>选择标的（{PRESET_ASSETS.length} 只预设 · 可搜索/自选）</Text>
             <Text style={{ color: '#D4AF37', fontSize: 11, fontWeight: 700 }}>{selectedTicker}</Text>
           </Space>
+          <Input
+            allowClear
+            size="small"
+            placeholder="搜索预设，或输入任意代码回车拉实时（AAPL / 600519 / 000001）"
+            value={assetQuery}
+            onChange={(e) => setAssetQuery(e.target.value)}
+            onPressEnter={handleAssetSearch}
+            style={{ marginTop: 6 }}
+          />
           <div style={{ maxHeight: 238, overflowY: 'auto', marginTop: 8, paddingRight: 4 }}>
             {ASSET_GROUPS.map((g) => (
               <div key={g.key} style={{ marginBottom: 10 }}>
