@@ -43,6 +43,7 @@ const menuItems = [
     type: 'group',
     label: 'Navigate',
     children: [
+      { key: '/showcase', icon: <StarOutlined />, label: '策展首页' },
       { key: '/dashboard', icon: <HomeOutlined />, label: '工作台首页' },
       { key: '/cockpit', icon: <RadarChartOutlined />, label: '驾驶舱' },
       { key: '/archive', icon: <FolderOpenOutlined />, label: '投资人档案' },

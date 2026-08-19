@@ -7,6 +7,7 @@ import './App.css';
 
 // ============= 入口页 + 驾驶舱（全屏，独立于 AppLayout）=============
 const HeroPage = React.lazy(() => import('./pages/HeroPage'));
+const ShowcasePage = React.lazy(() => import('./pages/ShowcasePage'));
 const CockpitPage = React.lazy(() => import('./pages/CockpitPage'));
 
 // ============= 路由懒加载（代码分割）=============
@@ -57,8 +58,11 @@ function AppRoutes() {
         {/* 欢迎引导页（全屏，仅首次访问） */}
         <Route path="/welcome" element={<HeroPage />} />
 
+        {/* 策展式首页（面试官导览，全屏，独立于 AppLayout） */}
+        <Route path="/showcase" element={<ShowcasePage />} />
+
         {/* 主入口：Dashboard 作为工作台首页 */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/showcase" replace />} />
 
         {/* AppLayout 内的所有功能页面（包括 cockpit，统一侧边栏） */}
         <Route path="/*" element={
