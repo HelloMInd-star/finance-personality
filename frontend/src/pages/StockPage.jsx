@@ -11,7 +11,7 @@ import {
   InfoCircleOutlined, ExperimentOutlined, FireOutlined, WalletOutlined,
   AimOutlined, CalculatorOutlined, HistoryOutlined, PlayCircleOutlined,
   StopOutlined, DatabaseOutlined, BulbOutlined, SettingOutlined,
-  SyncOutlined, CloudDownloadOutlined,
+  SyncOutlined, CloudDownloadOutlined, DownloadOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import * as echarts from 'echarts';
@@ -56,6 +56,46 @@ const StockPage = () => {
   const [useRealtimeData, setUseRealtimeData] = useState(false);
   const [realtimeLoading, setRealtimeLoading] = useState(false);
   const [realtimeSnapshot, setRealtimeSnapshot] = useState(null);  // { symbol, quote, asset, factors, kline }
+
+  // 预设资产分组卡片墙（美股/中概/A股）
+  const ASSET_GROUPS = useMemo(() => {
+    const CN_ADR = ['BABA', 'PDD', 'JD', 'NIO'];
+    const groups = [
+      { key: 'us', label: '美股', assets: [] },
+      { key: 'adr', label: '中概', assets: [] },
+      { key: 'cn', label: 'A股', assets: [] },
+    ];
+    PRESET_ASSETS.forEach((a) => {
+      if (/^\d/.test(a.ticker)) groups[2].assets.push(a);
+      else if (CN_ADR.includes(a.ticker)) groups[1].assets.push(a);
+      else groups[0].assets.push(a);
+    });
+    return groups;
+  }, []);
+
+  // 导出运行历史 CSV（BOM 防 Excel 中文乱码）
+  const exportHistory = () => {
+    try {
+      const header = '时间,标的,环境,建议,仓位,上涨空间,数据源\n';
+      const rows = runHistory.map((h) => [
+        new Date(h.runAt).toLocaleString('zh-CN'),
+        h.ticker,
+        REGIMES[h.regime]?.label || h.regime,
+        h.recommendation,
+        (h.position * 100).toFixed(0) + '%',
+        (h.upside > 0 ? '+' : '') + (h.upside * 100).toFixed(1) + '%',
+        h.dataSource === 'realtime' ? '东方财富实时' : '内置预设',
+      ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob(['\ufeff' + header + rows], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `quant_history_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      message.success('已导出运行历史 CSV');
+    } catch (e) { message.error('导出失败'); logger.error('导出历史失败', e); }
+  };
   const [simDays, setSimDays] = useState(126); // 半年
   const [manualPerturb, setManualPerturb] = useState(0); // ±20% 扰动
   const [autoRefresh, setAutoRefresh] = useState(false);
@@ -100,7 +140,7 @@ const StockPage = () => {
         apiClient.marketGetValuation(symbol),
         apiClient.marketGetKline(symbol, Math.max(simDays, 120)).catch(() => ({ bars: [] })),
       ]);
-      const snapshot = { ...val, kline: kline?.bars || [] };
+      const snapshot = { ...val, kline: kline?.bars || [], fetchedAt: Date.now() };
       setRealtimeSnapshot(snapshot);
       logger.session('[StockPage][Realtime] 行情已拉取', {
         ticker: snapshot?.asset?.ticker,
@@ -642,22 +682,48 @@ const StockPage = () => {
         </div>
 
         <div>
-          <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>选择标的（内置预设）</Text>
-          <Select
-            value={selectedTicker}
-            onChange={(v) => {
-              setSelectedTicker(v);
-              setUseRealtimeData(false);
-              setRealtimeSnapshot(null);
-            }}
-            style={{ width: '100%', marginTop: 6 }}
-            size="small"
-            options={PRESET_ASSETS.map(a => ({
-              label: `${a.ticker} · ${a.name} (${a.industry})`,
-              value: a.ticker,
-            }))}
-            disabled={useRealtimeData && !!customTicker.trim()}
-          />
+          <Space style={{ justifyContent: 'space-between', width: '100%' }}>
+            <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>选择标的（{PRESET_ASSETS.length} 只预设 · 点击选中）</Text>
+            <Text style={{ color: '#D4AF37', fontSize: 11, fontWeight: 700 }}>{selectedTicker}</Text>
+          </Space>
+          <div style={{ maxHeight: 238, overflowY: 'auto', marginTop: 8, paddingRight: 4 }}>
+            {ASSET_GROUPS.map((g) => (
+              <div key={g.key} style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', letterSpacing: 1, marginBottom: 6 }}>
+                  {g.label} · {g.assets.length}
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
+                  {g.assets.map((a) => {
+                    const active = a.ticker === selectedTicker;
+                    const disabled = useRealtimeData && !!customTicker.trim();
+                    return (
+                      <div
+                        key={a.ticker}
+                        onClick={() => {
+                          if (disabled) return;
+                          setSelectedTicker(a.ticker);
+                          setUseRealtimeData(false);
+                          setRealtimeSnapshot(null);
+                        }}
+                        style={{
+                          cursor: disabled ? 'not-allowed' : 'pointer',
+                          opacity: disabled ? 0.45 : 1,
+                          padding: '6px 8px',
+                          borderRadius: 8,
+                          border: active ? '1px solid rgba(212,175,55,0.6)' : '1px solid rgba(168,85,247,0.18)',
+                          background: active ? 'rgba(212,175,55,0.10)' : 'rgba(168,85,247,0.05)',
+                          transition: 'all .15s',
+                        }}
+                      >
+                        <div style={{ fontSize: 11, fontWeight: 700, color: active ? '#D4AF37' : 'rgba(255,255,255,0.85)' }}>{a.ticker}</div>
+                        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.name} · {a.industry}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div>
@@ -687,6 +753,12 @@ const StockPage = () => {
             }
             disabled={!useRealtimeData}
           />
+          {realtimeSnapshot?.quote && (
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 8 }}>
+              数据时间 {realtimeSnapshot.fetchedAt ? new Date(realtimeSnapshot.fetchedAt).toLocaleTimeString('zh-CN', { hour12: false }) : '—'}
+              {realtimeSnapshot.quote.provider ? ` · 来源 ${realtimeSnapshot.quote.provider}` : ''}
+            </div>
+          )}
           {realtimeSnapshot?.quote && (
             <Row gutter={12} style={{ marginTop: 10 }}>
               <Col span={12}>
@@ -1481,6 +1553,16 @@ const StockPage = () => {
           <Text strong style={{ color: 'rgba(255,255,255,0.85)' }}>运行历史 / 审计日志</Text>
         </Space>
       }
+      extra={runHistory.length > 0 && (
+        <Button
+          size="small"
+          icon={<DownloadOutlined />}
+          onClick={exportHistory}
+          style={{ background: 'rgba(168,85,247,0.08)', borderColor: 'rgba(168,85,247,0.35)', color: '#a855f7' }}
+        >
+          导出 CSV
+        </Button>
+      )}
     >
       {runHistory.length > 0 ? (
         <Table
@@ -1489,7 +1571,7 @@ const StockPage = () => {
             {
               title: '时间', dataIndex: 'runAt', key: 't',
               render: t => <Text style={{ color: 'rgba(255,255,255,0.55)', fontSize: 10 }}>
-                {new Date(t).toLocaleTimeString('zh-CN')}
+                {new Date(t).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })}
               </Text>,
             },
             { title: '标的', dataIndex: 'ticker', key: 'ticker', render: t => <Text strong style={{ color: '#a855f7' }}>{t}</Text> },

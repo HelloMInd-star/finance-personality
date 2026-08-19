@@ -67,6 +67,31 @@ export const PRESET_ASSETS = [
   { ticker: 'JPM', name: '摩根大通', industry: '银行', marketCap: 500, pe: 11, pb: 1.8, revenueGrowthYoY: 0.2, fcfYield: 0, roe: 0.15, debtToEquity: 0, grade: 'B', basePrice: 195 },
   { ticker: 'TSLA', name: '特斯拉', industry: '新能源', marketCap: 600, pe: 50, pb: 12, revenueGrowthYoY: 0.1, fcfYield: 0.01, roe: 0.25, debtToEquity: 0.2, grade: 'A', basePrice: 245 },
   { ticker: 'BRK.B', name: '伯克希尔', industry: '多元金融', marketCap: 900, pe: 9, pb: 1.5, revenueGrowthYoY: 0.05, fcfYield: 0.04, roe: 0.15, debtToEquity: 0.3, grade: 'S', basePrice: 410 },
+  // —— 美股补充 ——
+  { ticker: 'META', name: 'Meta', industry: '社交/广告', marketCap: 1300, pe: 27, pb: 8, revenueGrowthYoY: 0.2, fcfYield: 0.03, roe: 0.35, debtToEquity: 0.3, grade: 'A', basePrice: 500 },
+  { ticker: 'NFLX', name: '奈飞', industry: '流媒体', marketCap: 290, pe: 40, pb: 12, revenueGrowthYoY: 0.15, fcfYield: 0.02, roe: 0.3, debtToEquity: 0.6, grade: 'A', basePrice: 670 },
+  { ticker: 'AMD', name: 'AMD', industry: '半导体', marketCap: 240, pe: 45, pb: 4, revenueGrowthYoY: 0.1, fcfYield: 0.015, roe: 0.08, debtToEquity: 0.05, grade: 'B', basePrice: 150 },
+  { ticker: 'AVGO', name: '博通', industry: '半导体', marketCap: 750, pe: 35, pb: 10, revenueGrowthYoY: 0.4, fcfYield: 0.04, roe: 0.5, debtToEquity: 1.0, grade: 'A', basePrice: 160 },
+  { ticker: 'COST', name: '好市多', industry: '零售', marketCap: 390, pe: 50, pb: 14, revenueGrowthYoY: 0.06, fcfYield: 0.015, roe: 0.3, debtToEquity: 0.4, grade: 'A', basePrice: 880 },
+  { ticker: 'KO', name: '可口可乐', industry: '消费', marketCap: 290, pe: 24, pb: 10, revenueGrowthYoY: 0.05, fcfYield: 0.03, roe: 0.4, debtToEquity: 1.5, grade: 'B', basePrice: 66 },
+  { ticker: 'DIS', name: '迪士尼', industry: '娱乐', marketCap: 170, pe: 40, pb: 2, revenueGrowthYoY: 0.03, fcfYield: 0.03, roe: 0.05, debtToEquity: 0.5, grade: 'B', basePrice: 95 },
+  { ticker: 'V', name: 'Visa', industry: '支付', marketCap: 550, pe: 30, pb: 14, revenueGrowthYoY: 0.1, fcfYield: 0.035, roe: 0.5, debtToEquity: 0.6, grade: 'S', basePrice: 275 },
+  // —— 中概 ——
+  { ticker: 'BABA', name: '阿里巴巴', industry: '电商/云', marketCap: 230, pe: 20, pb: 2, revenueGrowthYoY: 0.07, fcfYield: 0.06, roe: 0.1, debtToEquity: 0.2, grade: 'A', basePrice: 100 },
+  { ticker: 'PDD', name: '拼多多', industry: '电商', marketCap: 190, pe: 12, pb: 4, revenueGrowthYoY: 0.6, fcfYield: 0.05, roe: 0.4, debtToEquity: 0.1, grade: 'A', basePrice: 135 },
+  { ticker: 'JD', name: '京东', industry: '电商/物流', marketCap: 60, pe: 11, pb: 1.6, revenueGrowthYoY: 0.06, fcfYield: 0.05, roe: 0.15, debtToEquity: 0.3, grade: 'B', basePrice: 40 },
+  { ticker: 'NIO', name: '蔚来', industry: '新能源车', marketCap: 9, pe: 0, pb: 2.5, revenueGrowthYoY: 0.2, fcfYield: -0.2, roe: -1.5, debtToEquity: 3.0, grade: 'C', basePrice: 5 },
+  // —— A股 ——
+  { ticker: '600519', name: '贵州茅台', industry: '白酒', marketCap: 250, pe: 24, pb: 8, revenueGrowthYoY: 0.15, fcfYield: 0.03, roe: 0.35, debtToEquity: 0.0, grade: 'S', basePrice: 1450 },
+  { ticker: '000858', name: '五粮液', industry: '白酒', marketCap: 70, pe: 16, pb: 4, revenueGrowthYoY: 0.08, fcfYield: 0.04, roe: 0.25, debtToEquity: 0.0, grade: 'A', basePrice: 125 },
+  { ticker: '601318', name: '中国平安', industry: '保险', marketCap: 140, pe: 9, pb: 1.0, revenueGrowthYoY: 0.05, fcfYield: 0.05, roe: 0.12, debtToEquity: 0.0, grade: 'B', basePrice: 55 },
+  { ticker: '600036', name: '招商银行', industry: '银行', marketCap: 130, pe: 7, pb: 1.0, revenueGrowthYoY: 0.02, fcfYield: 0, roe: 0.16, debtToEquity: 0, grade: 'A', basePrice: 40 },
+  { ticker: '300750', name: '宁德时代', industry: '电池', marketCap: 160, pe: 22, pb: 4.5, revenueGrowthYoY: 0.1, fcfYield: 0.02, roe: 0.22, debtToEquity: 0.5, grade: 'A', basePrice: 250 },
+  { ticker: '002594', name: '比亚迪', industry: '新能源车', marketCap: 110, pe: 20, pb: 4, revenueGrowthYoY: 0.15, fcfYield: 0.01, roe: 0.2, debtToEquity: 0.8, grade: 'A', basePrice: 260 },
+  { ticker: '600900', name: '长江电力', industry: '公用事业', marketCap: 100, pe: 20, pb: 3, revenueGrowthYoY: 0.05, fcfYield: 0.04, roe: 0.15, debtToEquity: 1.2, grade: 'B', basePrice: 28 },
+  { ticker: '601899', name: '紫金矿业', industry: '有色矿业', marketCap: 70, pe: 15, pb: 3.5, revenueGrowthYoY: 0.12, fcfYield: 0.03, roe: 0.25, debtToEquity: 0.8, grade: 'A', basePrice: 18 },
+  { ticker: '000001', name: '平安银行', industry: '银行', marketCap: 35, pe: 5, pb: 0.6, revenueGrowthYoY: -0.05, fcfYield: 0, roe: 0.11, debtToEquity: 0, grade: 'B', basePrice: 11 },
+  { ticker: '600030', name: '中信证券', industry: '券商', marketCap: 60, pe: 16, pb: 1.5, revenueGrowthYoY: 0.05, fcfYield: 0, roe: 0.08, debtToEquity: 0, grade: 'B', basePrice: 28 },
 ];
 
 // 宏观环境
