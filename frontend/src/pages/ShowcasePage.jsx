@@ -5,25 +5,27 @@ import { useNavigate } from 'react-router-dom';
  * ShowcasePage —— 策展式首页（面试官导览）
  * 定位：平台对外首屏。策展 5 个必看 Demo + 同构系统矩阵出口 + 全场景二级入口。
  * 个人工作台保留在 /dashboard，本页只承担「讲故事」职责。
+ * 视觉：全量对齐 styles/variables.css 设计系统（酒局紫 × 塔罗古金 × 深空黑磨砂玻璃）。
  */
 
 const COLORS = {
-  bg: '#070b1a',
-  bgCard: 'rgba(255,255,255,0.03)',
-  border: 'rgba(129,140,248,0.14)',
-  borderHover: 'rgba(167,139,250,0.45)',
-  text: '#e8edff',
-  sec: '#94a3b8',
-  dim: '#5b6690',
-  cyan: '#22d3ee',
-  purple: '#a78bfa',
-  gold: '#fbbf24',
+  bgCard: 'rgba(20, 18, 37, 0.5)',          // 同 .home-stat-card 磨砂玻璃
+  bgCardSoft: 'rgba(20, 18, 37, 0.4)',
+  borderGold: 'rgba(212, 175, 55, 0.25)',   // var(--border-gold)
+  borderGoldStrong: 'rgba(212, 175, 55, 0.4)',
+  borderPurple: 'rgba(168, 85, 247, 0.2)',  // var(--border-medium)
+  text: '#ffffff',
+  sec: 'rgba(255, 255, 255, 0.7)',
+  dim: 'rgba(255, 255, 255, 0.4)',
+  purple: '#a855f7',
+  purpleLight: '#c4b5fd',
+  gold: '#D4AF37',
 };
 
 const S = {
   page: {
     minHeight: '100vh',
-    background: `radial-gradient(1200px 600px at 80% -10%, rgba(139,92,246,0.12), transparent 60%), radial-gradient(900px 500px at 10% 0%, rgba(34,211,238,0.08), transparent 55%), ${COLORS.bg}`,
+    background: 'transparent', // 继承 body 全局紫金深空氛围（index.css body::before）
     color: COLORS.text,
     fontFamily: "'Segoe UI', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif",
     padding: '48px 24px 64px',
@@ -33,29 +35,39 @@ const S = {
     display: 'inline-block',
     fontSize: 12,
     letterSpacing: 2,
-    color: COLORS.purple,
-    border: `1px solid rgba(167,139,250,0.35)`,
+    color: COLORS.purpleLight,
+    border: '1px solid rgba(168, 85, 247, 0.35)',
     borderRadius: 999,
     padding: '5px 16px',
     marginBottom: 22,
+    background: COLORS.bgCardSoft,
+    backdropFilter: 'blur(20px) saturate(180%)',
+    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
   },
   h1: { fontSize: 34, fontWeight: 700, lineHeight: 1.35, margin: '0 0 14px' },
+  h1Accent: {
+    background: 'linear-gradient(135deg, #D4AF37 0%, #F5F5F0 50%, #a855f7 100%)', // var(--gradient-title)
+    WebkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+  },
   sub: { fontSize: 15, lineHeight: 1.9, color: COLORS.sec, maxWidth: 720, margin: '0 0 20px' },
   chips: { display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 26 },
   chip: {
     fontSize: 12, color: COLORS.sec,
-    border: `1px solid ${COLORS.border}`, borderRadius: 999, padding: '4px 12px',
-    background: 'rgba(255,255,255,0.02)',
+    border: `1px solid ${COLORS.borderPurple}`, borderRadius: 999, padding: '4px 12px',
+    background: COLORS.bgCardSoft,
   },
   actions: { display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 8 },
   btnPrimary: {
     padding: '12px 26px', borderRadius: 10, border: 'none', cursor: 'pointer',
-    background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+    background: 'linear-gradient(135deg, #a855f7 0%, #D4AF37 100%)', // var(--gradient-btn-primary)
     color: '#fff', fontSize: 14, fontWeight: 600,
+    boxShadow: '0 0 24px rgba(168, 85, 247, 0.2)', // var(--glow-purple)
   },
   btnGhost: {
     padding: '12px 22px', borderRadius: 10, cursor: 'pointer',
-    background: 'transparent', border: `1px solid ${COLORS.border}`,
+    background: COLORS.bgCardSoft, border: `1px solid ${COLORS.borderPurple}`,
     color: COLORS.sec, fontSize: 14,
   },
   sectionTitle: { fontSize: 18, fontWeight: 600, margin: '46px 0 4px' },
@@ -63,35 +75,35 @@ const S = {
   grid2: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 14 },
   card: {
     display: 'block', textAlign: 'left', width: '100%',
-    padding: '18px 20px', borderRadius: 14,
-    background: COLORS.bgCard, border: `1px solid ${COLORS.border}`,
-    cursor: 'pointer', transition: 'all .2s', color: COLORS.text,
+    padding: '20px 22px', borderRadius: 16, // var(--radius-md)
+    background: COLORS.bgCard,
+    backdropFilter: 'blur(20px) saturate(180%)',
+    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+    border: `1px solid ${COLORS.borderGold}`,
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)', // var(--shadow-md)
+    cursor: 'pointer', transition: 'all .3s cubic-bezier(0.4, 0, 0.2, 1)', color: COLORS.text,
   },
   cardHead: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
   cardEmoji: { fontSize: 22 },
   cardTag: {
-    fontSize: 11, color: COLORS.purple,
-    border: '1px solid rgba(167,139,250,0.3)', borderRadius: 999, padding: '2px 10px',
+    fontSize: 11, color: COLORS.purpleLight,
+    border: '1px solid rgba(168, 85, 247, 0.35)', borderRadius: 999, padding: '2px 10px',
   },
   cardName: { fontSize: 15.5, fontWeight: 600, marginBottom: 6 },
   cardDesc: { fontSize: 12.5, lineHeight: 1.7, color: COLORS.sec },
-  cardGo: { marginTop: 10, fontSize: 12, color: COLORS.cyan },
+  cardGo: { marginTop: 10, fontSize: 12, color: COLORS.gold },
   linkGroups: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 14 },
   linkGroup: {
-    padding: '14px 16px', borderRadius: 12,
-    background: 'rgba(255,255,255,0.02)', border: `1px solid ${COLORS.border}`,
+    padding: '14px 16px', borderRadius: 16,
+    background: COLORS.bgCardSoft, border: `1px solid ${COLORS.borderPurple}`,
+    backdropFilter: 'blur(20px) saturate(180%)',
+    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
   },
   linkGroupTitle: { fontSize: 12, color: COLORS.dim, letterSpacing: 2, marginBottom: 10 },
   linkItem: {
     display: 'block', fontSize: 13, color: COLORS.sec, padding: '4px 0',
     cursor: 'pointer', background: 'none', border: 'none', textAlign: 'left', width: '100%',
   },
-  footer: {
-    marginTop: 56, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.06)',
-    display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 12,
-    fontSize: 12, color: COLORS.dim,
-  },
-  extLink: { color: COLORS.dim, textDecoration: 'none' },
 };
 
 const CURATED = [
@@ -152,8 +164,11 @@ const ShowcasePage = () => {
   const navigate = useNavigate();
 
   const hover = (e, on) => {
-    e.currentTarget.style.borderColor = on ? COLORS.borderHover : COLORS.border;
-    e.currentTarget.style.transform = on ? 'translateY(-2px)' : 'none';
+    e.currentTarget.style.borderColor = on ? COLORS.borderGoldStrong : COLORS.borderGold;
+    e.currentTarget.style.transform = on ? 'translateY(-4px)' : 'none';
+    e.currentTarget.style.boxShadow = on
+      ? '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(212, 175, 55, 0.2)' // var(--glow-gold)
+      : '0 8px 32px rgba(0, 0, 0, 0.4)';
   };
 
   return (
@@ -162,7 +177,7 @@ const ShowcasePage = () => {
         {/* ===== Hero 定位 ===== */}
         <span style={S.badge}>GAME-OS 应用层 · 人格金融孪生平台</span>
         <h1 style={S.h1}>
-          把行为数据，炼成<span style={{ color: COLORS.purple }}>可审计的决策人格</span>
+          把行为数据，炼成<span style={S.h1Accent}>可审计的决策人格</span>
         </h1>
         <p style={S.sub}>
           一套 KMP → IPD → 六维向量内核，驱动本平台 30+ 在线交互场景。
@@ -230,7 +245,7 @@ const ShowcasePage = () => {
               <div style={S.linkGroupTitle}>{g.title}</div>
               {g.items.map(([label, path]) => (
                 <button key={path} style={S.linkItem}
-                        onMouseEnter={e => { e.currentTarget.style.color = COLORS.cyan; }}
+                        onMouseEnter={e => { e.currentTarget.style.color = COLORS.purpleLight; }}
                         onMouseLeave={e => { e.currentTarget.style.color = COLORS.sec; }}
                         onClick={() => navigate(path)}>
                   {label} <span style={{ color: COLORS.dim, fontSize: 11 }}>→</span>
@@ -238,18 +253,6 @@ const ShowcasePage = () => {
               ))}
             </div>
           ))}
-        </div>
-
-        {/* ===== Footer ===== */}
-        <div style={S.footer}>
-          <span>© 2026 Y.Mine · 罗煜 — 审计 × 工程 × MBA</span>
-          <span>
-            <a style={S.extLink} href="https://github.com/HelloMInd-star" target="_blank" rel="noopener noreferrer">GitHub</a>
-            {' · '}
-            <a style={S.extLink} href="https://hellomind-star.github.io/ymine/" target="_blank" rel="noopener noreferrer">Game-OS 主站</a>
-            {' · '}
-            <a style={S.extLink} href="https://hellomind-star.github.io/ymine-validation-hub/" target="_blank" rel="noopener noreferrer">作品集</a>
-          </span>
         </div>
       </div>
     </div>
