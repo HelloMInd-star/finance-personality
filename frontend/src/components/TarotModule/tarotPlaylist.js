@@ -11,9 +11,9 @@ export const MOODS = {
   ignite: {
     key: 'ignite',
     name: '启程之火',
-    desc: '今夜适合踏出舒适区，让肾上腺素替你开路',
-    playlistId: '13905314237',
-    playlistName: '100首英文超燃爆曲',
+    desc: '阳光和律动已备好，替你的第一步开路',
+    playlistId: '18006287376',
+    playlistName: '清夏少女 · 阳光R&B欢快氛围(2026)',
   },
   flow: {
     key: 'flow',
@@ -26,15 +26,15 @@ export const MOODS = {
     key: 'midnight',
     name: '深夜内省',
     desc: '把音量调小，把内心调大',
-    playlistId: '7849335657',
-    playlistName: '冷门宝藏R&B · TrapSoul进阶',
+    playlistId: '17974209281',
+    playlistName: '午夜低音 · 沙发上的慵懒气泡(2026)',
   },
   warmth: {
     key: 'warmth',
     name: '温度',
     desc: '连接他人之前，先被温柔接住',
-    playlistId: '12651884817',
-    playlistName: 'R&B清新小曲 · 治愈温柔氛围',
+    playlistId: '17965751354',
+    playlistName: '华语R&B · 慵懒小调挑动心弦(2026)',
   },
   power: {
     key: 'power',
