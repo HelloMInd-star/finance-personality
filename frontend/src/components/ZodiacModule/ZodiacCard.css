@@ -1,12 +1,13 @@
 /* ========================================
- * 星盘印证卡片 · 黑金风格
+ * 星盘印证卡片 · 深空紫金语系
+ * 结构全紫,金留点睛:标题/星符号/星座符号/印证语
  * ======================================== */
 
 .zodiac-card {
   margin-top: 20px;
   padding: 24px 28px;
-  background: linear-gradient(160deg, rgba(20, 20, 30, 0.95), rgba(26, 26, 40, 0.9));
-  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: linear-gradient(160deg, rgba(30, 19, 64, 0.85), rgba(20, 12, 44, 0.8));
+  border: 1px solid rgba(139, 92, 246, 0.25);
   border-radius: 16px;
   position: relative;
   overflow: hidden;
@@ -19,7 +20,7 @@
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(180deg, #D4AF37 0%, rgba(212, 175, 55, 0.2) 100%);
+  background: linear-gradient(180deg, #a855f7 0%, #D4AF37 100%);
 }
 
 .zodiac-card-header {
@@ -53,15 +54,15 @@
   align-items: flex-start;
   gap: 14px;
   padding: 14px 16px;
-  background: rgba(212, 175, 55, 0.04);
-  border: 1px solid rgba(212, 175, 55, 0.12);
+  background: rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.12);
   border-radius: 10px;
   transition: all 0.3s ease;
 }
 
 .zodiac-position-row:hover {
-  background: rgba(212, 175, 55, 0.07);
-  border-color: rgba(212, 175, 55, 0.25);
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(139, 92, 246, 0.25);
 }
 
 .zodiac-position-icon {
@@ -80,7 +81,7 @@
 
 .zodiac-position-label {
   font-size: 12px;
-  color: rgba(212, 175, 55, 0.7);
+  color: rgba(168, 85, 247, 0.75);
   font-weight: 600;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -110,14 +111,14 @@
   margin-top: 6px;
   padding: 2px 10px;
   border-radius: 10px;
-  background: rgba(123, 76, 255, 0.1);
-  border: 1px solid rgba(123, 76, 255, 0.25);
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.25);
   color: #A78BFA;
   font-size: 11px;
   letter-spacing: 0.5px;
 }
 
-/* === 底部印证语 === */
+/* === 底部印证语(金·点睛收尾) === */
 .zodiac-footer-text {
   text-align: center;
   font-size: 14px;
@@ -125,7 +126,7 @@
   font-style: italic;
   letter-spacing: 1px;
   padding: 16px 0 0;
-  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  border-top: 1px solid rgba(139, 92, 246, 0.15);
 }
 
 /* === 无数据状态 === */
@@ -136,7 +137,7 @@
 
 .zodiac-empty-icon {
   font-size: 36px;
-  color: rgba(212, 175, 55, 0.3);
+  color: rgba(139, 92, 246, 0.35);
   margin-bottom: 12px;
 }
 
@@ -164,7 +165,7 @@
 
 .zodiac-input-label {
   font-size: 13px;
-  color: #D4AF37;
+  color: #A78BFA;
   font-weight: 600;
   letter-spacing: 1px;
   min-width: 56px;
@@ -176,8 +177,8 @@
 }
 
 .zodiac-input-select .ant-select-selector {
-  background: rgba(212, 175, 55, 0.06) !important;
-  border-color: rgba(212, 175, 55, 0.25) !important;
+  background: rgba(139, 92, 246, 0.06) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
   border-radius: 8px !important;
 }
 
@@ -189,9 +190,9 @@
   margin-top: 8px;
   height: 38px;
   border-radius: 19px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
-  color: #D4AF37;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(139, 92, 246, 0.04));
+  color: #A78BFA;
   font-size: 14px;
   letter-spacing: 2px;
   cursor: pointer;
@@ -199,8 +200,8 @@
 }
 
 .zodiac-save-btn:hover {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.2);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.08));
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.2);
   color: #F5F5F0;
 }
 

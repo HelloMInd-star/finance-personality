@@ -6,7 +6,7 @@
   position: relative;
   min-height: calc(100vh - 80px);
   background: #0A0A0F;
-  overflow: hidden;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;

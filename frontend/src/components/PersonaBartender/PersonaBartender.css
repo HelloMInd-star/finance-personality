@@ -44,7 +44,7 @@
 }
 
 .pb-tab.active {
-  color: #ffd700;
+  color: #a855f7;
   background: rgba(168, 85, 247, 0.08);
   border-color: rgba(168, 85, 247, 0.3);
   border-bottom-color: #12121f;
@@ -82,16 +82,19 @@
 .pb-intro-icon {
   font-size: 64px;
   margin-bottom: 24px;
-  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
 }
 
 .pb-intro-title {
   font-size: 28px;
   font-weight: 700;
-  color: #ffd700;
+  color: #F5F5F0;
+  background: linear-gradient(135deg, #D4AF37 0%, #F5F5F0 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 16px;
   letter-spacing: 2px;
-  text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
 }
 
 .pb-intro-desc {
@@ -124,7 +127,7 @@
 }
 
 .pb-start-btn {
-  background: linear-gradient(135deg, #a855f7, #ffd700) !important;
+  background: linear-gradient(135deg, #a855f7, #D4AF37) !important;
   border: none !important;
   height: 48px;
   padding: 0 40px;
@@ -258,7 +261,7 @@
 .pb-result-title {
   font-size: 22px;
   font-weight: 700;
-  color: #ffd700;
+  color: #D4AF37;
   margin-bottom: 16px;
 }
 
@@ -289,8 +292,8 @@
   align-items: center;
   gap: 8px;
   padding: 8px 24px;
-  background: rgba(255, 215, 0, 0.08);
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
   border-radius: 20px;
 }
 
@@ -302,7 +305,7 @@
 .pb-match-value {
   font-size: 20px;
   font-weight: 700;
-  color: #ffd700;
+  color: #D4AF37;
 }
 
 /* === 3D 分子区域 === */
@@ -366,8 +369,8 @@
 /* === 故事卡片 === */
 
 .pb-story-card {
-  background: rgba(255, 215, 0, 0.04);
-  border: 1px solid rgba(255, 215, 0, 0.15);
+  background: rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.15);
   border-radius: 12px;
   padding: 24px 28px;
   margin-bottom: 32px;
@@ -381,7 +384,7 @@
   top: 20px;
   bottom: 20px;
   width: 3px;
-  background: linear-gradient(180deg, #a855f7, #ffd700);
+  background: linear-gradient(180deg, #a855f7, #D4AF37);
   border-radius: 2px;
 }
 

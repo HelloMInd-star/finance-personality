@@ -26,7 +26,6 @@ import {
   DIMENSION_CONFIG,
   PHASE_CONFIG,
 } from '../utils/cultivationEngine.js';
-import ZodiacCard from '../components/ZodiacModule/ZodiacCard.jsx';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -432,8 +431,6 @@ const CultivationPlanPage = () => {
         </Col>
       </Row>
 
-      {/* 星盘印证卡片(整合方案最后) */}
-      <ZodiacCard />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { drawRandomCard } from './tarotData.js';
 import TarotCard from './TarotCard.jsx';
+import ZodiacCard from '../ZodiacModule/ZodiacCard.jsx';
 import { storage } from '../../utils/storage';
 import { logger } from '../../utils/logger';
 import './TarotDraw.css';
@@ -231,6 +232,11 @@ export default function TarotDraw() {
           </div>
         </div>
       )}
+
+      {/* 星盘印证(人格画像印证·与塔罗同属神秘学专区) */}
+      <div style={{ width: '100%', maxWidth: 640, marginTop: 40 }}>
+        <ZodiacCard />
+      </div>
     </div>
   );
 }
