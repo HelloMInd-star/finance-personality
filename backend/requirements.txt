@@ -11,6 +11,7 @@ redis==5.0.1
 
 # 认证
 passlib[bcrypt]==1.7.4
+bcrypt==4.0.1  # 钉版本:bcrypt 4.1+ 与 passlib 1.7.4 冲突导致注册 500
 python-dotenv==1.0.0
 PyJWT==2.13.0
 
