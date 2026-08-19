@@ -23,6 +23,11 @@ import './PokerArena.css';
 
 const SUIT_ICON = { '♠': '♠', '♥': '♥', '♦': '♦', '♣': '♣' };
 const STAGE_LABEL = { preflop: '翻前', flop: '翻牌', turn: '转牌', river: '河牌', showdown: '摊牌' };
+const HAND_CN = {
+  'High Card': '高牌', 'One Pair': '一对', 'Two Pair': '两对',
+  'Three of a Kind': '三条', 'Straight': '顺子', 'Flush': '同花',
+  'Full House': '葫芦', 'Four of a Kind': '四条', 'Straight Flush': '同花顺',
+};
 const POLL_MS = 1800;
 
 function CardFace({ card, hidden }) {
@@ -131,7 +136,7 @@ function PokerArena() {
   useEffect(() => {
     if (!state?.hand_over || handOverHandledRef.current || !me) return;
     handOverHandledRef.current = true;
-    const winners = state.winners || (state.winner ? [state.winner] : []);
+    const winners = state.hand_result?.winners || state.winners || (state.winner ? [state.winner] : []);
     const iWon = winners.some((w) => (w.id || w.player_id) === me.id);
     setStreak((s) => (iWon ? (s >= 0 ? s + 1 : 1) : s <= 0 ? s - 1 : -1));
   }, [state, me]);
@@ -311,18 +316,27 @@ function PokerArena() {
       </div>
 
       {/* ── 结算条 ── */}
-      {state?.hand_over && (
-        <div className="pa-result glass">
-          <div className="pa-result-text">
-            {(state.winners || []).some((w) => (w.id || w.player_id) === me?.id)
-              ? `🏆 你拿下底池 ${state.pot}`
-              : `🌑 ${ai?.name} 拿下底池 ${state.pot}`}
+      {state?.hand_over && (() => {
+        const hr = state.hand_result;
+        const winList = hr?.winners || state.winners || [];
+        const iWon = winList.some((w) => (w.id || w.player_id) === me?.id);
+        const finalPot = hr?.pot ?? state.pot;
+        const handCn = hr?.hand_name ? (HAND_CN[hr.hand_name] || hr.hand_name) : null;
+        const handPart = handCn ? `以【${handCn}】` : '';
+        let text;
+        if (iWon && hr?.win_type === 'fold') text = `🏆 对手弃牌，你拿下底池 ${finalPot}`;
+        else if (iWon) text = `🏆 你${handPart}拿下底池 ${finalPot}`;
+        else if (hr?.win_type === 'fold') text = `🌑 你弃牌，${ai?.name} 拿下底池 ${finalPot}`;
+        else text = `🌑 ${ai?.name}${handPart}拿下底池 ${finalPot}`;
+        return (
+          <div className="pa-result glass">
+            <div className="pa-result-text">{text}</div>
+            <button className="pa-next-btn" onClick={nextHand} disabled={busy}>
+              {busy ? '洗牌中…' : '▶ 下一手'}
+            </button>
           </div>
-          <button className="pa-next-btn" onClick={nextHand} disabled={busy}>
-            {busy ? '洗牌中…' : '▶ 下一手'}
-          </button>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ── 我的区 ── */}
       <div className={`pa-seat glass me ${isMyTurn ? 'myturn' : ''}`}>
