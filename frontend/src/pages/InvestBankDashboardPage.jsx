@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, Row, Col, Statistic, Tag, Divider, Progress, Space, Typography, Table, Alert, Button, Select, Spin } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
 import ReactECharts from 'echarts-for-react';
@@ -234,8 +235,40 @@ const ZONE_REC = {
 };
 
 const InvestBankDashboardPage = () => {
+  const navigate = useNavigate();
   const [model, setModel] = useState(() => buildSandboxModel());
+  const [aiInvReport, setAiInvReport] = useState(null);
+  const [aiInvLoading, setAiInvLoading] = useState(false);
+  const hasToken = !!localStorage.getItem('auth_token');
   const [status, setStatus] = useState({ loading: false, source: '本地沙盘', error: null, symbol: '600519' });
+
+  // ✦ AI 投资人格解读(DeepSeek 点亮工程 · 登录态真调,未登录引导解锁)
+  const handleAiInvestorReport = async () => {
+    if (!model.best?.investor || aiInvLoading) return;
+    setAiInvLoading(true);
+    setAiInvReport(null);
+    try {
+      const inv = model.best.investor;
+      const common = investorEngine.generateCommonPoints(model.userData, inv).join('；');
+      const diff = investorEngine.generateDifferencePoints(model.userData, inv).join('；');
+      const advice = investorEngine.generateImprovementAdvice(model.userData, inv, 2)
+        .map(a => `${a.dimensionLabel}${a.direction}: ${a.advice}`).join('；');
+      const res = await apiClient.llmGenerate('investor_report', {
+        investor_name: inv.name,
+        investor_title: `${inv.mbtiLabel || ''} · ${inv.decisionStyle || ''}`.slice(0, 60),
+        similarity: `${model.best.similarity}%`,
+        tier_label: model.best.tier?.label || '',
+        common_points: (common || '暂无显著契合点').slice(0, 190),
+        difference_points: (diff || '暂无显著差异').slice(0, 190),
+        advice: (advice || '保持当前节奏').slice(0, 190),
+      });
+      if (res?.text) setAiInvReport(res.text);
+    } catch (e) {
+      logger.error('[AI投资解读] 失败', e);
+    } finally {
+      setAiInvLoading(false);
+    }
+  };
 
   const loadRealData = useCallback(async (sym) => {
     setStatus(s => ({ ...s, loading: true, error: null, symbol: sym, source: '加载中…' }));
@@ -678,6 +711,34 @@ const InvestBankDashboardPage = () => {
             <ReactECharts option={assetBarOpt} style={{ height: 200 }} notMerge />
           </Col>
         </Row>
+        <Divider style={{ borderColor: 'rgba(139,92,246,0.2)', margin: '16px 0' }} />
+        {hasToken ? (
+          <div>
+            <Button
+              size="small"
+              icon={<ThunderboltOutlined />}
+              loading={aiInvLoading}
+              onClick={handleAiInvestorReport}
+              style={{ background: 'rgba(212,175,55,0.08)', borderColor: 'rgba(212,175,55,0.35)', color: '#D4AF37' }}
+            >
+              {aiInvReport ? '重新生成 AI 解读' : '✦ 生成 AI 投资人格解读'}
+            </Button>
+            {aiInvReport && (
+              <div style={{ marginTop: 12, padding: '14px 18px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: 12 }}>
+                <div style={{ fontSize: 12, color: '#D4AF37', letterSpacing: 1, marginBottom: 6 }}>✦ AI 人格金融分析师 · 解读与选择建议</div>
+                <div style={{ fontSize: 13, lineHeight: 1.9, color: 'rgba(255,255,255,0.88)', whiteSpace: 'pre-wrap' }}>{aiInvReport}</div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Button
+            size="small"
+            onClick={() => navigate('/login', { state: { from: '/ib-dashboard' } })}
+            style={{ background: 'transparent', border: '1px dashed rgba(212,175,55,0.25)', color: 'rgba(212,175,55,0.75)' }}
+          >
+            ✦ 登录解锁 AI 投资人格解读 →
+          </Button>
+        )}
       </Card>
     );
   };

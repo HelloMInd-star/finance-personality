@@ -33,6 +33,11 @@ import { useAppStore } from '../store/appStore';
 import { storage } from '../utils/storage';
 import { cognitiveCircleEngine } from '../utils/cognitiveCircleEngine';
 import { generateInsights, classifyPersona } from '../utils/insightBriefEngine';
+import { investorEngine } from '../utils/investorEngine';
+import { apiClient } from '../utils/apiClient';
+import {
+  determinePhase, calculateTotalSessions, calculateDimensionScores, identifyWeakDimensions,
+} from '../utils/cultivationEngine.js';
 import PersonaRadar from '../components/Dashboard/PersonaRadar';
 import { logger } from '../utils/logger';
 import './DashboardPage.css';
@@ -56,6 +61,9 @@ const DashboardPage = () => {
   const [selectedNode, setSelectedNode] = useState(null);
   const [circleRefreshKey, setCircleRefreshKey] = useState(0);
   const [lastRefresh, setLastRefresh] = useState(null);
+  const [masterReport, setMasterReport] = useState(null);
+  const [masterLoading, setMasterLoading] = useState(false);
+  const hasToken = !!localStorage.getItem('auth_token');
 
   const greeting = useMemo(() => {
     const h = new Date().getHours();
@@ -300,6 +308,49 @@ const DashboardPage = () => {
   const circleNodes = circle?.nodes?.slice(0, 8) || [];
   const circleEdges = circle?.edges?.slice(0, 12) || [];
 
+  // ✦ 人格金融综合报告(DeepSeek 点亮工程 · 跨模块人格痕迹汇总)
+  const handleMasterReport = async () => {
+    if (masterLoading) return;
+    setMasterLoading(true);
+    setMasterReport(null);
+    try {
+      const tarotCard = storage.getUserState()?.tarotDraw?.cardName
+        || (storage.get('tarotHistory') || []).slice(-1)[0]?.cardName || '未抽牌';
+      const partyHist = storage.getUserState()?.partyHistory || [];
+      const partyPersona = partyHist.length ? partyHist.slice(-1)[0].persona : '未入局';
+      let invName = '未匹配';
+      let invSim = '—';
+      try {
+        const ud = investorEngine.extractUserData();
+        const m0 = investorEngine.matchInvestor(ud)[0];
+        if (m0) { invName = m0.investor.name; invSim = `${m0.similarity}%`; }
+      } catch (_) {}
+      let phaseName = '—';
+      let weakDims = '—';
+      try {
+        const total = calculateTotalSessions(data);
+        phaseName = determinePhase(total)?.label || '—';
+        const scores = calculateDimensionScores(data);
+        const weak = identifyWeakDimensions(scores) || [];
+        weakDims = weak.map(w => (typeof w === 'string' ? w : (w.label || w.key))).join('、') || '无显著弱项';
+      } catch (_) {}
+      const res = await apiClient.llmGenerate('master_report', {
+        mbti: `${mbti}(${mbtiMap[mbti] || '探索者'})`,
+        tarot_card: String(tarotCard).slice(0, 50),
+        party_persona: String(partyPersona).slice(0, 80),
+        investor_name: String(invName).slice(0, 50),
+        similarity: String(invSim),
+        phase_name: String(phaseName).slice(0, 60),
+        weak_dims: String(weakDims).slice(0, 120),
+      });
+      if (res?.text) setMasterReport(res.text);
+    } catch (e) {
+      logger.error('[综合报告] 生成失败', e);
+    } finally {
+      setMasterLoading(false);
+    }
+  };
+
   return (
     <div className="dashboard-page fade-in">
       {/* === Hero 欢迎区 + 数据沉浸 === */}
@@ -528,6 +579,41 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
+      </Card>
+
+      {/* === ✦ 人格金融综合报告(跨模块汇总 · 选择建议) === */}
+      <Card
+        title={<span style={{ color: '#fff' }}>✦ 人格金融综合报告 · 跨模块人格痕迹汇总</span>}
+        style={{ marginBottom: 24, background: 'rgba(30,19,64,0.8)', border: '1px solid rgba(212,175,55,0.22)' }}
+      >
+        {hasToken ? (
+          <div>
+            <Paragraph style={{ color: 'rgba(255,255,255,0.55)', fontSize: 13, marginBottom: 12 }}>
+              汇总塔罗指引、酒局原型、投资人匹配与成长阶段的人格痕迹，由 AI 总分析师生成综合报告与选择建议。
+            </Paragraph>
+            <Button
+              icon={<StarOutlined />}
+              loading={masterLoading}
+              onClick={handleMasterReport}
+              style={{ background: 'rgba(212,175,55,0.08)', borderColor: 'rgba(212,175,55,0.35)', color: '#D4AF37' }}
+            >
+              {masterReport ? '重新生成综合报告' : '生成我的综合报告'}
+            </Button>
+            {masterReport && (
+              <div style={{ marginTop: 14, padding: '16px 20px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: 12 }}>
+                <div style={{ fontSize: 12, color: '#D4AF37', letterSpacing: 1, marginBottom: 8 }}>✦ AI 总分析师 · 综合报告与选择建议</div>
+                <div style={{ fontSize: 14, lineHeight: 2, color: 'rgba(255,255,255,0.9)', whiteSpace: 'pre-wrap' }}>{masterReport}</div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Button
+            onClick={() => navigate('/login', { state: { from: '/dashboard' } })}
+            style={{ background: 'transparent', border: '1px dashed rgba(212,175,55,0.25)', color: 'rgba(212,175,55,0.75)' }}
+          >
+            ✦ 登录解锁人格金融综合报告 →
+          </Button>
+        )}
       </Card>
 
       {/* === 六维人格向量 · 雷达图 + 塔罗 + 洞察 === */}

@@ -29,6 +29,7 @@ export default function TarotDraw() {
   const [glowActive, setGlowActive] = useState(false);
   const [aiReading, setAiReading] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
+  const [aiAdvice, setAiAdvice] = useState(null);
   const hasToken = !!localStorage.getItem('auth_token');
   const canvasRef = useRef(null);
   const animRef = useRef(null);
@@ -151,6 +152,15 @@ export default function TarotDraw() {
     }).finally(() => {
       if (!cancelled) setAiLoading(false);
     });
+    // 并联:今日行动建议(同条件触发,独立降级)
+    setAiAdvice(null);
+    apiClient.llmGenerate('tarot_advice', {
+      card_name: card.name,
+      keywords: (card.keywords || []).join('、'),
+      mbti: card.mbti,
+    }).then((res) => {
+      if (!cancelled && res?.text) setAiAdvice(res.text);
+    }).catch(() => {});
     return () => { cancelled = true; };
   }, [stage, card, hasToken]);
 
@@ -252,6 +262,12 @@ export default function TarotDraw() {
               ) : aiReading ? (
                 <div className="tarot-ai-text">{aiReading}</div>
               ) : null}
+              {aiAdvice && (
+                <div className="tarot-ai-advice">
+                  <div className="tarot-ai-label">✦ 今日行动指引</div>
+                  <div className="tarot-ai-text">{aiAdvice}</div>
+                </div>
+              )}
             </div>
           ) : (
             <button

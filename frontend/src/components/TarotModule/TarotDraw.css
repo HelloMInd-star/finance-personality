@@ -431,6 +431,12 @@
   transition: all 0.3s ease;
 }
 
+.tarot-ai-advice {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(212, 175, 55, 0.18);
+}
+
 .tarot-ai-locked:hover {
   color: #D4AF37;
   border-color: rgba(212, 175, 55, 0.5);
