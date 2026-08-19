@@ -31,7 +31,7 @@ const HAND_CN = {
 const POLL_MS = 1800;
 
 function CardFace({ card, hidden }) {
-  if (hidden) return <div className="pa-card back">🂠</div>;
+  if (hidden) return <div className="pa-card back"><span className="pa-card-back-mark">♦</span></div>;
   const red = card.color === 'red' || card.suit === '♥' || card.suit === '♦';
   return (
     <div className={`pa-card ${red ? 'red' : 'black'}`}>

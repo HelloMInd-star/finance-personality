@@ -22,7 +22,7 @@ const DIM_THRESHOLDS = {
 };
 
 const TAROT_INFLUENCE = {
-  '愚者': { risk: 0.15, openness: 0.2, speed: 0.1, icon: '🃏', tip: '今日适合尝试新事物' },
+  '愚者': { risk: 0.15, openness: 0.2, speed: 0.1, icon: '🎴', tip: '今日适合尝试新事物' },
   '魔术师': { risk: 0.1, speed: 0.15, openness: 0.1, icon: '🎩', tip: '发挥你的创造力' },
   '女祭司': { emotionStability: 0.15, grit: 0.1, social: -0.1, icon: '🌙', tip: '倾听内心声音' },
   '皇后': { social: 0.15, openness: 0.1, emotionStability: 0.05, icon: '👑', tip: '滋养身边的人' },

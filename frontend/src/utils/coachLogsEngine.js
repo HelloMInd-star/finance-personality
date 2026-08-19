@@ -54,7 +54,7 @@ const tryApi = async (apiFn, fallbackFn, operationName) => {
 // ============================================================
 
 const GAME_TYPES = [
-  { key: 'poker', label: '德州扑克', icon: '🃏' },
+  { key: 'poker', label: '德州扑克', icon: '🎴' },
   { key: 'game_table', label: '模拟博弈台', icon: '♟️' },
   { key: 'billiards', label: '台球', icon: '🎱' },
 ];

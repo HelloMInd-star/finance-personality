@@ -109,7 +109,7 @@ const TASK_TEMPLATES = {
     id: 'poker',
     title: '德州扑克训练 30分钟',
     desc: '专注风险控制与情绪管理',
-    icon: '🃏',
+    icon: '🎴',
     basePriority: 'high',
     relatedDimensions: [DIMENSION_KEYS.RISK_CONTROL, DIMENSION_KEYS.EMOTIONAL_STABILITY],
   },

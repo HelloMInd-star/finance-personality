@@ -321,7 +321,7 @@ const buildAnchorNodes = ({ anchors }) => {
       angle: -30,
       tags: ['今日指引', '人格底色'],
       color: '#a855f7',
-      emoji: '🃏',
+      emoji: '🎴',
     });
   }
 

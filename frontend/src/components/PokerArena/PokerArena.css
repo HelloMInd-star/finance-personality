@@ -276,10 +276,13 @@
   font-size: 16px;
 }
 .pa-card.back {
-  background: linear-gradient(160deg, #3b2d6e, #241d44);
-  border: 1px solid rgba(167, 139, 250, 0.4);
-  font-size: 26px;
-  color: rgba(167, 139, 250, 0.5);
+  background: repeating-linear-gradient(45deg, #3b2d6e 0 5px, #281e50 5px 10px);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+.pa-card-back-mark {
+  font-size: 22px;
+  color: rgba(251, 191, 36, 0.45);
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.25);
 }
 
 /* ── 公共牌 ── */

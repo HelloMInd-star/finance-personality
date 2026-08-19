@@ -207,7 +207,7 @@ const DashboardPage = () => {
       badge: tarotName || '待抽取',
       badgeTone: tarotName ? 'gold' : 'muted',
       accent: 'gold',
-      icon: '🃏',
+      icon: '🎴',
       action: () => navigate('/tarot'),
     },
     {
@@ -275,7 +275,7 @@ const DashboardPage = () => {
       const last = pokerGames[pokerGames.length - 1];
       activities.push({
         id: 'p_' + last.id,
-        icon: '🃏',
+        icon: '🎴',
         title: '完成一局德州扑克',
         subtitle: `盈亏 ${last.profit >= 0 ? '+' : ''}${last.profit || 0} · 手数 ${last.totalActions || 0}`,
         time: last.timestamp ? new Date(last.timestamp).toLocaleString('zh-CN', { hour: '2-digit', minute: '2-digit', month: 'numeric', day: 'numeric' }) : '今日',
@@ -676,7 +676,7 @@ const DashboardPage = () => {
                     onClick={() => navigate('/tarot')}
                   >
                     <div className="tarot-insight-header">
-                      <span className="tarot-insight-icon">🃏</span>
+                      <span className="tarot-insight-icon">🎴</span>
                       <div>
                         <div className="tarot-insight-title">{tarotToday.card.name}</div>
                         <div className="tarot-insight-sub">今日塔罗底色</div>
@@ -708,7 +708,7 @@ const DashboardPage = () => {
                     onClick={() => navigate('/tarot')}
                   >
                     <div className="tarot-insight-header">
-                      <span className="tarot-insight-icon">🃏</span>
+                      <span className="tarot-insight-icon">🎴</span>
                       <div>
                         <div className="tarot-insight-title">抽取今日塔罗</div>
                         <div className="tarot-insight-sub">塔罗底色影响认知权重</div>
@@ -845,7 +845,7 @@ const DashboardPage = () => {
         </Col>
         <Col xs={12} md={6}>
           <Card className="stat-card stat-poker" size="small">
-            <div className="stat-icon">🃏</div>
+            <div className="stat-icon">🎴</div>
             <div className="stat-info">
               <div className="stat-value">{stats.pokerRounds}</div>
               <div className="stat-label">德州手数</div>

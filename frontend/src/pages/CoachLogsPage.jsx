@@ -48,7 +48,7 @@ const DIFFICULTY_CONFIG = {
 };
 
 const GAME_TYPE_CONFIG = {
-  poker: { color: 'purple', icon: '🃏' },
+  poker: { color: 'purple', icon: '🎴' },
   game_table: { color: 'cyan', icon: '♟️' },
   billiards: { color: 'gold', icon: '🎱' },
 };
@@ -269,7 +269,7 @@ const CoachLogsPage = () => {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 22,
             }}>
-              🃏
+              🎴
             </div>
             <div>
               <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 2 }}>总手数</div>
@@ -339,7 +339,7 @@ const CoachLogsPage = () => {
             style={{ width: 140 }}
           >
             <Option value="all">🎮 全部游戏</Option>
-            <Option value="poker">🃏 德州扑克</Option>
+            <Option value="poker">🎴 德州扑克</Option>
             <Option value="game_table">♟️ 模拟博弈台</Option>
             <Option value="billiards">🎱 台球</Option>
           </Select>
@@ -527,7 +527,7 @@ const CoachLogsPage = () => {
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8, flexWrap: 'wrap' }}>
                       <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 13 }}>
-                        🃏 {session.total_hands} 手
+                        🎴 {session.total_hands} 手
                       </span>
                       <span style={{ color: session.win_rate >= 50 ? '#34d399' : '#f87171', fontSize: 13 }}>
                         <TrophyOutlined style={{ marginRight: 4 }} />

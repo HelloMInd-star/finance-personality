@@ -228,7 +228,7 @@ const CockpitPage = () => {
             {/* 今日塔罗底色 */}
             {tarotToday?.card && (
               <div className="cockpit-tarot-strip" onClick={() => navigate('/tarot')}>
-                <span className="cockpit-tarot-emoji">🃏</span>
+                <span className="cockpit-tarot-emoji">🎴</span>
                 <div className="cockpit-tarot-info">
                   <span className="cockpit-tarot-name">{tarotToday.card.name}</span>
                   <span className="cockpit-tarot-meaning">{tarotToday.card.meaning || '今日人格底色'}</span>

@@ -153,7 +153,7 @@ const CURATED = [
     desc: '人格 × 市场行为：不同决策人格在同一行情下的操作分叉，行为金融学的实时推演台。',
   },
   {
-    emoji: '🃏', tag: '全栈在线', name: '德州扑克', path: '/poker', grad: GRAD.violetDeep,
+    emoji: '🎴', tag: '全栈在线', name: '德州扑克', path: '/poker', grad: GRAD.violetDeep,
     desc: '16 型人格 AI 牌手在线对局，FastAPI + WebSocket 全栈实战，人格化决策全程可解释。',
   },
   {

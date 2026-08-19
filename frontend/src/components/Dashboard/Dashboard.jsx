@@ -254,7 +254,7 @@ const Dashboard = ({ gameState }) => {
             <span className="bridge-value">{(tension * 100).toFixed(0)}%</span>
           </div>
           <div className="bridge-item">
-            <span className="bridge-label">🃏 牌力</span>
+            <span className="bridge-label">🎴 牌力</span>
             <span className="bridge-value">{handName}</span>
           </div>
           <div className="bridge-item">
