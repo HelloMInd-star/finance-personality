@@ -1,5 +1,5 @@
 import React, { Suspense, useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ConfigProvider, Spin } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import AppLayout from './components/Layout/AppLayout';
@@ -165,9 +165,9 @@ function App() {
         },
       }}
     >
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter>
         <AppRoutes />
-      </BrowserRouter>
+      </HashRouter>
     </ConfigProvider>
   );
 }

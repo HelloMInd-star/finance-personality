@@ -137,7 +137,7 @@ function PokerArena() {
 
     const tick = async () => {
       try {
-        const s = await arenaApi.getState(game.gameId);
+        const s = await arenaApi.getState(game.gameId, game.playerId);
         if (cancelled) return;
         setState(s);
         const idx = s.players.findIndex((p) => !p.is_ai);
@@ -208,11 +208,11 @@ function PokerArena() {
       await arenaApi.postAction(game.gameId, game.playerId, actionType, amount);
       turnStartRef.current = 0;
       setAnalysis(null);
-      const ns = await arenaApi.getState(game.gameId);
+      const ns = await arenaApi.getState(game.gameId, game.playerId);
       setState(ns);
       pollRef.current = setTimeout(async function poll() {
         try {
-          const s2 = await arenaApi.getState(game.gameId);
+          const s2 = await arenaApi.getState(game.gameId, game.playerId);
           setState(s2);
           const idx = s2.players.findIndex((p) => !p.is_ai);
           const meP = s2.players[idx];
@@ -244,7 +244,7 @@ function PokerArena() {
       setHandSeq((h) => h + 1);
       turnStartRef.current = 0;
       setAnalysis(null);
-      const s = await arenaApi.getState(game.gameId);
+      const s = await arenaApi.getState(game.gameId, game.playerId);
       setState(s);
     } catch (e) {
       setErr(`开新一手失败：${e.message}`);
