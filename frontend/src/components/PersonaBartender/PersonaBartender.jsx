@@ -30,16 +30,19 @@ import './PersonaBartender.css';
 
 // 懒加载 3D 组件(只在结果页加载,减少首屏负担)
 const MoleculeViewer = lazy(() => import('../MoleculeViewer/MoleculeViewer.jsx'));
+// 蓝图第 3 站：今夜酒单（卡片仪式 · 数据驱动）
+const CocktailRitual = lazy(() => import('../CocktailRitual/CocktailRitual.jsx'));
 
 const TOTAL_QUESTIONS = 6;
 
 const TABS = [
+  { key: 'tonight', label: '今夜酒单', icon: <span>🍸</span>, desc: '读你的人格向量 → 今夜精选三杯' },
   { key: 'molecule', label: '分子调酒生成器', icon: <ExperimentFilled />, desc: '6 题人格测试 → 人格酒 + 3D 分子结构' },
   { key: 'party', label: 'MBTI 企业家酒局', icon: <CoffeeOutlined />, desc: '选酒入场 → 对话模拟 → 酒局人格报告' },
 ];
 
 export default function PersonaBartender() {
-  const [activeTab, setActiveTab] = useState('molecule');
+  const [activeTab, setActiveTab] = useState('tonight');
 
   return (
     <div className="persona-bartender">
@@ -55,7 +58,15 @@ export default function PersonaBartender() {
           </button>
         ))}
       </div>
-      {activeTab === 'molecule' ? <MoleculeBartender /> : <MbtParty />}
+      {activeTab === 'tonight' ? (
+        <Suspense fallback={null}>
+          <CocktailRitual />
+        </Suspense>
+      ) : activeTab === 'molecule' ? (
+        <MoleculeBartender />
+      ) : (
+        <MbtParty />
+      )}
     </div>
   );
 }
