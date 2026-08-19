@@ -10,7 +10,20 @@
   <meta property="og:type" content="website" />
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <!-- 首屏 splash:JS 加载期间的品牌呼吸屏,React 挂载后自动接管 -->
+    <div style="position:fixed;inset:0;background:#0A0A0F;display:flex;flex-direction:column;gap:18px;justify-content:center;align-items:center;z-index:9999;">
+      <div style="font-size:44px;animation:ymine-splash-pulse 1.6s ease-in-out infinite;">♠️</div>
+      <div style="font-size:15px;letter-spacing:6px;color:#a855f7;text-shadow:0 0 20px rgba(168,85,247,0.45);font-family:-apple-system,'PingFang SC',sans-serif;">Y.Mine</div>
+      <div style="font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.35);font-family:-apple-system,'PingFang SC',sans-serif;">人格金融孪生空间加载中…</div>
+    </div>
+  </div>
+  <style>
+    @keyframes ymine-splash-pulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(168,85,247,0.35)); opacity: 0.85; }
+      50% { transform: scale(1.12); filter: drop-shadow(0 0 28px rgba(168,85,247,0.6)); opacity: 1; }
+    }
+  </style>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

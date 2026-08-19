@@ -44,12 +44,23 @@ const ArchivePage = React.lazy(() => import('./pages/ArchivePage'));
 const InvestBankDashboardPage = React.lazy(() => import('./pages/InvestBankDashboardPage'));
 const TrustDashboardPage = React.lazy(() => import('./pages/TrustDashboardPage'));
 
-// 懒加载 fallback
+// 懒加载 fallback(品牌化)
 const PageLoader = () => (
-  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 16, justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+    <span style={{ fontSize: 34, color: '#a855f7', textShadow: '0 0 24px rgba(168,85,247,0.5)', animation: 'ymine-splash-pulse 1.6s ease-in-out infinite' }}>♠️</span>
     <Spin size="large" />
   </div>
 );
+
+// 落地门控:首次访问 -> 品牌入场页(/welcome -> showcase 导览);回访 -> 直进工作台
+const LandingGate = () => {
+  const visited = localStorage.getItem('ymine_visited');
+  if (!visited) {
+    localStorage.setItem('ymine_visited', String(Date.now()));
+    return <Navigate to="/welcome" replace />;
+  }
+  return <Navigate to="/dashboard" replace />;
+};
 
 function AppRoutes() {
   return (
@@ -61,8 +72,8 @@ function AppRoutes() {
         {/* 策展式首页（面试官导览，全屏，独立于 AppLayout） */}
         <Route path="/showcase" element={<ShowcasePage />} />
 
-        {/* 主入口：Dashboard 作为工作台首页 */}
-        <Route path="/" element={<Navigate to="/showcase" replace />} />
+        {/* 主入口：首次入场页,回访直进工作台 */}
+        <Route path="/" element={<LandingGate />} />
 
         {/* AppLayout 内的所有功能页面（包括 cockpit，统一侧边栏） */}
         <Route path="/*" element={

@@ -10,7 +10,7 @@ const HeroPage = () => {
   const navigate = useNavigate();
 
   const handleEnter = () => {
-    navigate('/dashboard', { replace: true });
+    navigate('/showcase', { replace: true });
   };
 
   return (
@@ -58,7 +58,7 @@ const HeroPage = () => {
           onClick={handleEnter}
           className="hero-enter-btn"
         >
-          进入驾驶舱
+          开启导览
         </Button>
       </div>
     </div>
