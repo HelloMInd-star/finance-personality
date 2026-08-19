@@ -1,5 +1,5 @@
 /* ========================================
- * 塔罗指引模块 · 深空黑金风格
+ * 塔罗指引模块 · 深空紫金风格
  * ======================================== */
 
 .tarot-module {
@@ -46,7 +46,7 @@
   color: #F5F5F0;
   letter-spacing: 4px;
   margin: 0;
-  background: linear-gradient(135deg, #D4AF37 0%, #F5F5F0 50%, #D4AF37 100%);
+  background: linear-gradient(135deg, #D4AF37 0%, #F5F5F0 50%, #a855f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -96,13 +96,13 @@
   backface-visibility: hidden;
   border-radius: 12px;
   background: linear-gradient(145deg, #14141E 0%, #1a1a28 100%);
-  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  border: 1.5px solid rgba(139, 92, 246, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow:
-    0 0 30px rgba(212, 175, 55, 0.15),
-    inset 0 0 20px rgba(212, 175, 55, 0.05);
+    0 0 30px rgba(139, 92, 246, 0.18),
+    inset 0 0 20px rgba(139, 92, 246, 0.05);
   overflow: hidden;
 }
 
@@ -110,15 +110,15 @@
   content: '';
   position: absolute;
   inset: 8px;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.18);
   border-radius: 8px;
 }
 
 .tarot-card-back-symbol {
   font-size: 48px;
-  color: #D4AF37;
+  color: #c4b5fd;
   opacity: 0.7;
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
   animation: tarot-back-pulse 3s ease-in-out infinite;
 }
 
@@ -136,18 +136,18 @@
   transform: rotateY(180deg);
   border-radius: 12px;
   background: linear-gradient(160deg, #14141E 0%, #1e1e2e 100%);
-  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  border: 1.5px solid rgba(139, 92, 246, 0.55);
   overflow: hidden;
   box-shadow:
-    0 0 40px rgba(212, 175, 55, 0.2),
-    inset 0 0 30px rgba(212, 175, 55, 0.03);
+    0 0 40px rgba(139, 92, 246, 0.22),
+    inset 0 0 30px rgba(139, 92, 246, 0.04);
 }
 
 .tarot-card-front::before {
   content: '';
   position: absolute;
   inset: 6px;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.18);
   border-radius: 8px;
   pointer-events: none;
 }
@@ -191,9 +191,9 @@
   height: 46px;
   padding: 0 36px;
   border-radius: 24px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
-  color: #D4AF37;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.14), rgba(139, 92, 246, 0.05));
+  color: #c4b5fd;
   font-size: 15px;
   letter-spacing: 3px;
   cursor: pointer;
@@ -202,9 +202,9 @@
 }
 
 .tarot-draw-btn:hover {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
-  border-color: rgba(212, 175, 55, 0.7);
-  box-shadow: 0 0 24px rgba(212, 175, 55, 0.25);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.22), rgba(139, 92, 246, 0.08));
+  border-color: rgba(139, 92, 246, 0.7);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.3);
   color: #F5F5F0;
 }
 
@@ -264,9 +264,9 @@
 .tarot-keyword-tag {
   padding: 4px 14px;
   border-radius: 14px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  background: rgba(212, 175, 55, 0.06);
-  color: #D4AF37;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.08);
+  color: #c4b5fd;
   font-size: 12px;
   letter-spacing: 1px;
 }
@@ -287,8 +287,8 @@
   gap: 8px;
   padding: 8px 20px;
   border-radius: 20px;
-  border: 1px solid rgba(123, 76, 255, 0.3);
-  background: rgba(123, 76, 255, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: rgba(168, 85, 247, 0.08);
   margin-bottom: 32px;
 }
 
@@ -336,14 +336,14 @@
 }
 
 .tarot-action-primary {
-  border: 1px solid rgba(212, 175, 55, 0.5);
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
-  color: #D4AF37;
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.16), rgba(139, 92, 246, 0.06));
+  color: #c4b5fd;
 }
 
 .tarot-action-primary:hover {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1));
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.26), rgba(139, 92, 246, 0.1));
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.35);
   color: #F5F5F0;
 }
 

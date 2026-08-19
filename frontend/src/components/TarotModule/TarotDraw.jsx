@@ -68,7 +68,7 @@ export default function TarotDraw() {
         const alpha = p.opacity * (0.5 + 0.5 * Math.sin(p.twinkle));
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(212, 175, 55, ${alpha})`;
+        ctx.fillStyle = `rgba(168, 85, 247, ${alpha})`;
         ctx.fill();
       });
       animRef.current = requestAnimationFrame(render);
