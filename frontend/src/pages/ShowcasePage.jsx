@@ -121,7 +121,7 @@ const MATRIX = [
   { emoji: '🛩️', domain: '低空经济', name: 'AirMind OS', url: 'https://hellomind-star.github.io/airmind-os/', desc: 'Kelly 博弈定价 × 应急调度 × 算力浓度监控的低空决策中枢。' },
   { emoji: '🎬', domain: '内容市场', name: '短剧 MBTI 推演器', url: 'https://hellomind-star.github.io/short-drama-mbti/', desc: '人格向量 × 平台适配，「前额叶×边缘系统」双引擎发布策略。' },
   { emoji: '🎰', domain: '博弈对抗', name: 'Poker Face Arena', url: 'https://hellomind-star.github.io/poker-egg-fullstack/', desc: '独立部署的扑克人格竞技场，16 型 AI 对手公开可玩。' },
-  { emoji: '🍸', domain: '消费体验', name: 'Y.MINE 调酒宇宙', url: 'https://hellomind-star.github.io/ymine-demos/', desc: '人格 → 风味/声场/视觉的五感映射，午夜酒馆叙事宇宙。' },
+  { emoji: '🍸', domain: '消费体验', name: 'Y.MINE 人格调酒系统', url: 'https://hellomind-star.github.io/personality-wine-mixing/', desc: 'MBTI 分子调酒全栈系统：人格 → 风味/声场/视觉的五感映射。' },
   { emoji: '⚙️', domain: '元工具', name: '智能工坊 Agent Studio', url: 'https://hellomind-star.github.io/agent-studio-board/', desc: '多模型路由与 Agent 工作流编排控制台 —— 我指挥 AI 军团的方式。' },
   { emoji: '🌌', domain: '总览', name: '返回作品集', url: 'https://hellomind-star.github.io/ymine-validation-hub/', desc: '跨域应用矩阵总览 · 论文 · 实验集群 · 完整项目列表。' },
 ];
