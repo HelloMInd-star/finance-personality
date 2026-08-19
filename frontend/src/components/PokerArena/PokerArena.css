@@ -1,0 +1,420 @@
+/* 扑克竞技场 · 紫金基调 */
+
+.pa-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 8px 0 40px;
+}
+
+.pa-wrap .glass {
+  background: rgba(22, 20, 38, 0.72);
+  border: 1px solid rgba(167, 139, 250, 0.18);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+}
+
+/* ── 大厅 ── */
+.pa-lobby {
+  padding: 32px 26px;
+  text-align: center;
+}
+.pa-lobby-title {
+  font-size: 26px;
+  letter-spacing: 0.08em;
+  background: linear-gradient(90deg, #fbbf24, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+.pa-lobby-sub {
+  font-size: 12px;
+  color: #8f8ab3;
+  line-height: 1.9;
+  margin-bottom: 22px;
+}
+.pa-err {
+  margin: 10px auto;
+  max-width: 480px;
+  font-size: 12px;
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+.pa-opp-groups {
+  text-align: left;
+  margin-bottom: 22px;
+}
+.pa-opp-group {
+  margin-bottom: 14px;
+}
+.pa-opp-group-name {
+  font-size: 11px;
+  color: #a78bfa;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.pa-opp-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .pa-opp-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.pa-opp-chip {
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  background: rgba(167, 139, 250, 0.05);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pa-opp-chip b {
+  font-size: 13px;
+  color: #e6e2f7;
+}
+.pa-opp-chip span {
+  font-size: 9px;
+  color: #6d6890;
+  line-height: 1.5;
+}
+.pa-opp-chip.on {
+  border-color: rgba(251, 191, 36, 0.65);
+  background: rgba(251, 191, 36, 0.08);
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.12);
+}
+.pa-opp-chip.on b {
+  color: #fbbf24;
+}
+.pa-start-btn {
+  padding: 13px 40px;
+  border-radius: 999px;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.14), rgba(167, 139, 250, 0.14));
+  color: #fbbf24;
+  transition: all 0.25s ease;
+}
+.pa-start-btn:hover:not(:disabled) {
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.25);
+}
+.pa-start-btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.pa-log-note {
+  margin-top: 14px;
+  font-size: 11px;
+  color: #6d6890;
+}
+
+/* ── 牌桌头 ── */
+.pa-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  margin-bottom: 12px;
+}
+.pa-head-title {
+  font-size: 14px;
+  color: #e6e2f7;
+  letter-spacing: 0.05em;
+}
+.pa-streak {
+  margin-left: 12px;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.pa-streak.win {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+}
+.pa-streak.lose {
+  color: #22d3ee;
+  background: rgba(34, 211, 238, 0.08);
+}
+.pa-pot {
+  font-size: 12px;
+  color: #8f8ab3;
+  margin-right: 14px;
+}
+.pa-pot b {
+  color: #fbbf24;
+  font-size: 15px;
+}
+.pa-quit {
+  font-size: 11px;
+  color: #6d6890;
+  background: none;
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+.pa-quit:hover {
+  color: #c4b5fd;
+}
+
+/* ── 座位 ── */
+.pa-seat {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.pa-seat.me {
+  border-color: rgba(251, 191, 36, 0.3);
+}
+.pa-seat.myturn {
+  border-color: rgba(251, 191, 36, 0.7);
+  box-shadow: 0 0 22px rgba(251, 191, 36, 0.14);
+}
+.pa-seat-info {
+  min-width: 180px;
+}
+.pa-seat-name {
+  display: block;
+  font-size: 14px;
+  color: #e6e2f7;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.pa-seat-style {
+  font-size: 10px;
+  color: #6d6890;
+}
+.pa-seat-strength {
+  font-size: 10px;
+  color: #8f8ab3;
+  display: block;
+}
+.pa-seat-strength i {
+  display: block;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #a78bfa, #fbbf24);
+  margin-top: 4px;
+  transition: width 0.5s ease;
+}
+.pa-seat-cards {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+}
+.pa-seat-chips {
+  font-size: 13px;
+  color: #fbbf24;
+  min-width: 150px;
+  text-align: right;
+}
+.pa-seat-bet {
+  margin-left: 10px;
+  font-size: 11px;
+  color: #8f8ab3;
+}
+.pa-tag {
+  margin-left: 8px;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.pa-tag.folded {
+  color: #6d6890;
+  background: rgba(109, 104, 144, 0.15);
+}
+.pa-tag.allin {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.12);
+}
+.pa-thinking {
+  margin-left: 10px;
+  font-size: 11px;
+  color: #22d3ee;
+  animation: paBlink 1.2s infinite;
+}
+@keyframes paBlink {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── 扑克牌 ── */
+.pa-card {
+  width: 52px;
+  height: 72px;
+  border-radius: 8px;
+  background: linear-gradient(160deg, #faf7ff, #e8e2f5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+.pa-card.red { color: #dc2626; }
+.pa-card.black { color: #1e1b2e; }
+.pa-card-rank {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+.pa-card-suit {
+  font-size: 16px;
+}
+.pa-card.back {
+  background: linear-gradient(160deg, #3b2d6e, #241d44);
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  font-size: 26px;
+  color: rgba(167, 139, 250, 0.5);
+}
+
+/* ── 公共牌 ── */
+.pa-board {
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.pa-board-cards {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  min-height: 72px;
+  align-items: center;
+}
+.pa-board-empty {
+  font-size: 12px;
+  color: #6d6890;
+}
+
+/* ── 结算条 ── */
+.pa-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  border-color: rgba(251, 191, 36, 0.5);
+}
+.pa-result-text {
+  font-size: 15px;
+  color: #fbbf24;
+}
+.pa-next-btn {
+  padding: 9px 26px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+}
+.pa-next-btn:disabled {
+  opacity: 0.5;
+}
+
+/* ── Kelly 面板 ── */
+.pa-kelly {
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  border-color: rgba(34, 211, 238, 0.3);
+}
+.pa-kelly-title {
+  font-size: 12px;
+  color: #22d3ee;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.pa-kelly-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.pa-kelly-grid label {
+  display: block;
+  font-size: 10px;
+  color: #6d6890;
+  margin-bottom: 3px;
+}
+.pa-kelly-grid b {
+  font-size: 15px;
+  color: #22d3ee;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+}
+
+/* ── 操作区 ── */
+.pa-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.pa-act {
+  padding: 11px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid;
+}
+.pa-act:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.pa-act.fold {
+  border-color: rgba(109, 104, 144, 0.5);
+  background: rgba(109, 104, 144, 0.1);
+  color: #b8b3d9;
+}
+.pa-act.check {
+  border-color: rgba(34, 211, 238, 0.5);
+  background: rgba(34, 211, 238, 0.1);
+  color: #22d3ee;
+}
+.pa-act.call {
+  border-color: rgba(52, 211, 153, 0.5);
+  background: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+}
+.pa-act.raise {
+  border-color: rgba(251, 191, 36, 0.6);
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+}
+.pa-act.allin {
+  border-color: rgba(248, 113, 113, 0.6);
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+}
+.pa-raise-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 220px;
+}
+.pa-raise-box input[type='range'] {
+  flex: 1;
+  accent-color: #fbbf24;
+}
+.pa-waiting {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: #6d6890;
+  animation: paBlink 1.6s infinite;
+}

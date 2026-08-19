@@ -48,6 +48,7 @@ import {
   AimOutlined,
 } from '@ant-design/icons';
 import PokerTable from '../components/PokerTable/PokerTable';
+import PokerArena from '../components/PokerArena/PokerArena';
 import Dashboard from '../components/Dashboard/Dashboard';
 import { useGameStore } from '../store/gameStore';
 import { storage } from '../utils/storage';
@@ -86,7 +87,7 @@ const COLLECTED_DATA_TYPES = [
 const PokerPage = () => {
   const navigate = useNavigate();
   const { gameState, playerId, createGame, isLoading, actionHistory } = useGameStore();
-  const [activeTab, setActiveTab] = useState('lobby');
+  const [activeTab, setActiveTab] = useState('arena');
   const [gameList, setGameList] = useState([]);
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [form] = Form.useForm();
@@ -634,6 +635,7 @@ const PokerPage = () => {
         onChange={setActiveTab}
         className="poker-tabs"
         items={[
+          { key: 'arena', label: <span><ThunderboltOutlined /> 午夜竞技场</span> },
           { key: 'lobby', label: <span><PlayCircleOutlined /> 游戏大厅</span> },
           { key: 'table', label: <span><TrophyOutlined /> 牌桌对战 {gameState && <Badge dot color="#22c55e" />}</span> },
           { key: 'stats', label: <span><LineChartOutlined /> 数据统计</span> },
@@ -642,6 +644,7 @@ const PokerPage = () => {
       />
 
       {/* Tab 内容 */}
+      {activeTab === 'arena' && <PokerArena />}
       {activeTab === 'lobby' && renderLobby()}
       {activeTab === 'table' && renderTable()}
       {activeTab === 'stats' && renderStats()}
