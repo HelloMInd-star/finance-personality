@@ -243,6 +243,25 @@ export default function TarotDraw() {
             <span className="tarot-mbti-desc">· {mbtiDesc}</span>
           </div>
 
+          {/* AI 个性化解牌(登录态真调 DeepSeek;未登录引导解锁) */}
+          {hasToken ? (
+            <div className="tarot-ai-reading">
+              <div className="tarot-ai-label">✦ AI 驻馆解牌师 · 为你凝视此牌</div>
+              {aiLoading ? (
+                <div className="tarot-ai-loading">解牌师正在凝视牌面…</div>
+              ) : aiReading ? (
+                <div className="tarot-ai-text">{aiReading}</div>
+              ) : null}
+            </div>
+          ) : (
+            <button
+              className="tarot-ai-locked"
+              onClick={() => navigate('/login', { state: { from: '/tarot' } })}
+            >
+              ✦ 登录解锁 AI 个性化解牌 →
+            </button>
+          )}
+
           <div className="tarot-actions">
             <button
               className="tarot-action-btn tarot-action-primary"

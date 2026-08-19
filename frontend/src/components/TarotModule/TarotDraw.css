@@ -416,6 +416,9 @@
 }
 
 .tarot-ai-locked {
+  display: block;
+  background: transparent;
+  font-family: inherit;
   margin: 18px auto 0;
   max-width: 560px;
   padding: 12px 20px;
