@@ -5,21 +5,21 @@ import { useNavigate } from 'react-router-dom';
  * ShowcasePage —— 策展式首页（面试官导览）
  * 定位：平台对外首屏。策展 5 个必看 Demo + 同构系统矩阵出口 + 全场景二级入口。
  * 个人工作台保留在 /dashboard，本页只承担「讲故事」职责。
- * 视觉：全量对齐 styles/variables.css 设计系统（酒局紫 × 塔罗古金 × 深空黑磨砂玻璃）。
+ * 视觉：卡片全量复用 Dashboard 系统卡片语言（rgba(30,19,64,0.6) 紫调玻璃 +
+ * 渐变 banner + 大 emoji + 玻璃徽标 + hover 紫光浮起），与全站其他页面同频。
  */
 
 const COLORS = {
-  bgCard: 'rgba(20, 18, 37, 0.5)',          // 同 .home-stat-card 磨砂玻璃
-  bgCardSoft: 'rgba(20, 18, 37, 0.4)',
-  borderGold: 'rgba(212, 175, 55, 0.25)',   // var(--border-gold)
-  borderGoldStrong: 'rgba(212, 175, 55, 0.4)',
-  borderPurple: 'rgba(168, 85, 247, 0.2)',  // var(--border-medium)
   text: '#ffffff',
   sec: 'rgba(255, 255, 255, 0.7)',
   dim: 'rgba(255, 255, 255, 0.4)',
   purple: '#a855f7',
   purpleLight: '#c4b5fd',
   gold: '#D4AF37',
+  cardBg: 'rgba(30, 19, 64, 0.6)',            // 同 .system-card
+  cardBgSoft: 'rgba(30, 19, 64, 0.4)',
+  cardBorder: 'rgba(139, 92, 246, 0.18)',     // 同 .system-card
+  cardBorderHover: 'rgba(139, 92, 246, 0.5)', // 同 .system-card:hover
 };
 
 const S = {
@@ -28,19 +28,21 @@ const S = {
     background: 'transparent', // 继承 body 全局紫金深空氛围（index.css body::before）
     color: COLORS.text,
     fontFamily: "'Segoe UI', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif",
-    padding: '48px 24px 64px',
+    padding: '56px 24px 80px',
   },
-  wrap: { maxWidth: 960, margin: '0 auto' },
+  wrap: { maxWidth: 1080, margin: '0 auto' },
+
+  /* ===== Hero ===== */
   badge: {
     display: 'inline-block',
     fontSize: 12,
     letterSpacing: 2,
     color: COLORS.purpleLight,
-    border: '1px solid rgba(168, 85, 247, 0.35)',
+    border: `1px solid ${COLORS.cardBorder}`,
     borderRadius: 999,
     padding: '5px 16px',
     marginBottom: 22,
-    background: COLORS.bgCardSoft,
+    background: COLORS.cardBgSoft,
     backdropFilter: 'blur(20px) saturate(180%)',
     WebkitBackdropFilter: 'blur(20px) saturate(180%)',
   },
@@ -51,12 +53,12 @@ const S = {
     backgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
   },
-  sub: { fontSize: 15, lineHeight: 1.9, color: COLORS.sec, maxWidth: 720, margin: '0 0 20px' },
+  sub: { fontSize: 15, lineHeight: 1.9, color: COLORS.sec, maxWidth: 760, margin: '0 0 20px' },
   chips: { display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 26 },
   chip: {
     fontSize: 12, color: COLORS.sec,
-    border: `1px solid ${COLORS.borderPurple}`, borderRadius: 999, padding: '4px 12px',
-    background: COLORS.bgCardSoft,
+    border: `1px solid ${COLORS.cardBorder}`, borderRadius: 999, padding: '4px 12px',
+    background: COLORS.cardBgSoft,
   },
   actions: { display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 8 },
   btnPrimary: {
@@ -64,38 +66,61 @@ const S = {
     background: 'linear-gradient(135deg, #a855f7 0%, #D4AF37 100%)', // var(--gradient-btn-primary)
     color: '#fff', fontSize: 14, fontWeight: 600,
     boxShadow: '0 0 24px rgba(168, 85, 247, 0.2)', // var(--glow-purple)
+    transition: 'all 0.3s ease',
   },
   btnGhost: {
     padding: '12px 22px', borderRadius: 10, cursor: 'pointer',
-    background: COLORS.bgCardSoft, border: `1px solid ${COLORS.borderPurple}`,
-    color: COLORS.sec, fontSize: 14,
+    background: COLORS.cardBgSoft, border: `1px solid ${COLORS.cardBorder}`,
+    color: COLORS.sec, fontSize: 14, transition: 'all 0.3s ease',
   },
-  sectionTitle: { fontSize: 18, fontWeight: 600, margin: '46px 0 4px' },
-  sectionSub: { fontSize: 12.5, color: COLORS.dim, marginBottom: 16, letterSpacing: 1 },
-  grid2: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 14 },
+
+  /* ===== 分区标题 ===== */
+  section: { marginTop: 56 },
+  sectionTitle: { fontSize: 18, fontWeight: 600, margin: '0 0 4px' },
+  sectionSub: { fontSize: 12.5, color: COLORS.dim, marginBottom: 18, letterSpacing: 1 },
+
+  /* ===== 系统卡片（复用 Dashboard system-card 语言）===== */
+  grid2: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 },
   card: {
     display: 'block', textAlign: 'left', width: '100%',
-    padding: '20px 22px', borderRadius: 16, // var(--radius-md)
-    background: COLORS.bgCard,
-    backdropFilter: 'blur(20px) saturate(180%)',
-    WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-    border: `1px solid ${COLORS.borderGold}`,
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)', // var(--shadow-md)
-    cursor: 'pointer', transition: 'all .3s cubic-bezier(0.4, 0, 0.2, 1)', color: COLORS.text,
+    padding: 0, borderRadius: 16, overflow: 'hidden',
+    background: COLORS.cardBg,
+    border: `1px solid ${COLORS.cardBorder}`,
+    cursor: 'pointer', transition: 'all 0.3s ease', color: COLORS.text,
   },
-  cardHead: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
-  cardEmoji: { fontSize: 22 },
-  cardTag: {
-    fontSize: 11, color: COLORS.purpleLight,
-    border: '1px solid rgba(168, 85, 247, 0.35)', borderRadius: 999, padding: '2px 10px',
+  banner: (gradient) => ({
+    height: 100,
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    padding: '0 20px', position: 'relative', overflow: 'hidden',
+    background: gradient,
+  }),
+  bannerSheen: { // 等价于 .system-card-banner::before 的高光层
+    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%)',
+    pointerEvents: 'none',
   },
-  cardName: { fontSize: 15.5, fontWeight: 600, marginBottom: 6 },
+  bannerEmoji: {
+    fontSize: 36, color: '#fff', zIndex: 1,
+    filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))',
+  },
+  bannerTag: {
+    fontSize: 11, fontWeight: 500, color: '#fff', zIndex: 1,
+    background: 'rgba(255, 255, 255, 0.25)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    borderRadius: 999, padding: '3px 12px',
+    backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+    whiteSpace: 'nowrap',
+  },
+  cardBody: { padding: '18px 20px 20px' },
+  cardName: { fontSize: 15, fontWeight: 600, marginBottom: 6 },
   cardDesc: { fontSize: 12.5, lineHeight: 1.7, color: COLORS.sec },
-  cardGo: { marginTop: 10, fontSize: 12, color: COLORS.gold },
-  linkGroups: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 14 },
+  cardGo: { marginTop: 10, fontSize: 12, color: COLORS.purpleLight },
+
+  /* ===== 全场景索引 ===== */
+  linkGroups: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 },
   linkGroup: {
     padding: '14px 16px', borderRadius: 16,
-    background: COLORS.bgCardSoft, border: `1px solid ${COLORS.borderPurple}`,
+    background: COLORS.cardBgSoft, border: `1px solid ${COLORS.cardBorder}`,
     backdropFilter: 'blur(20px) saturate(180%)',
     WebkitBackdropFilter: 'blur(20px) saturate(180%)',
   },
@@ -106,36 +131,48 @@ const S = {
   },
 };
 
+/* 紫金家族 banner 渐变（每张卡一支，全部落在品牌色系内） */
+const GRAD = {
+  violetDeep: 'linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%)',
+  purpleCore: 'linear-gradient(135deg, #6d28d9 0%, #a855f7 100%)',
+  purpleGold: 'linear-gradient(135deg, #a855f7 0%, #D4AF37 100%)',
+  violetSoft: 'linear-gradient(135deg, #7c3aed 0%, #c4b5fd 100%)',
+  goldViolet: 'linear-gradient(135deg, #8b5cf6 0%, #D4AF37 100%)',
+  indigoNight: 'linear-gradient(135deg, #3b0764 0%, #8b5cf6 100%)',
+  grapeMid: 'linear-gradient(135deg, #581c87 0%, #a855f7 100%)',
+  royalGold: 'linear-gradient(135deg, #7e22ce 0%, #D4AF37 100%)',
+};
+
 const CURATED = [
   {
-    emoji: '🧬', tag: '方法论旗舰', name: 'DNA分析 · 决策染色体', path: '/genome',
+    emoji: '🧬', tag: '方法论旗舰', name: 'DNA分析 · 决策染色体', path: '/genome', grad: GRAD.purpleCore,
     desc: 'IEEE 论文同款方法论的可交互版：八维决策基因、核型诊断、漂移检测。看这一页就知道整套系统怎么思考。',
   },
   {
-    emoji: '📈', tag: '金融核心', name: '股价模拟', path: '/stock',
+    emoji: '📈', tag: '金融核心', name: '股价模拟', path: '/stock', grad: GRAD.purpleGold,
     desc: '人格 × 市场行为：不同决策人格在同一行情下的操作分叉，行为金融学的实时推演台。',
   },
   {
-    emoji: '🃏', tag: '全栈在线', name: '德州扑克', path: '/poker',
+    emoji: '🃏', tag: '全栈在线', name: '德州扑克', path: '/poker', grad: GRAD.violetDeep,
     desc: '16 型人格 AI 牌手在线对局，FastAPI + WebSocket 全栈实战，人格化决策全程可解释。',
   },
   {
-    emoji: '🪞', tag: '向量引擎', name: '人格镜子', path: '/persona-mirror',
+    emoji: '🪞', tag: '向量引擎', name: '人格镜子', path: '/persona-mirror', grad: GRAD.violetSoft,
     desc: '六维向量最近邻映射：投资人镜像、名人镜像，看「你的人格在金融史上有哪些影子」。',
   },
   {
-    emoji: '🧠', tag: '认知科学', name: '认知引擎 MindSpeak', path: '/mindspeak',
+    emoji: '🧠', tag: '认知科学', name: '认知引擎 MindSpeak', path: '/mindspeak', grad: GRAD.goldViolet,
     desc: '认知画圈：概念节点、关系张力、内耗与合力的可视化推演，决策的底层操作系统。',
   },
 ];
 
 const MATRIX = [
-  { emoji: '🛩️', domain: '低空经济', name: 'AirMind OS', url: 'https://hellomind-star.github.io/airmind-os/', desc: 'Kelly 博弈定价 × 应急调度 × 算力浓度监控的低空决策中枢。' },
-  { emoji: '🎬', domain: '内容市场', name: '短剧 MBTI 推演器', url: 'https://hellomind-star.github.io/short-drama-mbti/', desc: '人格向量 × 平台适配，「前额叶×边缘系统」双引擎发布策略。' },
-  { emoji: '🎰', domain: '博弈对抗', name: 'Poker Face Arena', url: 'https://hellomind-star.github.io/poker-egg-fullstack/', desc: '独立部署的扑克人格竞技场，16 型 AI 对手公开可玩。' },
-  { emoji: '🍸', domain: '消费体验', name: 'Y.MINE 人格调酒系统', url: 'https://hellomind-star.github.io/personality-wine-mixing/', desc: 'MBTI 分子调酒全栈系统：人格 → 风味/声场/视觉的五感映射。' },
-  { emoji: '⚙️', domain: '元工具', name: '智能工坊 Agent Studio', url: 'https://hellomind-star.github.io/agent-studio-board/', desc: '多模型路由与 Agent 工作流编排控制台 —— 我指挥 AI 军团的方式。' },
-  { emoji: '🌌', domain: '总览', name: '返回作品集', url: 'https://hellomind-star.github.io/ymine-validation-hub/', desc: '跨域应用矩阵总览 · 论文 · 实验集群 · 完整项目列表。' },
+  { emoji: '🛩️', domain: '低空经济', name: 'AirMind OS', url: 'https://hellomind-star.github.io/airmind-os/', grad: GRAD.indigoNight, desc: 'Kelly 博弈定价 × 应急调度 × 算力浓度监控的低空决策中枢。' },
+  { emoji: '🎬', domain: '内容市场', name: '短剧 MBTI 推演器', url: 'https://hellomind-star.github.io/short-drama-mbti/', grad: GRAD.grapeMid, desc: '人格向量 × 平台适配，「前额叶×边缘系统」双引擎发布策略。' },
+  { emoji: '🎰', domain: '博弈对抗', name: 'Poker Face Arena', url: 'https://hellomind-star.github.io/poker-egg-fullstack/', grad: GRAD.violetDeep, desc: '独立部署的扑克人格竞技场，16 型 AI 对手公开可玩。' },
+  { emoji: '🍸', domain: '消费体验', name: 'Y.MINE 人格调酒系统', url: 'https://hellomind-star.github.io/personality-wine-mixing/', grad: GRAD.royalGold, desc: 'MBTI 分子调酒全栈系统：人格 → 风味/声场/视觉的五感映射。' },
+  { emoji: '⚙️', domain: '元工具', name: '智能工坊 Agent Studio', url: 'https://hellomind-star.github.io/agent-studio-board/', grad: GRAD.purpleCore, desc: '多模型路由与 Agent 工作流编排控制台 —— 我指挥 AI 军团的方式。' },
+  { emoji: '🌌', domain: '总览', name: '返回作品集', url: 'https://hellomind-star.github.io/ymine-validation-hub/', grad: GRAD.purpleGold, desc: '跨域应用矩阵总览 · 论文 · 实验集群 · 完整项目列表。' },
 ];
 
 const GROUPS = [
@@ -163,12 +200,39 @@ const GROUPS = [
 const ShowcasePage = () => {
   const navigate = useNavigate();
 
+  // 与 .system-card hover 完全同参数：浮起 -6px + 紫边 0.5 + 双层紫光阴影
   const hover = (e, on) => {
-    e.currentTarget.style.borderColor = on ? COLORS.borderGoldStrong : COLORS.borderGold;
-    e.currentTarget.style.transform = on ? 'translateY(-4px)' : 'none';
-    e.currentTarget.style.boxShadow = on
-      ? '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(212, 175, 55, 0.2)' // var(--glow-gold)
-      : '0 8px 32px rgba(0, 0, 0, 0.4)';
+    const el = e.currentTarget;
+    el.style.transform = on ? 'translateY(-6px)' : 'none';
+    el.style.borderColor = on ? COLORS.cardBorderHover : COLORS.cardBorder;
+    el.style.boxShadow = on
+      ? '0 16px 48px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.15)'
+      : 'none';
+  };
+
+  const renderCard = (c, tagText, onClick, href) => {
+    const inner = (
+      <>
+        <div style={S.banner(c.grad)}>
+          <div style={S.bannerSheen} />
+          <span style={S.bannerEmoji}>{c.emoji}</span>
+          <span style={S.bannerTag}>{tagText}</span>
+        </div>
+        <div style={S.cardBody}>
+          <div style={S.cardName}>{c.name}</div>
+          <div style={S.cardDesc}>{c.desc}</div>
+          <div style={S.cardGo}>{href ? 'Live ↗' : '进入 →'}</div>
+        </div>
+      </>
+    );
+    const common = {
+      style: S.card,
+      onMouseEnter: e => hover(e, true),
+      onMouseLeave: e => hover(e, false),
+    };
+    return href
+      ? <a key={href} {...common} href={href} target="_blank" rel="noopener noreferrer" style={{ ...S.card, textDecoration: 'none' }}>{inner}</a>
+      : <button key={c.path} {...common} onClick={onClick}>{inner}</button>;
   };
 
   return (
@@ -199,60 +263,42 @@ const ShowcasePage = () => {
         </div>
 
         {/* ===== 策展必看 ===== */}
-        <div style={S.sectionTitle}>🎯 策展动线 · 五站看懂这套系统</div>
-        <div style={S.sectionSub}>CURATED PATH · 按顺序参观约 5 分钟</div>
-        <div style={S.grid2}>
-          {CURATED.map((c, i) => (
-            <button key={c.path} style={S.card}
-                    onClick={() => navigate(c.path)}
-                    onMouseEnter={e => hover(e, true)} onMouseLeave={e => hover(e, false)}>
-              <div style={S.cardHead}>
-                <span style={S.cardEmoji}>{c.emoji}</span>
-                <span style={S.cardTag}>第 {i + 1} 站 · {c.tag}</span>
-              </div>
-              <div style={S.cardName}>{c.name}</div>
-              <div style={S.cardDesc}>{c.desc}</div>
-              <div style={S.cardGo}>进入 →</div>
-            </button>
-          ))}
+        <div style={S.section}>
+          <div style={S.sectionTitle}>🎯 策展动线 · 五站看懂这套系统</div>
+          <div style={S.sectionSub}>CURATED PATH · 按顺序参观约 5 分钟</div>
+          <div style={S.grid2}>
+            {CURATED.map((c, i) => renderCard(c, `第 ${i + 1} 站 · ${c.tag}`, () => navigate(c.path)))}
+          </div>
         </div>
 
         {/* ===== 同构系统矩阵 ===== */}
-        <div style={S.sectionTitle}>🌐 同一内核 · 五个域</div>
-        <div style={S.sectionSub}>CROSS-DOMAIN MATRIX · 跨域同构：方法论不换，场景随便换</div>
-        <div style={S.grid2}>
-          {MATRIX.map(m => (
-            <a key={m.url} style={{ ...S.card, textDecoration: 'none' }}
-               href={m.url} target="_blank" rel="noopener noreferrer"
-               onMouseEnter={e => hover(e, true)} onMouseLeave={e => hover(e, false)}>
-              <div style={S.cardHead}>
-                <span style={S.cardEmoji}>{m.emoji}</span>
-                <span style={S.cardTag}>{m.domain}</span>
-              </div>
-              <div style={S.cardName}>{m.name}</div>
-              <div style={S.cardDesc}>{m.desc}</div>
-              <div style={S.cardGo}>Live ↗</div>
-            </a>
-          ))}
+        <div style={S.section}>
+          <div style={S.sectionTitle}>🌐 同一内核 · 五个域</div>
+          <div style={S.sectionSub}>CROSS-DOMAIN MATRIX · 跨域同构：方法论不换，场景随便换</div>
+          <div style={S.grid2}>
+            {MATRIX.map(m => renderCard(m, m.domain, null, m.url))}
+          </div>
         </div>
 
         {/* ===== 全场景索引（二级入口）===== */}
-        <div style={S.sectionTitle}>🗂 全场景索引</div>
-        <div style={S.sectionSub}>ALL MODULES · 30+ 场景按域分组</div>
-        <div style={S.linkGroups}>
-          {GROUPS.map(g => (
-            <div key={g.title} style={S.linkGroup}>
-              <div style={S.linkGroupTitle}>{g.title}</div>
-              {g.items.map(([label, path]) => (
-                <button key={path} style={S.linkItem}
-                        onMouseEnter={e => { e.currentTarget.style.color = COLORS.purpleLight; }}
-                        onMouseLeave={e => { e.currentTarget.style.color = COLORS.sec; }}
-                        onClick={() => navigate(path)}>
-                  {label} <span style={{ color: COLORS.dim, fontSize: 11 }}>→</span>
-                </button>
-              ))}
-            </div>
-          ))}
+        <div style={S.section}>
+          <div style={S.sectionTitle}>🗂 全场景索引</div>
+          <div style={S.sectionSub}>ALL MODULES · 30+ 场景按域分组</div>
+          <div style={S.linkGroups}>
+            {GROUPS.map(g => (
+              <div key={g.title} style={S.linkGroup}>
+                <div style={S.linkGroupTitle}>{g.title}</div>
+                {g.items.map(([label, path]) => (
+                  <button key={path} style={S.linkItem}
+                          onMouseEnter={e => { e.currentTarget.style.color = COLORS.purpleLight; }}
+                          onMouseLeave={e => { e.currentTarget.style.color = COLORS.sec; }}
+                          onClick={() => navigate(path)}>
+                    {label} <span style={{ color: COLORS.dim, fontSize: 11 }}>→</span>
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
