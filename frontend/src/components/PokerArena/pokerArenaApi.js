@@ -50,7 +50,7 @@ export const arenaApi = {
   createGame: (playerName, personality) =>
     req('/api/game/create', {
       method: 'POST',
-      body: JSON.stringify({ player_name: playerName, ai_difficulty: 'medium', ai_personality: personality }),
+      body: JSON.stringify({ player_name: playerName, ai_difficulty: 'medium', ai_personality: personality, auto_next_hand: false }),
     }),
   startGame: (gid) => req(`/api/game/${gid}/start`, { method: 'POST' }),
   getState: (gid) => req(`/api/game/${gid}`),
