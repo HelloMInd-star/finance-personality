@@ -31,6 +31,7 @@ import {
   DISPATCH_MODES,
   DISPATCH_MODE_LABELS,
 } from '../utils/dispatchEngine';
+import { apiClient } from '../utils/apiClient';
 import { logger } from '../utils/logger';
 import { storage } from '../utils/storage';
 import {
@@ -53,6 +54,9 @@ const PRIORITY_LABELS = {
 };
 
 const DroneDispatchPage = () => {
+  const [aiBroadcast, setAiBroadcast] = useState(null);
+  const [aiBroadcastLoading, setAiBroadcastLoading] = useState(false);
+  const hasToken = !!localStorage.getItem('auth_token');
   const [mode, setMode] = useState(DISPATCH_MODES.SINGLE);
   const [state, setState] = useState(getDefaultState(DISPATCH_MODES.SINGLE));
   const [plan, setPlan] = useState(null);
@@ -121,6 +125,27 @@ const DroneDispatchPage = () => {
     const input = buildFinInput(mode, state, history);
     return generateDispatchDecision(input);
   }, [mode, state, history]);
+
+  // ✦ AI 调度播报(DeepSeek 点亮工程 · 登录态真调)
+  const handleAiBroadcast = async () => {
+    if (!finDecision || aiBroadcastLoading) return;
+    setAiBroadcastLoading(true);
+    setAiBroadcast(null);
+    try {
+      const res = await apiClient.llmGenerate('dispatch_reason', {
+        recommendation: finDecision.decisionSignal.recommendation,
+        score: finDecision.decisionSignal.score.toFixed(3),
+        probability: `${(finDecision.decisionSignal.probability * 100).toFixed(1)}%`,
+        primary_factor: finDecision.reasoning.primaryFactor,
+        explanation: String(finDecision.reasoning.explanation || '').slice(0, 190),
+      });
+      if (res?.text) setAiBroadcast(res.text);
+    } catch (e) {
+      logger.error('[AI调度播报] 失败', e);
+    } finally {
+      setAiBroadcastLoading(false);
+    }
+  };
 
   // 模式切换
   const handleModeChange = (newMode) => {
@@ -474,6 +499,28 @@ const DroneDispatchPage = () => {
               🔍 推理：主导因子「{d.reasoning.primaryFactor}」（{d.reasoning.confidenceLevel === 'high' ? '高' : d.reasoning.confidenceLevel === 'medium' ? '中' : '低'}置信）
             </Text>
             <Paragraph style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, margin: 0 }}>{d.reasoning.explanation}</Paragraph>
+            <div style={{ marginTop: 10 }}>
+              {hasToken ? (
+                <>
+                  <Button
+                    size="small"
+                    loading={aiBroadcastLoading}
+                    onClick={handleAiBroadcast}
+                    style={{ background: 'rgba(212,175,55,0.08)', borderColor: 'rgba(212,175,55,0.35)', color: '#D4AF37' }}
+                  >
+                    {aiBroadcast ? '重新播报' : '✦ AI 调度播报'}
+                  </Button>
+                  {aiBroadcast && (
+                    <div style={{ marginTop: 10, padding: '12px 16px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: 10 }}>
+                      <div style={{ fontSize: 12, color: '#D4AF37', letterSpacing: 1, marginBottom: 4 }}>✦ 调度指挥中心播报</div>
+                      <div style={{ fontSize: 13, lineHeight: 1.9, color: 'rgba(255,255,255,0.88)', whiteSpace: 'pre-wrap' }}>{aiBroadcast}</div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <span style={{ fontSize: 12, color: 'rgba(212,175,55,0.6)' }}>✦ 登录后可听 AI 调度播报</span>
+              )}
+            </div>
           </Col>
         </Row>
       </Card>

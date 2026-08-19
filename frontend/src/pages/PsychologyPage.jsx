@@ -52,6 +52,7 @@ import {
   INVESTOR_PROFILES
 } from '../utils/investorEngine';
 import { storage } from '../utils/storage';
+import { apiClient } from '../utils/apiClient';
 import { logger } from '../utils/logger';
 import { cognitiveCircleEngine } from '../utils/cognitiveCircleEngine';
 import './PsychologyPage.css';
@@ -709,6 +710,34 @@ const KlineAndInvestorPanel = (props) => {
 // ============ 认知画圈面板 ============
 const CognitiveCirclePanel = ({ circle, activeNodeId, setActiveNodeId, onRefresh }) => {
   const { nodes, edges, layers, insights, stats, sources, dimensions } = circle;
+  // ✦ AI 人格简报(DeepSeek 点亮工程 · 登录态真调)
+  const [aiBrief, setAiBrief] = useState(null);
+  const [aiBriefLoading, setAiBriefLoading] = useState(false);
+  const hasToken = !!localStorage.getItem('auth_token');
+  const handleAiBrief = async () => {
+    if (aiBriefLoading) return;
+    setAiBriefLoading(true);
+    setAiBrief(null);
+    try {
+      const DIM_LABELS = { risk: '风险承受', speed: '决策速度', grit: '执行韧性', social: '社交开放', emotionStability: '情绪稳定', openness: '开放探索' };
+      const entries = Object.entries(dimensions || {}).filter(([, v]) => typeof v === 'number');
+      const sorted = [...entries].sort((a, b) => b[1] - a[1]);
+      const top = sorted.slice(0, 2).map(([k, v]) => `${DIM_LABELS[k] || k} ${Math.round(v * 100)}%`).join('、');
+      const dimsSummary = sorted.map(([k, v]) => `${DIM_LABELS[k] || k} ${Math.round(v * 100)}%`).join('，').slice(0, 160);
+      const topLabel = sorted.length ? (DIM_LABELS[sorted[0][0]] || sorted[0][0]) : '均衡';
+      const res = await apiClient.llmGenerate('psych_brief', {
+        persona_type: `${topLabel}主导型`,
+        strengths: top || '各维度均衡',
+        today_focus: String(insights?.[0]?.text || '保持觉察').slice(0, 100),
+        dims_summary: dimsSummary || '暂无数据',
+      });
+      if (res?.text) setAiBrief(res.text);
+    } catch (e) {
+      logger.error('[AI简报] 失败', e);
+    } finally {
+      setAiBriefLoading(false);
+    }
+  };
   const width = 640;
   const height = 640;
   const cx = width / 2;
@@ -1040,6 +1069,30 @@ const CognitiveCirclePanel = ({ circle, activeNodeId, setActiveNodeId, onRefresh
               </div>
             );
           })}
+        </div>
+
+        {/* ✦ AI 人格简报(登录解锁) */}
+        <div style={{ marginTop: 14 }}>
+          {hasToken ? (
+            <div>
+              <Button
+                size="small"
+                loading={aiBriefLoading}
+                onClick={handleAiBrief}
+                style={{ background: 'rgba(212,175,55,0.08)', borderColor: 'rgba(212,175,55,0.35)', color: '#D4AF37' }}
+              >
+                {aiBrief ? '重新生成简报' : '✦ 生成 AI 人格简报'}
+              </Button>
+              {aiBrief && (
+                <div style={{ marginTop: 12, padding: '14px 18px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: 12 }}>
+                  <div style={{ fontSize: 12, color: '#D4AF37', letterSpacing: 1, marginBottom: 6 }}>✦ AI 人格洞察分析师 · 本期简报</div>
+                  <div style={{ fontSize: 13, lineHeight: 1.9, color: 'rgba(255,255,255,0.88)', whiteSpace: 'pre-wrap' }}>{aiBrief}</div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <span style={{ fontSize: 12, color: 'rgba(212,175,55,0.6)' }}>✦ 登录后可生成 AI 人格简报</span>
+          )}
         </div>
 
         {/* 维度雷达辅助条（六维展示） */}

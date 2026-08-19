@@ -17,6 +17,7 @@ import {
   Slider,
   Tooltip,
   Select,
+  Input,
 } from 'antd';
 import {
   ArrowLeftOutlined,
@@ -44,6 +45,7 @@ import {
   getExampleDialogue,
   ROBOT_PERSONALITY_MODES,
 } from '../utils/robotCognitiveEngine';
+import { apiClient } from '../utils/apiClient';
 import { logger } from '../utils/logger';
 
 const { Title, Text, Paragraph } = Typography;
@@ -55,6 +57,10 @@ const RobotPage = () => {
   const [emotionOverride, setEmotionOverride] = useState(null);
   const [mbtiOverride, setMbtiOverride] = useState(null);
   const [storyModeOverride, setStoryModeOverride] = useState(null);
+  const [robotMsg, setRobotMsg] = useState('');
+  const [aiReply, setAiReply] = useState(null);
+  const [aiReplyLoading, setAiReplyLoading] = useState(false);
+  const hasToken = !!localStorage.getItem('auth_token');
 
   // 用户画像
   const baseUserProfile = useMemo(() => extractUserProfile(), []);
@@ -78,6 +84,27 @@ const RobotPage = () => {
 
   // 行为节奏
   const behaviorRhythm = useMemo(() => generateBehaviorRhythm(userProfile), [userProfile]);
+
+  // ✦ AI 实时对话(DeepSeek 点亮工程 · 登录态真调)
+  const handleAiDialogue = async () => {
+    const msg = robotMsg.trim();
+    if (!msg || aiReplyLoading) return;
+    setAiReplyLoading(true);
+    setAiReply(null);
+    try {
+      const res = await apiClient.llmGenerate('robot_dialogue', {
+        mode_name: selectedMode?.name || '陪伴模式',
+        mbti: userProfile?.currentMbti || '探索者',
+        tone: dialogueStrategy?.tone || '温和',
+        scenario: msg.slice(0, 150),
+      });
+      if (res?.text) setAiReply(res.text);
+    } catch (e) {
+      logger.error('[AI对话] 失败', e);
+    } finally {
+      setAiReplyLoading(false);
+    }
+  };
 
   // 示例对话
   const exampleDialogues = useMemo(
@@ -585,6 +612,49 @@ const RobotPage = () => {
                       </Card>
                     ))}
                   </Space>
+                </Card>
+
+                {/* ✦ AI 实时对话(登录解锁) */}
+                <Card
+                  title={
+                    <Space>
+                      <MessageOutlined style={{ color: '#D4AF37' }} />
+                      <span>AI 实时对话（按当前人格策略语气回应）</span>
+                    </Space>
+                  }
+                >
+                  {hasToken ? (
+                    <Space direction="vertical" size={12} style={{ width: '100%' }}>
+                      <Space.Compact style={{ width: '100%' }}>
+                        <Input
+                          placeholder="对机器人说点什么…"
+                          value={robotMsg}
+                          onChange={(e) => setRobotMsg(e.target.value)}
+                          onPressEnter={handleAiDialogue}
+                          maxLength={150}
+                        />
+                        <Button
+                          loading={aiReplyLoading}
+                          onClick={handleAiDialogue}
+                          style={{ background: 'rgba(212,175,55,0.08)', borderColor: 'rgba(212,175,55,0.35)', color: '#D4AF37' }}
+                        >
+                          ✦ 发送
+                        </Button>
+                      </Space.Compact>
+                      {aiReply && (
+                        <div style={{ padding: '12px 16px', background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.25)', borderRadius: 10 }}>
+                          <div style={{ fontSize: 12, color: '#10b981', marginBottom: 4 }}>
+                            {selectedMode.emoji} {selectedMode.name} · {dialogueStrategy.tone}语气
+                          </div>
+                          <div style={{ fontSize: 13, lineHeight: 1.9, color: 'rgba(255,255,255,0.9)', whiteSpace: 'pre-wrap' }}>{aiReply}</div>
+                        </div>
+                      )}
+                    </Space>
+                  ) : (
+                    <div style={{ fontSize: 13, color: 'rgba(212,175,55,0.6)' }}>
+                      ✦ 登录后，可以和机器人实时对话（它会按你的人格调整语气）
+                    </div>
+                  )}
                 </Card>
               </Space>
             )}

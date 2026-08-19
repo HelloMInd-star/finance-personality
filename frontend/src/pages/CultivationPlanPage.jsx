@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
-import { Card, Typography, Row, Col, Progress, Tag, Space, Divider, List, Empty } from 'antd';
+import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, Typography, Row, Col, Progress, Tag, Space, Divider, List, Empty, Button } from 'antd';
 import {
   RiseOutlined,
   TrophyOutlined,
@@ -15,6 +16,7 @@ import {
 import { useAppStore } from '../store/appStore';
 import { storage } from '../utils/storage';
 import { logger } from '../utils/logger';
+import { apiClient } from '../utils/apiClient';
 import {
   determinePhase,
   calculatePhaseProgress,
@@ -38,6 +40,7 @@ DIMENSION_CONFIG.creativity.icon = <BulbOutlined />;
 DIMENSION_CONFIG.endurance.icon = <FireOutlined />;
 
 const CultivationPlanPage = () => {
+  const navigate = useNavigate();
   const { data } = useAppStore();
 
   const totalSessions = useMemo(() => calculateTotalSessions(data), [data]);
@@ -55,6 +58,30 @@ const CultivationPlanPage = () => {
   const todayTasks = useMemo(() => generateTodayTasks(data), [data]);
 
   const weakDimensions = useMemo(() => identifyWeakDimensions(dimensionScores), [dimensionScores]);
+
+  // ✦ AI 成长教练寄语(DeepSeek 点亮工程 · 登录态真调)
+  const [coachNote, setCoachNote] = useState(null);
+  const [coachLoading, setCoachLoading] = useState(false);
+  const hasToken = !!localStorage.getItem('auth_token');
+  const handleCoachNote = async () => {
+    if (coachLoading) return;
+    setCoachLoading(true);
+    setCoachNote(null);
+    try {
+      const res = await apiClient.llmGenerate('growth_coach', {
+        phase_name: currentPhase.label,
+        phase_desc: currentPhase.desc,
+        weak_dims: (weakDimensions.map(w => w.label).join('、') || '无显著弱项').slice(0, 120),
+        today_tasks: (todayTasks.slice(0, 3).map(t => t.title).join('；') || '今日无待办').slice(0, 150),
+        mbti: persona?.mbti || persona?.currentMbti || '探索者',
+      });
+      if (res?.text) setCoachNote(res.text);
+    } catch (e) {
+      logger.error('[AI教练寄语] 失败', e);
+    } finally {
+      setCoachLoading(false);
+    }
+  };
 
   logger.session('培养方案页面加载', `阶段: ${currentPhase.key}, 会话数: ${totalSessions}`);
 
@@ -125,6 +152,36 @@ const CultivationPlanPage = () => {
                 size="small"
               />
             </div>
+            {/* ✦ AI 成长教练寄语(登录解锁) */}
+            <div style={{ marginTop: 16 }}>
+              {hasToken ? (
+                <div>
+                  <Button
+                    size="small"
+                    loading={coachLoading}
+                    onClick={handleCoachNote}
+                    style={{ background: 'rgba(212,175,55,0.08)', borderColor: 'rgba(212,175,55,0.35)', color: '#D4AF37' }}
+                  >
+                    {coachNote ? '换一段教练寄语' : '✦ 生成今晚的教练寄语'}
+                  </Button>
+                  {coachNote && (
+                    <div style={{ marginTop: 12, padding: '14px 18px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: 12 }}>
+                      <div style={{ fontSize: 12, color: '#D4AF37', letterSpacing: 1, marginBottom: 6 }}>✦ AI 成长教练 · 看了你的训练记录</div>
+                      <div style={{ fontSize: 13, lineHeight: 1.9, color: 'rgba(255,255,255,0.88)', whiteSpace: 'pre-wrap' }}>{coachNote}</div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Button
+                  size="small"
+                  onClick={() => navigate('/login', { state: { from: '/cultivation-plan' } })}
+                  style={{ background: 'transparent', border: '1px dashed rgba(212,175,55,0.25)', color: 'rgba(212,175,55,0.75)' }}
+                >
+                  ✦ 登录解锁 AI 成长教练寄语 →
+                </Button>
+              )}
+            </div>
+
             {/* 阶段解锁内容 */}
             {currentPhase.unlocks && (
               <div style={{ marginTop: 14, display: 'flex', gap: 10, flexWrap: 'wrap' }}>

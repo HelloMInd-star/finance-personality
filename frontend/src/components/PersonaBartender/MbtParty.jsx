@@ -28,6 +28,7 @@ import {
 // 懒加载 3D 分子组件 (只在报告页加载,减少首屏负担)
 const MoleculeViewer = lazy(() => import('../MoleculeViewer/MoleculeViewer.jsx'));
 
+import { apiClient } from '../../utils/apiClient';
 import './MbtParty.css';
 
 export default function MbtParty() {
@@ -38,6 +39,32 @@ export default function MbtParty() {
   const [topic, setTopic] = useState(null);
   const [choice, setChoice] = useState(null);
   const [report, setReport] = useState(null);
+  const [aiReview, setAiReview] = useState(null);
+  const [aiReviewLoading, setAiReviewLoading] = useState(false);
+  const hasToken = !!localStorage.getItem('auth_token');
+
+  // ✦ 主理人 AI 回顾(DeepSeek 点亮工程 · 登录态真调)
+  const generateAiReview = async () => {
+    if (!report || aiReviewLoading) return;
+    setAiReviewLoading(true);
+    setAiReview(null);
+    try {
+      const res = await apiClient.llmGenerate('party_report', {
+        spirit_name: report.spiritName,
+        persona_name: `${report.personaType}·${report.personaName}`.slice(0, 60),
+        match_percent: `${report.matchPercent}%`,
+        role_name: report.roleName,
+        dialogue_style: report.dialogueStyle,
+        topic_question: String(report.topicQuestion || '').slice(0, 120),
+        user_response: String(report.userResponse || '').slice(0, 120),
+      });
+      if (res?.text) setAiReview(res.text);
+    } catch (e) {
+      message.error('主理人今晚有点累，稍后再试');
+    } finally {
+      setAiReviewLoading(false);
+    }
+  };
 
   const reset = () => {
     setStep(0);
@@ -342,6 +369,30 @@ export default function MbtParty() {
             </div>
           </div>
 
+          {/* ✦ 主理人 AI 回顾(登录解锁) */}
+          {hasToken ? (
+            <div style={{ margin: '4px 0 18px' }}>
+              <Button
+                className="mbt-action-btn"
+                loading={aiReviewLoading}
+                onClick={generateAiReview}
+                style={{ background: 'rgba(212,175,55,0.08)', borderColor: 'rgba(212,175,55,0.35)', color: '#D4AF37' }}
+              >
+                {aiReview ? '让主理人再写一段' : '✦ 让主理人为今晚写回顾'}
+              </Button>
+              {aiReview && (
+                <div style={{ marginTop: 12, padding: '14px 18px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: 12, textAlign: 'left' }}>
+                  <div style={{ fontSize: 12, color: '#D4AF37', letterSpacing: 1, marginBottom: 6 }}>✦ 主理人回顾 · 今晚的人格侧写</div>
+                  <div style={{ fontSize: 13, lineHeight: 1.9, color: 'rgba(255,255,255,0.88)', whiteSpace: 'pre-wrap' }}>{aiReview}</div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div style={{ margin: '4px 0 18px', fontSize: 13, color: 'rgba(212,175,55,0.6)' }}>
+              ✦ 登录后，主理人可以为今晚写一段专属回顾
+            </div>
+          )}
+
           <div className="mbt-report-actions">
             <Button icon={<SaveOutlined />} className="mbt-action-btn" onClick={() => message.success('已保存到用户画像')}>
               保存画像
@@ -378,7 +429,7 @@ function PartyProgress({ step, onBack }) {
       )}
       <Progress
         percent={percent}
-        strokeColor={{ from: '#a855f7', to: '#ffd700' }}
+        strokeColor={{ from: '#a855f7', to: '#D4AF37' }}
         format={() => `${step + 1} / ${PARTY_STEPS.length}`}
       />
     </div>
