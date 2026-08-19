@@ -52,6 +52,7 @@ import {
 import { logger } from '../utils/logger';
 import { storage } from '../utils/storage';
 import NetEaseConnect from '../components/Music/NetEaseConnect';
+import PersonaMusic from '../components/PersonaMusic/PersonaMusic';
 import './MusicPage.css';
 
 const { Title, Text, Paragraph } = Typography;
@@ -417,7 +418,7 @@ const MusicGenerator = ({ onSessionEnd }) => {
 // ============= MusicPage 主组件 =============
 const MusicPage = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('lobby');
+  const [activeTab, setActiveTab] = useState('persona');
 
   const mockStats = useMemo(() => ({
     totalSessions: 8,
@@ -686,6 +687,7 @@ const MusicPage = () => {
         onChange={setActiveTab}
         className="music-tabs"
         items={[
+          { key: 'persona', label: <span><SoundOutlined /> 人格画像</span> },
           { key: 'lobby', label: <span><PlayCircleOutlined /> 入口大厅</span> },
           { key: 'netease', label: <span><CloudOutlined /> 网易云接入</span> },
           { key: 'trainer', label: <span><SoundOutlined /> 音乐生成</span> },
@@ -694,6 +696,7 @@ const MusicPage = () => {
         ]}
       />
 
+      {activeTab === 'persona' && <PersonaMusic />}
       {activeTab === 'lobby' && renderLobby()}
       {activeTab === 'netease' && <NetEaseConnect />}
       {activeTab === 'trainer' && <MusicGenerator />}

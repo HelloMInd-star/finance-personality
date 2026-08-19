@@ -1,0 +1,474 @@
+/* 人格音乐画像 · 紫金基调，金=面具/青=真实 语义色延续护照 */
+
+.pm-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 8px 0 40px;
+}
+
+.pm-wrap .glass {
+  background: rgba(22, 20, 38, 0.72);
+  border: 1px solid rgba(167, 139, 250, 0.18);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+}
+
+/* ── 双面开关 ── */
+.pm-side-bar {
+  margin-bottom: 18px;
+}
+.pm-side-switch {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pm-side-btn {
+  padding: 9px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  background: rgba(167, 139, 250, 0.06);
+  color: #b8b3d9;
+  transition: all 0.25s ease;
+}
+.pm-side-btn.true.on {
+  border-color: rgba(34, 211, 238, 0.7);
+  background: rgba(34, 211, 238, 0.12);
+  color: #22d3ee;
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.18);
+}
+.pm-side-btn.mask.on {
+  border-color: rgba(251, 191, 36, 0.7);
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.15);
+}
+.pm-side-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #8f8ab3;
+  letter-spacing: 0.03em;
+}
+.pm-arch b {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+/* ── 六维向量条 ── */
+.pm-vec {
+  padding: 18px 22px;
+  margin-bottom: 22px;
+}
+.pm-vec-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 44px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.pm-vec-row:last-child {
+  margin-bottom: 0;
+}
+.pm-vec-name {
+  font-size: 12px;
+  font-weight: 600;
+}
+.pm-vec-bar {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.pm-vec-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+.pm-vec-val {
+  font-size: 11px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  color: #8f8ab3;
+  text-align: right;
+}
+
+/* ── 分区标题 ── */
+.pm-section {
+  margin-bottom: 24px;
+}
+.pm-sec-title {
+  font-size: 12px;
+  color: #22d3ee;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pm-sec-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.4), transparent);
+}
+
+/* ── 推荐风格 ── */
+.pm-styles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 860px) {
+  .pm-styles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .pm-styles {
+    grid-template-columns: 1fr;
+  }
+}
+@keyframes pmFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.pm-style-tag {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  background: rgba(167, 139, 250, 0.07);
+  animation: pmFadeUp 0.5s ease both;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.pm-style-tag:hover {
+  border-color: rgba(167, 139, 250, 0.55);
+  background: rgba(167, 139, 250, 0.13);
+}
+.pm-style-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e6e2f7;
+  margin-bottom: 4px;
+}
+.pm-style-mood {
+  font-size: 11px;
+  color: #8f8ab3;
+}
+.pm-style-desc {
+  font-size: 10px;
+  color: #6d6890;
+  margin-top: 6px;
+  line-height: 1.6;
+}
+.pm-style-arch {
+  font-size: 10px;
+  color: #a78bfa;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* ── 原型歌单 ── */
+.pm-playlists {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 860px) {
+  .pm-playlists {
+    grid-template-columns: 1fr;
+  }
+}
+.pm-pl-card {
+  padding: 16px 18px;
+  animation: pmFadeUp 0.5s ease both;
+}
+.pm-pl-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e6e2f7;
+  margin-bottom: 4px;
+}
+.pm-pl-mood {
+  font-size: 11px;
+  color: #8f8ab3;
+  margin-bottom: 10px;
+}
+.pm-pl-songs {
+  font-size: 11px;
+  color: #6d6890;
+  line-height: 1.9;
+}
+.pm-pl-songs span {
+  color: #22d3ee;
+}
+.pm-pl-arch {
+  margin-top: 10px;
+  font-size: 10px;
+  color: #a78bfa;
+  letter-spacing: 0.05em;
+}
+
+/* ── 氛围合成播放器 ── */
+.pm-player {
+  padding: 24px;
+  text-align: center;
+}
+.pm-play-btn {
+  padding: 12px 30px;
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  background: rgba(167, 139, 250, 0.12);
+  color: #c4b5fd;
+  transition: all 0.25s ease;
+}
+.pm-play-btn:hover {
+  border-color: rgba(167, 139, 250, 0.8);
+  background: rgba(167, 139, 250, 0.2);
+}
+.pm-play-btn.playing {
+  border-color: rgba(34, 211, 238, 0.7);
+  background: rgba(34, 211, 238, 0.14);
+  color: #22d3ee;
+  animation: pmGlowPulse 2s infinite;
+}
+.pm-play-btn.gold {
+  border-color: rgba(251, 191, 36, 0.55);
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+}
+.pm-play-btn.gold:hover {
+  border-color: rgba(251, 191, 36, 0.85);
+  background: rgba(251, 191, 36, 0.2);
+}
+@keyframes pmGlowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(34, 211, 238, 0.35);
+  }
+}
+.pm-player-status {
+  font-size: 11px;
+  color: #8f8ab3;
+  margin-top: 10px;
+}
+.pm-param-bars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+.pm-param-bars.second {
+  margin-top: 10px;
+}
+.pm-param-label {
+  font-size: 10px;
+  color: #6d6890;
+  margin-bottom: 5px;
+}
+.pm-param-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.pm-param-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+.pm-param-val {
+  font-size: 10px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  color: #22d3ee;
+  margin-top: 4px;
+}
+
+/* ── 主题曲卡 ── */
+.pm-theme-card {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 22px 24px;
+}
+.pm-theme-card.locked {
+  opacity: 0.8;
+  border: 1px dashed rgba(167, 139, 250, 0.35);
+}
+.pm-theme-lock-icon {
+  font-size: 30px;
+  color: rgba(167, 139, 250, 0.5);
+  border: 1px dashed rgba(167, 139, 250, 0.4);
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pm-theme-lock-title {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: #b8b3d9;
+  margin-bottom: 6px;
+}
+.pm-theme-lock-hint {
+  font-size: 12px;
+  color: #8f8ab3;
+  line-height: 1.8;
+}
+.pm-theme-clue {
+  color: rgba(251, 191, 36, 0.75);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+.pm-theme-dist {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 10px;
+  color: #6d6890;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+}
+.pm-theme-card.unlocked {
+  border: 1px solid rgba(251, 191, 36, 0.55);
+  box-shadow: 0 0 24px rgba(251, 191, 36, 0.12), inset 0 0 30px rgba(251, 191, 36, 0.04);
+  animation: pmThemeGlow 3s ease-in-out infinite;
+}
+@keyframes pmThemeGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 24px rgba(251, 191, 36, 0.1), inset 0 0 30px rgba(251, 191, 36, 0.03);
+  }
+  50% {
+    box-shadow: 0 0 36px rgba(251, 191, 36, 0.22), inset 0 0 30px rgba(251, 191, 36, 0.06);
+  }
+}
+.pm-theme-info {
+  flex: 1;
+  min-width: 0;
+}
+.pm-theme-badge {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.pm-theme-title {
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  background: linear-gradient(90deg, #fbbf24, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.pm-theme-meta {
+  font-size: 12px;
+  color: #8f8ab3;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.pm-theme-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.pm-theme-link {
+  font-size: 12px;
+  color: #22d3ee;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(34, 211, 238, 0.5);
+}
+.pm-theme-link:hover {
+  color: #a78bfa;
+  border-bottom-color: #a78bfa;
+}
+.pm-theme-qr {
+  text-align: center;
+  flex-shrink: 0;
+}
+.pm-theme-qr img {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  display: block;
+}
+.pm-theme-qr-caption {
+  font-size: 10px;
+  color: #8f8ab3;
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+@media (max-width: 640px) {
+  .pm-theme-card.unlocked {
+    flex-direction: column;
+    text-align: center;
+  }
+  .pm-theme-actions {
+    justify-content: center;
+  }
+  .pm-theme-qr img {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* ── 空态引导 ── */
+.pm-empty {
+  padding: 40px 24px;
+  text-align: center;
+}
+.pm-empty-emoji {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.pm-empty-title {
+  font-size: 15px;
+  color: #b8b3d9;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.pm-empty-hint {
+  font-size: 12px;
+  color: #8f8ab3;
+  margin-bottom: 18px;
+}
+.pm-empty-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.pm-empty-btn {
+  padding: 9px 22px;
+  border-radius: 999px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  background: rgba(167, 139, 250, 0.08);
+  color: #c4b5fd;
+  transition: all 0.25s ease;
+}
+.pm-empty-btn:hover {
+  border-color: rgba(167, 139, 250, 0.75);
+  background: rgba(167, 139, 250, 0.16);
+}
