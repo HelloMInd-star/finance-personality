@@ -30,6 +30,7 @@ const PersonaMirrorPage = React.lazy(() => import('./pages/PersonaMirrorPage'));
 const GenomePage = React.lazy(() => import('./pages/GenomePage'));
 const ChakraTest = React.lazy(() => import('./components/ChakraTest/ChakraTest'));
 const TarotDraw = React.lazy(() => import('./components/TarotModule/TarotDraw'));
+const PassportPage = React.lazy(() => import('./components/PassportModule/PassportPage'));
 const ContentHubPage = React.lazy(() => import('./pages/ContentHubPage'));
 const DroneDispatchPage = React.lazy(() => import('./pages/DroneDispatchPage'));
 const MusicPage = React.lazy(() => import('./pages/MusicPage'));
@@ -112,6 +113,7 @@ function AppRoutes() {
                 <Route path="/genome" element={<GenomePage />} />
                 <Route path="/chakra" element={<ChakraTest />} />
                 <Route path="/tarot" element={<TarotDraw />} />
+                <Route path="/passport" element={<PassportPage />} />
                 <Route path="/content-hub" element={<ContentHubPage />} />
                 <Route path="/drone-dispatch" element={<DroneDispatchPage />} />
                 <Route path="/tools" element={<ToolsPage />} />

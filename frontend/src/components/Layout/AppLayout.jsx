@@ -30,6 +30,7 @@ import {
   FolderOpenOutlined,
   FundOutlined,
   DeploymentUnitOutlined,
+  IdcardOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { logger } from '../../utils/logger';
@@ -90,6 +91,7 @@ const menuItems = [
     type: 'group',
     label: 'Persona',
     children: [
+      { key: '/passport', icon: <IdcardOutlined />, label: '人格护照' },
       { key: '/mindspeak', icon: <BulbOutlined />, label: '认知引擎' },
       { key: '/persona-mirror', icon: <EyeOutlined />, label: '人格镜子' },
       { key: '/psychology', icon: <InfoCircleOutlined />, label: '心理盘面' },
