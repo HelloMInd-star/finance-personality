@@ -46,9 +46,11 @@ import {
   ClockCircleOutlined,
   DollarOutlined,
   AimOutlined,
+  AppstoreOutlined,
 } from '@ant-design/icons';
 import PokerTable from '../components/PokerTable/PokerTable';
 import PokerArena from '../components/PokerArena/PokerArena';
+import PokerPuzzle from '../components/PokerPuzzle/PokerPuzzle';
 import Dashboard from '../components/Dashboard/Dashboard';
 import { useGameStore } from '../store/gameStore';
 import { storage } from '../utils/storage';
@@ -636,6 +638,7 @@ const PokerPage = () => {
         className="poker-tabs"
         items={[
           { key: 'arena', label: <span><ThunderboltOutlined /> 午夜竞技场</span> },
+          { key: 'puzzle', label: <span><AppstoreOutlined /> 拼图墙</span> },
           { key: 'lobby', label: <span><PlayCircleOutlined /> 游戏大厅</span> },
           { key: 'table', label: <span><TrophyOutlined /> 牌桌对战 {gameState && <Badge dot color="#22c55e" />}</span> },
           { key: 'stats', label: <span><LineChartOutlined /> 数据统计</span> },
@@ -645,6 +648,7 @@ const PokerPage = () => {
 
       {/* Tab 内容 */}
       {activeTab === 'arena' && <PokerArena />}
+      {activeTab === 'puzzle' && <PokerPuzzle />}
       {activeTab === 'lobby' && renderLobby()}
       {activeTab === 'table' && renderTable()}
       {activeTab === 'stats' && renderStats()}
