@@ -14,6 +14,22 @@
 
 **Y.Mine** 是一个以"行为采集 → 人格映射 → 金融叙事生成"为核心链路的数字孪生平台。通过德州扑克、台球、健身、调酒等多种行为场景采集用户决策数据，融合塔罗底色、脉轮能量、音乐画像等多源信息，构建六维人格向量模型，最终生成个性化的人格洞察简报和金融行为分析。
 
+### 🌐 五域生态定位
+
+本仓库是 **Y.Mine 五域生态的中枢 / 策展首页（finance 策展首页）**，与其余四域互通：
+
+| 域 | 定位 |
+|----|------|
+| **finance-personality（本仓库）** | 五域中枢 · 策展首页 |
+| ymine 主站 | 人格引擎主站 |
+| poker-egg | 扑克域 |
+| personality-wine | 调酒域 |
+| ymine-validation-hub | 验证中枢 |
+
+六站回跳条已全绿 ✅ —— 五域之间可相互回跳，生态闭环打通。
+
+**线上地址**：后端 API 部署于 Railway — `https://finance-personality-api-production.up.railway.app`
+
 ### 核心理念
 
 ```
@@ -50,6 +66,17 @@
 | 🍸 分子调酒 | `/bartender` | 叙事基调 + 情绪映射 + MBTI 人格配方 |
 | ♟️ 模拟博弈台 | `/game-table` | 多人格 AI 对弈 + 策略推演 |
 
+#### 🃏 扑克线深度工程（5.1 / 5.2）
+
+- **5.1 人格决策引擎** — 8 维人格参数驱动 AI 决策，每次行动附带人格化理由，并具备 tilt（上头）记忆：连败/被 Bad Beat 后 AI 风格会真实漂移
+- **5.2 Kelly 面板** — 蒙特卡洛模拟真胜率逐街重算 + 牌型识别，搭配前端 `AnalysisPanel` 实时呈现凯利下注建议
+
+#### 🧩 PokerPuzzle 决策拼图墙 × 策略编译器
+
+- 实现位置：`frontend/src/components/PokerPuzzle/PokerPuzzle.jsx`
+- 对局中的决策碎片按街上墙聚合，攒够 `MIN_FRAGMENTS` 燃料门槛后，**纯本地编译**为可溯源的 `decide()` 决策代码（TypeScript 为主 / Python 为辅双版本）
+- 每一行生成的代码都可回溯到具体碎片，四维量化全溯源 —— 你的策略，你自己"编译"出来
+
 ### 🧠 人格认知层
 
 | 模块 | 路由 | 核心功能 |
@@ -72,6 +99,20 @@
 | 🏢 公司理财 | `/finance` | 财务建模 + 融资模拟 |
 | 🔻 信息漏斗 | `/funnel` | 多源信息过滤 + 决策权重 |
 | 📁 投资人档案 | `/archive` | 投资人/企业家画像库 |
+| 🏦 投行看板 | `/ib-dashboard` | `InvestBankDashboardPage` — 投资人契合度看板 + AI 投资人格解读 |
+| 📈 实时行情 | `/stock` | `StockPage` — 东方财富实时行情多源合并 + 数据时间戳 |
+
+### 🎵 多模态人格数据流（网易云音乐画像）
+
+```
+NetEaseConnect.jsx（网易云手机号 / 二维码扫码登录）
+        │
+        ▼
+   歌单拉取 ──► 音乐画像分析 ──► 行为向量映射（注入六维人格向量）
+```
+
+- 实现位置：`frontend/src/components/Music/NetEaseConnect.jsx`（另有 `PersonaMusic.jsx`、`tarotPlaylist.js` 协同）
+- 音乐偏好作为人格数据的一个模态，与塔罗底色、扑克决策等多源信息融合进同一条人格数据流
 
 ### 🚀 输出与扩展层
 
@@ -91,9 +132,11 @@
 | 💬 陪练记录 | `/coach-logs` | AI 陪练对话历史 + 行为反馈 |
 | ⚙️ 系统工具 | `/tools` | 数据导入导出 + 存储管理 |
 
-### ✦ AI 叙事层（DeepSeek 点亮工程）
+### ✦ AI 叙事层（DeepSeek 点亮工程 · P0 + P1 已完成 ✅）
 
-> **算留本地，说换 LLM** —— 所有方法论计算（量化引擎 / 认知画圈 / 投资人匹配）仍在本地引擎完成保证确定性；LLM 只负责叙事个性化，不碰方法论与映射数据。
+> **统一口径：数字全部本地计算，LLM 只做叙事层。** 所有方法论计算（量化引擎 / 认知画圈 / 投资人匹配）仍在本地引擎完成保证确定性；LLM 只负责叙事个性化，不碰方法论与映射数据。
+
+**P0 + P1 已点亮**：后端 LLM 通用路由 + 登录页 + 九大 LLM 模板全站点亮，实现位置 `backend/app.py` L1196-1380。
 
 | AI 能力 | 挂载点 | 触发方式 |
 |---------|--------|---------|
@@ -101,14 +144,15 @@
 | 🏦 AI 投资人格解读 | 投行看板 `/ib-dashboard` | 按钮触发（契合点 / 差异点 / 选择建议） |
 | 📋 人格金融综合报告 | 工作台首页 `/dashboard` | 按钮触发（跨模块汇总塔罗/酒局/投资人/成长阶段 → 一致性分析 + 矛盾点 + 建议） |
 | 🌱 成长教练寄语 | 培养方案 `/cultivation-plan` | 按钮触发 |
-| 🧠 AI 人格简报 | 认知画圈 `/psychology` | 按钮触发 |
-| 🍸 主理人回顾 | MBTI 企业家酒局 | 按钮触发 |
+| 🧠 AI 人格简报（心理简报） | 认知画圈 `/psychology` | 按钮触发 |
+| 🃏 扑克教练 | 德州扑克 `/poker` | 按钮触发 |
+| 🍸 主理人回顾（酒局主持） | MBTI 企业家酒局 | 按钮触发 |
 | 🚁 AI 调度播报 | 无人机调度 `/drone-dispatch` | 按钮触发 |
 | 🤖 AI 实时对话 | 人形机器人 `/robot` | 输入框自由对话（按当前人格策略语气回应） |
 
 **架构要点**：
 
-- 一条通用 LLM 代理路由 `POST /api/llm/generate` + 服务端 Prompt 模板注册表（9 条模板，统一"午夜酒馆"人设）
+- 一条通用 LLM 代理路由 `POST /api/llm/generate` + 服务端 Prompt 模板注册表（9 条模板：塔罗解读 / 投资人视角 / 综合报告 / 扑克教练 / 酒局主持 / 无人机 / 机器人 / 心理简报等，统一"午夜酒馆"人设）
 - API Key 仅服务端环境变量持有，不下发前端；仅注册表内模板可调（防任意 prompt 滥用）
 - 参数白名单 + 200 字符/项 + max_tokens 护栏 + temperature 0.8
 - JWT 登录门控：已登录真调 LLM，未登录走本地模板兜底 + 金色「登录解锁」引导
@@ -177,9 +221,10 @@ poker-egg-fullstack/
 │   │   │   ├── GameLobby/       # 游戏大厅
 │   │   │   ├── Layout/          # 布局组件（AppLayout）
 │   │   │   ├── MoleculeViewer/  # 3D 分子查看器
-│   │   │   ├── Music/           # 音乐播放器 + 网易云连接
+│   │   │   ├── Music/           # 音乐播放器 + 网易云连接（NetEaseConnect / PersonaMusic）
 │   │   │   ├── PersonaBartender/# 调酒组件
-│   │   │   ├── PokerTable/      # 德州扑克牌桌
+│   │   │   ├── PokerTable/      # 德州扑克牌桌（含 AnalysisPanel Kelly 面板）
+│   │   │   ├── PokerPuzzle/     # 决策拼图墙 × 策略编译器（本地编译 decide()）
 │   │   │   ├── TarotModule/     # 塔罗模块
 │   │   │   └── ZodiacModule/    # 星座模块
 │   │   ├── pages/               # 页面组件（30+）
@@ -187,6 +232,8 @@ poker-egg-fullstack/
 │   │   │   ├── CockpitPage.jsx      # 驾驶舱
 │   │   │   ├── HeroPage.jsx         # 欢迎引导页
 │   │   │   ├── PokerPage.jsx        # 德州扑克
+│   │   │   ├── InvestBankDashboardPage.jsx  # 投行看板
+│   │   │   ├── StockPage.jsx        # 实时行情
 │   │   │   ├── PsychologyPage.jsx   # 认知画圈
 │   │   │   ├── MusicPage.jsx        # K线音乐
 │   │   │   └── ...
@@ -355,6 +402,8 @@ npm run build
 
 ### 后端部署到 Railway
 
+> 当前线上地址：`https://finance-personality-api-production.up.railway.app`
+
 1. 在 Railway 创建新项目
 2. 连接 GitHub 仓库
 3. 设置 Root Directory 为 `backend`
@@ -418,12 +467,25 @@ VITE_WS_URL=wss://your-backend-domain.com
 - [x] 所有"返回首页"按钮统一指向 /dashboard
 - [x] Dashboard 移动端响应式适配（375px / 640px / 1024px 断点）
 
-#### ✦ LLM 叙事层点亮（2026-08）
+#### ✦ LLM 叙事层点亮（2026-08，P0 + P1 已完成）
 
-- [x] 后端 LLM 通用代理路由 + 9 模板注册表（DeepSeek）
-- [x] 用户注册 / 登录系统（JWT + bcrypt）
-- [x] 9 大 AI 能力全站点亮（塔罗解牌+行动指引 / 投资人解读 / 综合报告 / 成长教练 / 人格简报 / 酒局回顾 / 调度播报 / 机器人对话）
+- [x] 后端 LLM 通用代理路由 + 9 模板注册表（DeepSeek），实现位置 `backend/app.py` L1196-1380
+- [x] 用户注册 / 登录系统（JWT + bcrypt）+ 登录页
+- [x] 9 大 LLM 模板全站点亮（塔罗解读 / 投资人视角 / 综合报告 / 扑克教练 / 酒局主持 / 无人机 / 机器人 / 心理简报等）
+- [x] 统一口径落地：**数字全部本地计算，LLM 只做叙事层**
 - [x] 行情实验室扩容：预设池 10 → 32 只（美股 18 / 中概 4 / A股 10）+ 东方财富实时行情 + 分组卡片墙 + 数据时间戳 + 运行历史 CSV 导出
+
+#### 🃏 扑克线 5.x — 从牌桌到策略编译器
+
+- [x] 5.1 人格决策引擎：8 维人格参数 + 人格化理由 + tilt 记忆
+- [x] 5.2 Kelly 面板：蒙特卡洛真胜率逐街重算 + 牌型识别 + AnalysisPanel 前端
+- [x] PokerPuzzle 决策拼图墙 × 策略编译器：碎片聚合纯本地编译可溯源 `decide()`（TS 为主 / Python 为辅，MIN_FRAGMENTS 燃料门槛，四维量化全溯源）
+
+#### 🌐 五域生态互通
+
+- [x] 本仓库定位为五域中枢 / 策展首页（finance 策展首页），与 ymine 主站 / poker-egg / personality-wine / ymine-validation-hub 互通
+- [x] 六站回跳条全绿
+- [x] 后端上线 Railway：`https://finance-personality-api-production.up.railway.app`
 
 ### 🔲 待开发
 
