@@ -276,6 +276,16 @@
   display: inline-flex;
   margin-top: 2px;
 }
+.pa-card-suit svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.pa-card-back-mark svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
 .pa-card.back {
   background: repeating-linear-gradient(45deg, #3b2d6e 0 5px, #281e50 5px 10px);
   border: 1px solid rgba(251, 191, 36, 0.3);
