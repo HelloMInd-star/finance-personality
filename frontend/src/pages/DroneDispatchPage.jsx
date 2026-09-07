@@ -628,15 +628,6 @@ const DroneDispatchPage = () => {
         </Paragraph>
       </div>
 
-      {/* AirMind OS 升级横幅 */}
-      <div style={{ maxWidth: 860, margin: '0 auto 20px', padding: '12px 18px', borderRadius: 12, background: 'rgba(124,58,237,0.12)', border: '1px solid rgba(167,139,250,0.4)', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, justifyContent: 'space-between' }}>
-        <span style={{ color: '#e8edff', fontSize: 13 }}>
-          🛩️ 本模块已升级为独立系统 <strong style={{ color: '#c4b5fd' }}>AirMind OS</strong>：博弈定价 · 空域精算 · 应急六策略 · 算力浓度监控
-        </span>
-        <a href="https://hellomind-star.github.io/airmind-os/" target="_blank" rel="noopener noreferrer" style={{ color: '#22d3ee', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
-          前往完整版 ↗
-        </a>
-      </div>
 
       {/* 模式切换 */}
       <div style={{ textAlign: 'center', marginBottom: 24 }}>

@@ -138,9 +138,6 @@ const GRAD = {
   purpleGold: 'linear-gradient(135deg, #a855f7 0%, #D4AF37 100%)',
   violetSoft: 'linear-gradient(135deg, #7c3aed 0%, #c4b5fd 100%)',
   goldViolet: 'linear-gradient(135deg, #8b5cf6 0%, #D4AF37 100%)',
-  indigoNight: 'linear-gradient(135deg, #3b0764 0%, #8b5cf6 100%)',
-  grapeMid: 'linear-gradient(135deg, #581c87 0%, #a855f7 100%)',
-  royalGold: 'linear-gradient(135deg, #7e22ce 0%, #D4AF37 100%)',
 };
 
 const CURATED = [
@@ -166,14 +163,6 @@ const CURATED = [
   },
 ];
 
-const MATRIX = [
-  { emoji: '🛩️', domain: '低空经济', name: 'AirMind OS', url: 'https://hellomind-star.github.io/airmind-os/', grad: GRAD.indigoNight, desc: 'Kelly 博弈定价 × 应急调度 × 算力浓度监控的低空决策中枢。' },
-  { emoji: '🎬', domain: '内容市场', name: '短剧 MBTI 推演器', url: 'https://hellomind-star.github.io/short-drama-mbti/', grad: GRAD.grapeMid, desc: '人格向量 × 平台适配，「前额叶×边缘系统」双引擎发布策略。' },
-  { emoji: '🎰', domain: '博弈对抗', name: 'Poker Face Arena', url: 'https://hellomind-star.github.io/poker-egg-fullstack/', grad: GRAD.violetDeep, desc: '独立部署的扑克人格竞技场，16 型 AI 对手公开可玩。' },
-  { emoji: '🍸', domain: '消费体验', name: 'Y.MINE 人格调酒系统', url: 'https://hellomind-star.github.io/personality-wine-mixing/', grad: GRAD.royalGold, desc: 'MBTI 分子调酒全栈系统：人格 → 风味/声场/视觉的五感映射。' },
-  { emoji: '⚙️', domain: '元工具', name: '智能工坊 Agent Studio', url: 'https://hellomind-star.github.io/agent-studio-board/', grad: GRAD.purpleCore, desc: '多模型路由与 Agent 工作流编排控制台 —— 我指挥 AI 军团的方式。' },
-  { emoji: '🌌', domain: '总览', name: '返回作品集', url: 'https://hellomind-star.github.io/ymine-validation-hub/', grad: GRAD.purpleGold, desc: '跨域应用矩阵总览 · 论文 · 实验集群 · 完整项目列表。' },
-];
 
 const GROUPS = [
   { title: 'FINANCE · 金融', items: [
@@ -245,7 +234,6 @@ const ShowcasePage = () => {
         </h1>
         <p style={S.sub}>
           一套 KMP → IPD → 六维向量内核，驱动本平台 30+ 在线交互场景。
-          同一内核已迁移至低空经济、内容市场、博弈对抗与消费体验 ——
           下面是一条为面试官设计的 5 分钟动线。
         </p>
         <div style={S.chips}>
@@ -256,10 +244,6 @@ const ShowcasePage = () => {
         <div style={S.actions}>
           <button style={S.btnPrimary} onClick={() => navigate('/genome')}>🧬 从决策染色体看起</button>
           <button style={S.btnGhost} onClick={() => navigate('/dashboard')}>进入我的工作台 →</button>
-          <a style={{ ...S.btnGhost, textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
-             href="https://hellomind-star.github.io/ymine-validation-hub/" target="_blank" rel="noopener noreferrer">
-            🌌 作品集总览
-          </a>
         </div>
 
         {/* ===== 策展必看 ===== */}
@@ -271,14 +255,6 @@ const ShowcasePage = () => {
           </div>
         </div>
 
-        {/* ===== 同构系统矩阵 ===== */}
-        <div style={S.section}>
-          <div style={S.sectionTitle}>🌐 同一内核 · 五个域</div>
-          <div style={S.sectionSub}>CROSS-DOMAIN MATRIX · 跨域同构：方法论不换，场景随便换</div>
-          <div style={S.grid2}>
-            {MATRIX.map(m => renderCard(m, m.domain, null, m.url))}
-          </div>
-        </div>
 
         {/* ===== 全场景索引（二级入口）===== */}
         <div style={S.section}>
