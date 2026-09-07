@@ -26,6 +26,17 @@
 
 ---
 
+## ⏱️ 三分钟体验路径
+
+给面试官 / 新用户的最佳动线（线上站直接走）：
+
+1. **开启导览** — 打开线上站，产品世界观与核心理念
+2. **打一手德州扑克** `/poker` — 对局中的每次下注都在采集你的风险行为；AI 对手带 8 维人格参数与 tilt 记忆，连败会真的上头
+3. **回工作台** `/dashboard` — 看你的六维人格雷达、人格原型分类与洞察简报
+4. **进风险压力** `/risk` — 看行为人格如何投射为金融风险画像
+
+---
+
 ## 🏗️ 系统架构全景图
 
 ```mermaid
@@ -419,8 +430,8 @@ poker-egg-fullstack/
 ### Docker 部署（推荐）
 
 ```bash
-git clone https://github.com/HelloMind-star/poker-egg-fullstack.git
-cd poker-egg-fullstack
+git clone https://github.com/HelloMInd-star/finance-personality.git
+cd finance-personality
 docker-compose up -d
 
 # 访问
