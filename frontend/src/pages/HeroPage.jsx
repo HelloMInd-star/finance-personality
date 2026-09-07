@@ -46,7 +46,7 @@ const HeroPage = () => {
           欢迎回到 <span className="hero-gold-text">Y.Mine</span>
         </Title>
         <Text className="hero-subtitle">
-          你的人格数字孪生空间
+          你的专属金融人格实验室
         </Text>
         <Text className="hero-guide">
           每一次选择，都在塑造你的金融人格
@@ -58,7 +58,7 @@ const HeroPage = () => {
           onClick={handleEnter}
           className="hero-enter-btn"
         >
-          开启导览
+          开始探索
         </Button>
       </div>
     </div>

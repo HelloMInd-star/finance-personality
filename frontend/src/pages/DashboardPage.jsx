@@ -366,7 +366,7 @@ const DashboardPage = () => {
               欢迎回到 <span className="text-gradient">Y.Mine</span>
             </Title>
             <Text className="hero-subtitle">
-              你的人格数字孪生空间 · 每一次选择都在塑造你
+              你的专属金融人格实验室 · 每一次选择都在塑造你
             </Text>
             <Space className="hero-tags" wrap>
               <Tag className="hero-tag hero-tag-mbti" icon={<CrownOutlined />}>

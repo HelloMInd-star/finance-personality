@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /**
- * ShowcasePage —— 策展式首页（面试官导览）
- * 定位：平台对外首屏。策展 5 个必看 Demo + 同构系统矩阵出口 + 全场景二级入口。
+ * ShowcasePage —— 产品化首页（导览）
+ * 定位：平台对外首屏。精选 5 个必玩场景 + 全场景二级入口。
  * 个人工作台保留在 /dashboard，本页只承担「讲故事」职责。
  * 视觉：卡片全量复用 Dashboard 系统卡片语言（rgba(30,19,64,0.6) 紫调玻璃 +
  * 渐变 banner + 大 emoji + 玻璃徽标 + hover 紫光浮起），与全站其他页面同频。
@@ -142,42 +142,42 @@ const GRAD = {
 
 const CURATED = [
   {
-    emoji: '🧬', tag: '方法论旗舰', name: 'DNA分析 · 决策染色体', path: '/genome', grad: GRAD.purpleCore,
-    desc: 'IEEE 论文同款方法论的可交互版：八维决策基因、核型诊断、漂移检测。看这一页就知道整套系统怎么思考。',
+    emoji: '🧬', tag: '看懂自己', name: '决策 DNA 报告', path: '/genome', grad: GRAD.purpleCore,
+    desc: '你做决定时更信数据还是直觉？这份报告会把你的决策 DNA 摊开给你看，强弱项一目了然。',
   },
   {
-    emoji: '📈', tag: '金融核心', name: '股价模拟', path: '/stock', grad: GRAD.purpleGold,
-    desc: '人格 × 市场行为：不同决策人格在同一行情下的操作分叉，行为金融学的实时推演台。',
+    emoji: '📈', tag: '模拟操盘', name: '股价模拟', path: '/stock', grad: GRAD.purpleGold,
+    desc: '同一段行情，不同人格会走出完全不同的买卖轨迹。换你上场，你会怎么操作？',
   },
   {
-    emoji: '🎴', tag: '全栈在线', name: '德州扑克', path: '/poker', grad: GRAD.violetDeep,
-    desc: '16 型人格 AI 牌手在线对局，FastAPI + WebSocket 全栈实战，人格化决策全程可解释。',
+    emoji: '🎴', tag: 'AI 牌局', name: '德州扑克', path: '/poker', grad: GRAD.violetDeep,
+    desc: '和 16 种性格的 AI 同桌打牌：它们会诈唬、会犹豫、也会上头。猜猜哪一位最像你。',
   },
   {
-    emoji: '🪞', tag: '向量引擎', name: '人格镜子', path: '/persona-mirror', grad: GRAD.violetSoft,
-    desc: '六维向量最近邻映射：投资人镜像、名人镜像，看「你的人格在金融史上有哪些影子」。',
+    emoji: '🪞', tag: '名人对照', name: '人格镜子', path: '/persona-mirror', grad: GRAD.violetSoft,
+    desc: '把你的行为数据和历史上的投资大佬做对照——你的决策风格，和谁最像？',
   },
   {
-    emoji: '🧠', tag: '认知科学', name: '认知引擎 MindSpeak', path: '/mindspeak', grad: GRAD.goldViolet,
-    desc: '认知画圈：概念节点、关系张力、内耗与合力的可视化推演，决策的底层操作系统。',
+    emoji: '🧠', tag: '内心星图', name: '认知引擎 MindSpeak', path: '/mindspeak', grad: GRAD.goldViolet,
+    desc: '把你脑子里的纠结画成一张星图：哪些念头在互相拉扯，哪些在悄悄合力。',
   },
 ];
 
 
 const GROUPS = [
-  { title: 'FINANCE · 金融', items: [
-    ['信息漏斗', '/funnel'], ['股价模拟', '/stock'], ['公司理财', '/finance'],
-    ['风险压力', '/risk'], ['向量分析', '/vector'], ['投行看板', '/ib-dashboard'], ['可信中台', '/trust-dashboard'],
-  ]},
-  { title: 'PERSONA · 人格', items: [
-    ['DNA分析', '/genome'], ['认知引擎', '/mindspeak'], ['人格镜子', '/persona-mirror'],
-    ['心理盘面', '/psychology'], ['脉轮测试', '/chakra'], ['培养方案', '/cultivation-plan'],
-  ]},
-  { title: 'BEHAVIOR · 行为', items: [
+  { title: '行为采集', items: [
     ['德州扑克', '/poker'], ['台球', '/billiards'], ['健身', '/fitness'],
     ['K线音乐', '/music'], ['模拟博弈台', '/game-table'], ['娱乐方式', '/entertainment'],
   ]},
-  { title: 'OUTPUT · 输出', items: [
+  { title: '人格洞察', items: [
+    ['DNA分析', '/genome'], ['认知引擎', '/mindspeak'], ['人格镜子', '/persona-mirror'],
+    ['心理盘面', '/psychology'], ['脉轮测试', '/chakra'], ['培养方案', '/cultivation-plan'],
+  ]},
+  { title: '金融投射', items: [
+    ['信息漏斗', '/funnel'], ['股价模拟', '/stock'], ['公司理财', '/finance'],
+    ['风险压力', '/risk'], ['向量分析', '/vector'], ['投行看板', '/ib-dashboard'], ['可信中台', '/trust-dashboard'],
+  ]},
+  { title: '实验舱', items: [
     ['内容中枢', '/content-hub'], ['游戏引擎', '/game-engine'], ['人形机器人', '/robot'], ['无人机调度', '/drone-dispatch'],
   ]},
   { title: '记录与系统', items: [
@@ -228,38 +228,38 @@ const ShowcasePage = () => {
     <div style={S.page}>
       <div style={S.wrap}>
         {/* ===== Hero 定位 ===== */}
-        <span style={S.badge}>GAME-OS 应用层 · 人格金融孪生平台</span>
+        <span style={S.badge}>Y.MINE · 人格 × 金融实验室</span>
         <h1 style={S.h1}>
-          把行为数据，炼成<span style={S.h1Accent}>可审计的决策人格</span>
+          在游戏里，照见<span style={S.h1Accent}>你的金融人格</span>
         </h1>
         <p style={S.sub}>
-          一套 KMP → IPD → 六维向量内核，驱动本平台 30+ 在线交互场景。
-          下面是一条为面试官设计的 5 分钟动线。
+          打牌、操盘、做投资——每个小场景都会记下你的选择，慢慢拼出一张专属的决策画像。
+          不知道从哪逛起？跟着下面五站走就行。
         </p>
         <div style={S.chips}>
-          {['30+ 在线交互场景', '16 型人格引擎', '六维决策向量', '全栈自研 React + FastAPI', 'IEEE 预印本方法论'].map(c => (
+          {['30+ 互动场景', '16 型人格 AI', '专属决策画像', '全栈自研'].map(c => (
             <span key={c} style={S.chip}>{c}</span>
           ))}
         </div>
         <div style={S.actions}>
-          <button style={S.btnPrimary} onClick={() => navigate('/genome')}>🧬 从决策染色体看起</button>
+          <button style={S.btnPrimary} onClick={() => navigate('/genome')}>🧬 先看看我的决策 DNA</button>
           <button style={S.btnGhost} onClick={() => navigate('/dashboard')}>进入我的工作台 →</button>
         </div>
 
-        {/* ===== 策展必看 ===== */}
+        {/* ===== 精选必玩 ===== */}
         <div style={S.section}>
-          <div style={S.sectionTitle}>🎯 策展动线 · 五站看懂这套系统</div>
-          <div style={S.sectionSub}>CURATED PATH · 按顺序参观约 5 分钟</div>
+          <div style={S.sectionTitle}>🎯 先逛这五站</div>
+          <div style={S.sectionSub}>按顺序逛，大约 5 分钟</div>
           <div style={S.grid2}>
             {CURATED.map((c, i) => renderCard(c, `第 ${i + 1} 站 · ${c.tag}`, () => navigate(c.path)))}
           </div>
         </div>
 
 
-        {/* ===== 全场景索引（二级入口）===== */}
+        {/* ===== 更多场景（二级入口）===== */}
         <div style={S.section}>
-          <div style={S.sectionTitle}>🗂 全场景索引</div>
-          <div style={S.sectionSub}>ALL MODULES · 30+ 场景按域分组</div>
+          <div style={S.sectionTitle}>🗂 还有更多</div>
+          <div style={S.sectionSub}>30+ 个场景，按兴趣自取</div>
           <div style={S.linkGroups}>
             {GROUPS.map(g => (
               <div key={g.title} style={S.linkGroup}>
