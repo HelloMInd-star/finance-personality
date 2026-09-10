@@ -1,9 +1,14 @@
 // ============================================================
 // 扑克竞技场 · API 封装 + 通用决策采集 schema
-// 牌局真跑在 poker-egg Railway 引擎（HTTP 轮询驱动，免 WebSocket）
+// 牌局由本地决策引擎驱动（零后端依赖，GitHub Pages 直接可玩）
+// 旧 Railway 引擎（poker-egg-fullstack）已下线，保留远端代码作为回退开关
 // ============================================================
 
-export const API_BASE = 'https://poker-egg-fullstack-production.up.railway.app';
+import { localArenaApi } from './localArenaEngine.js';
+
+// true = 本地引擎；false = 远端 Railway 引擎（服务下线，勿随意打开）
+const USE_LOCAL_ENGINE = true;
+export const API_BASE = USE_LOCAL_ENGINE ? null : 'https://poker-egg-fullstack-production.up.railway.app';
 
 // 16 型对手速查（与 poker-egg personalities.py 同源）
 export const OPPONENTS = {
@@ -47,22 +52,33 @@ async function req(path, options = {}) {
 }
 
 export const arenaApi = {
-  createGame: (playerName, personality) =>
-    req('/api/game/create', {
+  createGame: (playerName, personality) => {
+    if (USE_LOCAL_ENGINE) return localArenaApi.createGame(playerName, personality);
+    return req('/api/game/create', {
       method: 'POST',
       body: JSON.stringify({ player_name: playerName, ai_difficulty: 'medium', ai_personality: personality, auto_next_hand: false }),
-    }),
-  startGame: (gid) => req(`/api/game/${gid}/start`, { method: 'POST' }),
+    });
+  },
+  startGame: (gid) => {
+    if (USE_LOCAL_ENGINE) return localArenaApi.startGame(gid);
+    return req(`/api/game/${gid}/start`, { method: 'POST' });
+  },
   getState: (gid, pid) => {
+    if (USE_LOCAL_ENGINE) return localArenaApi.getState(gid);
     const q = pid ? `?player_id=${pid}` : '';
     return req(`/api/game/${gid}${q}`);
   },
-  postAction: (gid, pid, actionType, amount = 0) =>
-    req(`/api/game/${gid}/action`, {
+  postAction: (gid, pid, actionType, amount = 0) => {
+    if (USE_LOCAL_ENGINE) return localArenaApi.postAction(gid, pid, actionType, amount);
+    return req(`/api/game/${gid}/action`, {
       method: 'POST',
       body: JSON.stringify({ player_id: pid, action_type: actionType, amount }),
-    }),
-  getAnalysis: (gid, pid) => req(`/api/game/${gid}/analysis?player_id=${pid}`),
+    });
+  },
+  getAnalysis: (gid, pid) => {
+    if (USE_LOCAL_ENGINE) return localArenaApi.getAnalysis(gid);
+    return req(`/api/game/${gid}/analysis?player_id=${pid}`);
+  },
 };
 
 // ============================================================
