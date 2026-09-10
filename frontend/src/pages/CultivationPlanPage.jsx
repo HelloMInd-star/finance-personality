@@ -17,6 +17,9 @@ import { useAppStore } from '../store/appStore';
 import { storage } from '../utils/storage';
 import { logger } from '../utils/logger';
 import { apiClient } from '../utils/apiClient';
+
+// AI 教练寄语：true=本地模板生成（后端 LLM 下线降级）；false=远端 /llm/generate
+const USE_LOCAL_COACH = true;
 import {
   determinePhase,
   calculatePhaseProgress,
@@ -25,6 +28,7 @@ import {
   identifyWeakDimensions,
   generateTodayTasks,
   getImprovementSuggestion,
+  generateLocalCoachNote,
   DIMENSION_CONFIG,
   PHASE_CONFIG,
 } from '../utils/cultivationEngine.js';
@@ -68,14 +72,27 @@ const CultivationPlanPage = () => {
     setCoachLoading(true);
     setCoachNote(null);
     try {
-      const res = await apiClient.llmGenerate('growth_coach', {
-        phase_name: currentPhase.label,
-        phase_desc: currentPhase.desc,
-        weak_dims: (weakDimensions.map(w => w.label).join('、') || '无显著弱项').slice(0, 120),
-        today_tasks: (todayTasks.slice(0, 3).map(t => t.title).join('；') || '今日无待办').slice(0, 150),
-        mbti: persona?.mbti || persona?.currentMbti || '探索者',
-      });
-      if (res?.text) setCoachNote(res.text);
+      if (USE_LOCAL_COACH) {
+        // 本地生成：模拟延迟保持 loading 交互
+        const text = generateLocalCoachNote({
+          phase_name: currentPhase.label,
+          phase_desc: currentPhase.desc,
+          weak_dims: (weakDimensions.map(w => w.label).join('、') || '无显著弱项').slice(0, 120),
+          today_tasks: (todayTasks.slice(0, 3).map(t => t.title).join('；') || '今日无待办').slice(0, 150),
+          mbti: persona?.mbti || persona?.currentMbti || '探索者',
+        });
+        await new Promise(r => setTimeout(r, 500));
+        setCoachNote(text);
+      } else {
+        const res = await apiClient.llmGenerate('growth_coach', {
+          phase_name: currentPhase.label,
+          phase_desc: currentPhase.desc,
+          weak_dims: (weakDimensions.map(w => w.label).join('、') || '无显著弱项').slice(0, 120),
+          today_tasks: (todayTasks.slice(0, 3).map(t => t.title).join('；') || '今日无待办').slice(0, 150),
+          mbti: persona?.mbti || persona?.currentMbti || '探索者',
+        });
+        if (res?.text) setCoachNote(res.text);
+      }
     } catch (e) {
       logger.error('[AI教练寄语] 失败', e);
     } finally {
@@ -166,7 +183,7 @@ const CultivationPlanPage = () => {
                   </Button>
                   {coachNote && (
                     <div style={{ marginTop: 12, padding: '14px 18px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: 12 }}>
-                      <div style={{ fontSize: 12, color: '#D4AF37', letterSpacing: 1, marginBottom: 6 }}>✦ AI 成长教练 · 看了你的训练记录</div>
+                      <div style={{ fontSize: 12, color: '#D4AF37', letterSpacing: 1, marginBottom: 6 }}>✦ 成长教练 · 看了你的训练记录（本地生成）</div>
                       <div style={{ fontSize: 13, lineHeight: 1.9, color: 'rgba(255,255,255,0.88)', whiteSpace: 'pre-wrap' }}>{coachNote}</div>
                     </div>
                   )}

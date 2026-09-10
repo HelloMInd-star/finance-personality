@@ -9,7 +9,7 @@
  * 5. 分层提升建议（按分数区间给出不同建议）
  */
 
-import { logger } from './logger';
+import { logger } from './logger.js';
 
 // ============================================================
 // 阶段配置
@@ -526,3 +526,53 @@ export const generateTodayTasks = (data, scores) => {
   logger.session('生成今日任务', `${tasks.length}项`);
   return tasks;
 };
+
+// ============================================================
+// 本地 AI 成长教练寄语（后端 LLM 下线降级）
+// 输入：阶段/弱项/今日任务/人格 → 模板 + 随机变体
+// 形状对齐 llmGenerate('growth_coach') 返回的 { text }
+// ============================================================
+const COACH_OPENERS = (mbti) => [
+  `作为${mbti || '探索者'}型人格，你的训练节奏里藏着答案——今晚的复盘也值得认真对待。`,
+  `${mbti || '探索者'}气质的你，习惯在复盘里找增量。今天的数据已经说了不少，听一听。`,
+  `看到你最近的行为曲线，${mbti || '探索者'}式的直觉正在成形。别急，稳住节奏。`,
+];
+
+const COACH_PHASE = (phase_name, phase_desc) => [
+  `当前处于「${phase_name || '基础期'}」——${phase_desc || '这一阶段的关键是稳定积累'}。这一步的扎实，决定下一步的从容。`,
+  `「${phase_name || '当前阶段'}」的要义不是冲刺，而是把${(phase_desc || '基础动作').replace(/，|,/g, '、')}做进肌肉记忆。`,
+];
+
+const COACH_WEAK = (weak_dims) => {
+  if (!weak_dims || weak_dims === '无显著弱项') {
+    return '今天没有明显弱项，说明基线已经站稳——可以往更难的维度加码了。';
+  }
+  return `今天值得盯一下「${weak_dims}」——它不是短板，是你还没点亮的地图。`;
+};
+
+const COACH_TASK = (today_tasks) => {
+  if (!today_tasks || today_tasks === '今日无待办') {
+    return '今天的任务清单是空的——那就从一次主动训练开始。';
+  }
+  const first = String(today_tasks).split('；')[0].slice(0, 40);
+  return `先把「${first}」做完，剩下的交给惯性。`;
+};
+
+const COACH_CLOSERS = [
+  '别贪多，一次只推一个变量。',
+  '数据不会说谎，坚持会。',
+  '你已经在跑赢昨天的自己了。',
+  '明天回看今天，你会感谢这个动作。',
+];
+
+export function generateLocalCoachNote({ phase_name, phase_desc, weak_dims, today_tasks, mbti } = {}) {
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const parts = [
+    pick(COACH_OPENERS(mbti)),
+    pick(COACH_PHASE(phase_name, phase_desc)),
+    COACH_WEAK(weak_dims),
+    COACH_TASK(today_tasks),
+    pick(COACH_CLOSERS),
+  ];
+  return parts.join('\n');
+}

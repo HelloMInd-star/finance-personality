@@ -8,6 +8,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Input, Form, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined, RocketOutlined } from '@ant-design/icons';
 import apiClient, { setAuthToken } from '../utils/apiClient';
+import localAuth from '../utils/localAuth';
+
+// 账号体系：true=本地账号库（后端下线降级）；false=远端 /auth/*
+const USE_LOCAL_AUTH = true;
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -23,11 +27,15 @@ const LoginPage = () => {
     setLoading(true);
     try {
       if (mode === 'login') {
-        const res = await apiClient.login(values.username, values.password);
+        const res = USE_LOCAL_AUTH
+          ? await localAuth.login(values.username, values.password)
+          : await apiClient.login(values.username, values.password);
         setAuthToken(res.access_token);
         message.success('欢迎回来 · AI 能力已解锁');
       } else {
-        const res = await apiClient.register(values.username, values.email, values.password);
+        const res = USE_LOCAL_AUTH
+          ? await localAuth.register(values.username, values.email, values.password)
+          : await apiClient.register(values.username, values.email, values.password);
         setAuthToken(res.token);
         message.success('注册成功 · AI 能力已解锁');
       }
@@ -47,7 +55,7 @@ const LoginPage = () => {
       <div className="login-card">
         <div className="login-logo">♠️</div>
         <h1 className="login-title">Y.Mine</h1>
-        <p className="login-subtitle">人格金融孪生空间 · 登录解锁 AI 个性化能力</p>
+        <p className="login-subtitle">人格金融孪生空间 · 登录解锁 AI 个性化能力（本地账号）</p>
 
         <div className="login-tabs">
           <button
