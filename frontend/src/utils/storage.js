@@ -1,6 +1,6 @@
 // localStorage 管理层 —— Y.Mine 行为决策沙盘
 
-import { logger } from './logger';
+import { logger } from './logger.js';
 
 const STORAGE_KEY = 'ymine_sandbox_v1';
 

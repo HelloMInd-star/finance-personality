@@ -9,8 +9,8 @@
  * 与现有 storage.js 共享同一个 localStorage key，但通过前缀隔离命名空间。
  */
 
-import { storage } from './storage';
-import { logger } from './logger';
+import { storage } from './storage.js';
+import { logger } from './logger.js';
 
 // ============ 命名空间前缀 ============
 const PREFIX_PIPELINE = 'pipeline_';

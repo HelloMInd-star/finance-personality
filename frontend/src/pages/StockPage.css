@@ -540,3 +540,54 @@
     font-size: 18px;
   }
 }
+
+/* ============ 移动端增强（P1 本地引擎 + 窄屏适配） ============ */
+@media (max-width: 768px) {
+  /* 所有 Space 允许换行，避免按钮/标签溢出 */
+  .stock-page .ant-space {
+    flex-wrap: wrap;
+  }
+  /* 控制面板：Slider 刻度更紧凑 */
+  .stock-control-card .ant-slider-mark-text {
+    font-size: 9px !important;
+  }
+  /* Tabs 在窄屏下允许横向滑动，避免挤压换行 */
+  .stock-page .ant-tabs-nav-wrap {
+    overflow-x: auto;
+  }
+  .stock-page .ant-tabs-tab {
+    padding: 10px 10px !important;
+    font-size: 12px;
+  }
+  /* 运行按钮区按钮在窄屏占满一行 */
+  .stock-page .ant-space-item:has(.btn-purple-gold) {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Hero 三栏统计进一步紧凑 */
+  .stock-hero-stats .stat-label {
+    font-size: 9px;
+    margin-bottom: 2px;
+  }
+  .stock-hero-stats .stat-value {
+    font-size: 15px;
+  }
+  .stock-hero-stats .stat-prefix {
+    font-size: 11px;
+  }
+  .stock-hero-stats .stat-suffix {
+    font-size: 10px;
+  }
+  /* 卡片内边距再收紧 */
+  .stock-page .glass-card .ant-card-body,
+  .stock-page .glass-gold .ant-card-body {
+    padding: 12px 10px !important;
+  }
+  /* 表格式面板：公式列允许省略 */
+  .stock-page .ant-table-cell {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}

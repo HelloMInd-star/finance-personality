@@ -26,6 +26,10 @@ import { logger } from '../utils/logger';
 import { storage } from '../utils/storage';
 import { auditLogStore } from '../utils/storageBus';
 import { apiClient } from '../utils/apiClient';
+import localMarket from '../utils/localMarket';
+
+// 实时行情数据源：true=本地引擎（腾讯直连+内置锚点，零后端依赖）；false=远端 /api/market/*
+const USE_LOCAL_MARKET = true;
 import {
   isFuseActive, getFuseState, triggerFuse, resetFuse,
   checkMaxDrawdown, checkValuationBreach,
@@ -136,13 +140,22 @@ const StockPage = () => {
   const fetchRealtimeData = async (symbol) => {
     if (!symbol) return null;
     setRealtimeLoading(true);
-    const hide = message.loading(`正在从东方财富拉取 ${symbol} 实时行情...`, 0);
+    const hide = message.loading(`正在拉取 ${symbol} 实时行情...`, 0);
     try {
       logger.session('[StockPage][Realtime] 拉取实时行情', { symbol });
-      const [val, kline] = await Promise.all([
-        apiClient.marketGetValuation(symbol),
-        apiClient.marketGetKline(symbol, Math.max(simDays, 120)).catch(() => ({ bars: [] })),
-      ]);
+      let val, kline;
+      if (USE_LOCAL_MARKET) {
+        // 本地引擎：腾讯实时 + PRESET_ASSETS 锚点 + 本地 K 线（后端下线降级）
+        [val, kline] = await Promise.all([
+          localMarket.getValuation(symbol),
+          localMarket.getKline(symbol, Math.max(simDays, 120)),
+        ]);
+      } else {
+        [val, kline] = await Promise.all([
+          apiClient.marketGetValuation(symbol),
+          apiClient.marketGetKline(symbol, Math.max(simDays, 120)).catch(() => ({ bars: [] })),
+        ]);
+      }
       const snapshot = { ...val, kline: kline?.bars || [], fetchedAt: Date.now() };
       setRealtimeSnapshot(snapshot);
       logger.session('[StockPage][Realtime] 行情已拉取', {
@@ -215,7 +228,7 @@ const StockPage = () => {
     const ticker = (snapshot?.asset?.ticker) || effectiveTicker;
     logger.session('[StockPage] 启动十一步量化引擎', {
       regime, ticker, simDays, perturb: manualPerturb,
-      数据源: useRealtimeData ? (snapshot ? '东方财富实时' : '实时源失败→回退内置') : '内置 PRESET_ASSETS',
+      数据源: useRealtimeData ? (snapshot ? '本地引擎实时' : '实时源失败→回退内置') : '内置 PRESET_ASSETS',
     });
 
     // 模拟十一步进度
@@ -765,7 +778,7 @@ const StockPage = () => {
           <Space style={{ justifyContent: 'space-between', width: '100%' }}>
             <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>
               <CloudDownloadOutlined style={{ marginRight: 4 }} />
-              接东方财富实时行情
+              接腾讯实时行情
             </Text>
             <Switch
               checked={useRealtimeData}
@@ -796,7 +809,7 @@ const StockPage = () => {
           )}
           {realtimeSnapshot?.quote && (
             <Row gutter={12} style={{ marginTop: 10 }}>
-              <Col span={12}>
+              <Col xs={24} sm={12}>
                 <Statistic
                   title={<span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10 }}>
                     {realtimeSnapshot.quote.name} · 实时价
@@ -818,7 +831,7 @@ const StockPage = () => {
                   }
                 />
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={12}>
                 <Statistic
                   title={<span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10 }}>PE · PB · ROE</span>}
                   value={realtimeSnapshot.asset?.pe || 0}
@@ -880,7 +893,7 @@ const StockPage = () => {
 
         <Divider style={{ margin: '2px 0', borderColor: 'rgba(168,85,247,0.15)' }} />
 
-        <Space style={{ width: '100%' }} size={8}>
+        <Space style={{ width: '100%' }} size={8} wrap>
           <Button
             type="primary"
             icon={<PlayCircleOutlined />}

@@ -14,8 +14,8 @@
  * 触发条件：canBypass 永远为 false，任何人（含作者）不可绕过
  */
 
-import { logger } from './logger';
-import { auditLogStore, draftStore } from './storageBus';
+import { logger } from './logger.js';
+import { auditLogStore, draftStore } from './storageBus.js';
 
 // ============ 熔断层级定义 ============
 export const FUSE_LAYERS = [

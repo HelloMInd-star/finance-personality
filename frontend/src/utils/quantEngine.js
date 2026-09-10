@@ -27,9 +27,9 @@
  *  - VaR: 风险价值
  */
 
-import { logger } from './logger';
-import { isFuseActive, checkMaxDrawdown, checkValuationBreach } from './fuse';
-import { auditLogStore } from './storageBus';
+import { logger } from './logger.js';
+import { isFuseActive, checkMaxDrawdown, checkValuationBreach } from './fuse.js';
+import { auditLogStore } from './storageBus.js';
 
 // ============================================================
 // 配置常量

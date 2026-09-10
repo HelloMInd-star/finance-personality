@@ -2,7 +2,7 @@
  * Y.Mine 行为决策沙盘 - 调试日志系统
  * 
  * 用法：
- *   import { logger } from '../utils/logger';
+ *   import { logger } from '../utils/logger.js';
  *   logger.route('从首页跳到德州');
  *   logger.game('创建牌局', { difficulty: 'medium' });
  *   logger.storage('写入', 'userState', data);
